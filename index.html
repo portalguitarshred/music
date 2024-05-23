@@ -23,15 +23,16 @@
         }
 
         header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background-color: #1f1f1f;
             color: #ffffff;
             padding: 1em;
             width: 100%;
-            text-align: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
             position: relative;
-            padding-bottom: 0.5px;
         }
 
         .cover-image {
@@ -52,12 +53,15 @@
         }
 
         .menu-toggle {
-            position: absolute;
-            top: 1em;
-            left: 1em;
-            cursor: pointer;
             font-size: 1.5em;
             color: #ffffff;
+            cursor: pointer;
+            padding: 0.5em;
+            transition: color 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            color: #d3d3d3;
         }
 
         .menu {
@@ -95,14 +99,20 @@
 
         .clock-icon {
             cursor: pointer;
-            margin-left: 45px;
             font-size: 1.2em;
             color: #ffffff;
+            padding: 0.5em;
+            transition: color 0.3s ease;
+        }
+
+        .clock-icon:hover {
+            color: #d3d3d3;
         }
 
         .logo {
             max-width: 150px;
-            margin-bottom: 10px;
+            margin: 0 auto;
+            display: block;
         }
 
         .tagline {
@@ -553,21 +563,21 @@
 </head>
 <body>
     <header>
-        <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet" />
-        <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet" />
-        <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet" />
-        <i class="fas fa-bars menu-toggle"></i>
-        <img src="logo.png" alt="Guitar Radio Logo" class="logo">
-     <!--    <p class="tagline">Músicas para quem curte guitarra</p> -->
-        <nav class="menu">
-            <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
-            <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
-            <a href="https://guitarshred.com.br" target="_blank"><i class="fas fa-newspaper"></i> Notícias</a>
-            <a href="https://guitarshredacademy.com.br" target="_blank"><i class="fas fa-guitar"></i> Cursos de Guitarra</a>
-            <a href="https://www.youtube.com/guitarshredofficial" target="_blank"><i class="fab fa-youtube"></i> Canal do YouTube</a>
-            <a href="https://www.instagram.com/portalguitarshred" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-        </nav>
-    </header>
+    <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet" />
+    <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet" />
+    <i class="fas fa-bars menu-toggle"></i>
+    <img src="logo.png" alt="Guitar Radio Logo" class="logo">
+    <span class="clock-icon" id="clock-icon">&#128339;</span>
+    <nav class="menu">
+        <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
+        <a href="https://guitarshred.com.br" target="_blank"><i class="fas fa-newspaper"></i> Notícias</a>
+        <a href="https://guitarshredacademy.com.br" target="_blank"><i class="fas fa-guitar"></i> Cursos de Guitarra</a>
+        <a href="https://www.youtube.com/guitarshredofficial" target="_blank"><i class="fab fa-youtube"></i> Canal do YouTube</a>
+        <a href="https://www.instagram.com/portalguitarshred" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+    </nav>
+</header>
     <!-- Aqui está a capa das músicas da rádio -->
     <img src="capa1.jpg" alt="Esta imagem ainda não foi carregada" class="cover-image">
     <div class="descript">
