@@ -35,6 +35,18 @@
             position: relative;
         }
 
+        .equalizer-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1em; /* Ajuste conforme necessário */
+        }
+
+        .equalizer-text {
+            font-size: 1.2em;
+            color: #ffffff;
+            margin-right: 5px;
+        }
+
         .header-text {
             font-size: 1.5em;
             color: #ffffff;
@@ -44,9 +56,8 @@
         
         .equalizer-icon {
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 1.5em;
             color: #ffffff;
-            padding: 0.5em;
             transition: color 0.3s ease;
         }
         
@@ -620,8 +631,10 @@
             </div>
         </section>
         <section id="stations">
-            <p class="header-text">Equalizador</p>
-             <span class="equalizer-icon" id="equalizer-icon">&#x1F39B;</span> <!-- Novo ícone de equalizador -->
+            <div class="equalizer-container">
+                <p class="equalizer-text">Equalizador</p>
+                <span class="equalizer-icon" id="equalizer-icon">&#x1F39B;</span>
+            </div>
             </h2>
             <ul id="station-list">
                 <!-- Stations will be dynamically added here -->
