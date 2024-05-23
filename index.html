@@ -35,6 +35,25 @@
             position: relative;
         }
 
+        .header-text {
+            font-size: 1.5em;
+            color: #ffffff;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        
+        .equalizer-icon {
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #ffffff;
+            padding: 0.5em;
+            transition: color 0.3s ease;
+        }
+        
+        .equalizer-icon:hover {
+            color: #d3d3d3;
+        }
+
         .cover-image {
             width: 220px;
             height: 210px;
@@ -601,8 +620,8 @@
             </div>
         </section>
         <section id="stations">
-            <h2>Escolha a estação
-               <!--   <span class="clock-icon" id="clock-icon">&#128339;</span> -->
+            <p class="header-text">Equalizador</p>
+             <span class="equalizer-icon" id="equalizer-icon">&#x1F39B;</span> <!-- Novo ícone de equalizador -->
             </h2>
             <ul id="station-list">
                 <!-- Stations will be dynamically added here -->
