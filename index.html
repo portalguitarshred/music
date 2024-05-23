@@ -67,6 +67,69 @@
             color: #d3d3d3;
         }
 
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+        .modal-content {
+            background-color: #1f1f1f;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            color: #ffffff;
+            border-radius: 10px;
+        }
+        
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .equalizer-control {
+            margin: 10px 0;
+        }
+        
+        .equalizer-control label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .equalizer-control input {
+            width: 100%;
+        }
+        
+        .equalizer-control button {
+            background-color: #05d26d;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .equalizer-control button:hover {
+            background-color: #04b65c;
+        }
+
         .cover-image {
             width: 220px;
             height: 210px;
@@ -653,6 +716,29 @@
             </div>
         </section>
     </main>
+
+    <!-- Modal do Equalizador -->
+<div id="equalizerModal" class="modal">
+    <div class="modal-content">
+        <span id="closeEqualizerModal" class="close">&times;</span>
+        <h2>Equalizador</h2>
+        <div class="equalizer-control">
+            <label for="bass">Graves</label>
+            <input type="range" id="bass" min="-10" max="10" value="0">
+        </div>
+        <div class="equalizer-control">
+            <label for="mid">Médios</label>
+            <input type="range" id="mid" min="-10" max="10" value="0">
+        </div>
+        <div class="equalizer-control">
+            <label for="treble">Agudos</label>
+            <input type="range" id="treble" min="-10" max="10" value="0">
+        </div>
+        <div class="equalizer-control">
+            <button id="resetEqualizer">Resetar</button>
+        </div>
+    </div>
+</div>
 
     <!-- Modal para a programação do temporizador -->
     <div id="timerModal" class="modal">
