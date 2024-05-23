@@ -183,117 +183,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Lógica para fechar o menu ao clicar fora dele
-document.addEventListener('click', (event) => {
-    const isClickInside = menu.contains(event.target) || menuToggle.contains(event.target);
-
-    if (!isClickInside) {
-        menu.style.display = 'none';
-    }
-});
-
     // Lógica do Login de Usuário
-const loginLink = document.getElementById('login-link');
-const loginModal = document.getElementById('loginModal');
-const closeLoginModal = document.getElementById('closeLoginModal');
-const loginButton = document.getElementById('loginButton');
+    const loginLink = document.getElementById('login-link');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginButton = document.getElementById('loginButton');
 
-loginLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    loginModal.style.display = 'block';
-});
+    loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'block';
+    });
 
-closeLoginModal.addEventListener('click', () => {
-    loginModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === loginModal) {
+    closeLoginModal.addEventListener('click', () => {
         loginModal.style.display = 'none';
-    }
-});
+    });
 
-loginButton.addEventListener('click', async () => {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    if (email && password) {
-        const response = await fetch('http://seu-dominio.com/login.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.text();
-        alert(data);
-
-        if (response.ok) {
+    window.addEventListener('click', (event) => {
+        if (event.target === loginModal) {
             loginModal.style.display = 'none';
-            // Aqui você pode salvar o token JWT ou outra informação de autenticação
-        } else {
-            alert('Erro ao realizar login. Verifique suas credenciais.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
+    });
 
-// Lógica do Registro de Usuário
-const registerLink = document.getElementById('register-link');
-const registerModal = document.getElementById('registerModal');
-const closeRegisterModal = document.getElementById('closeRegisterModal');
-const registerButton = document.getElementById('registerButton');
+    loginButton.addEventListener('click', async () => {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
 
-registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerModal.style.display = 'block';
-});
+        if (email && password) {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
 
-closeRegisterModal.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === registerModal) {
-        registerModal.style.display = 'none';
-    }
-});
-
-registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (username && email && password) {
-        const response = await fetch('http://seu-dominio.com/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                username: username,
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.text();
-        alert(data);
-
-        if (response.ok) {
-            registerModal.style.display = 'none';
+            if (response.ok) {
+                const data = await response.json();
+                alert('Login realizado com sucesso!');
+                loginModal.style.display = 'none';
+                // Aqui você pode salvar o token JWT ou outra informação de autenticação
+            } else {
+                alert('Erro ao realizar login. Verifique suas credenciais.');
+            }
         } else {
-            alert('Erro ao registrar usuário. Tente novamente.');
+            alert('Por favor, preencha todos os campos.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
+    });
 
     // Lógica do Registro de Usuário
     const registerLink = document.getElementById('register-link');
