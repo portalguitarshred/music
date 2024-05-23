@@ -98,6 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const setTimerButton = document.getElementById('setTimer');
     const timerInput = document.getElementById('timer');
 
+    // Define a cor do texto do input para branco
+    timerInput.style.color = 'white';
+
     clockIcon.addEventListener('click', () => {
         timerModal.style.display = 'block';
     });
