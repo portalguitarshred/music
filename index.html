@@ -36,25 +36,19 @@
         }
 
         .header-text {
-            font-size: 1.2em;
+            font-size: 1.5em;
             color: #ffffff;
-            margin-right: 10px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            margin-left: auto;
+            margin: 0.5em 0;
+            text-align: center;
         }
         
         .equalizer-icon {
             cursor: pointer;
-            font-size: 1.5em;
+            font-size: 1.2em;
             color: #ffffff;
-            margin-left: 5px;
+            padding: 0.5em;
             transition: color 0.3s ease;
         }
-
         
         .equalizer-icon:hover {
             color: #d3d3d3;
@@ -80,8 +74,8 @@
         .menu-toggle {
             font-size: 1.5em;
             color: #ffffff;
-            margin-left: 10px;
             cursor: pointer;
+            padding: 0.5em;
             transition: color 0.3s ease;
         }
 
@@ -128,7 +122,6 @@
             color: #ffffff;
             padding: 0.5em;
             transition: color 0.3s ease;
-            display: none; /* Para esconder o ícone do relógio antigo */
         }
 
         .clock-icon:hover {
@@ -140,7 +133,7 @@
             margin: 0 auto;
             display: block;
         }
-        
+
         .tagline {
             font-family: Arial, sans-serif;
             font-size: 1.2em;
@@ -594,12 +587,8 @@
     <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet" />
     <i class="fas fa-bars menu-toggle"></i>
     <img src="logo.png" alt="Guitar Radio Logo" class="logo">
-    <div class="header-right">
-        <p class="header-text">Equalizador</p>
-        <span class="equalizer-icon" id="equalizer-icon">&#x1F39B;</span>
-    </div>
+  <span class="clock-icon" id="clock-icon">&#128339;</span>
     <nav class="menu">
-        <!-- Links do menu -->
         <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
         <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
         <a href="https://guitarshred.com.br" target="_blank"><i class="fas fa-newspaper"></i> Notícias</a>
