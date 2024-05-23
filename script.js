@@ -183,6 +183,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Lógica para fechar o menu ao clicar fora dele
+document.addEventListener('click', (event) => {
+    const isClickInside = menu.contains(event.target) || menuToggle.contains(event.target);
+
+    if (!isClickInside) {
+        menu.style.display = 'none';
+    }
+});
+
     // Lógica do Login de Usuário
     const loginLink = document.getElementById('login-link');
     const loginModal = document.getElementById('loginModal');
