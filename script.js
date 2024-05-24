@@ -13,56 +13,42 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // Configuração da API Web Audio
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-console.log('AudioContext criado:', audioContext);
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioContext.createMediaElementSource(audioPlayer);
 
-const source = audioContext.createMediaElementSource(audioPlayer);
-console.log('MediaElementSource criado:', source);
+    const bassEQ = audioContext.createBiquadFilter();
+    bassEQ.type = 'lowshelf';
+    bassEQ.frequency.value = 500;
 
-const bassEQ = audioContext.createBiquadFilter();
-bassEQ.type = 'lowshelf';
-bassEQ.frequency.value = 500;
-console.log('Bass EQ criado:', bassEQ);
+    const midEQ = audioContext.createBiquadFilter();
+    midEQ.type = 'peaking';
+    midEQ.frequency.value = 1500;
+    midEQ.Q.value = 1;
 
-const midEQ = audioContext.createBiquadFilter();
-midEQ.type = 'peaking';
-midEQ.frequency.value = 1500;
-midEQ.Q.value = 1;
-console.log('Mid EQ criado:', midEQ);
+    const trebleEQ = audioContext.createBiquadFilter();
+    trebleEQ.type = 'highshelf';
+    trebleEQ.frequency.value = 3000;
 
-const trebleEQ = audioContext.createBiquadFilter();
-trebleEQ.type = 'highshelf';
-trebleEQ.frequency.value = 3000;
-console.log('Treble EQ criado:', trebleEQ);
+    source.connect(bassEQ);
+    bassEQ.connect(midEQ);
+    midEQ.connect(trebleEQ);
+    trebleEQ.connect(audioContext.destination);
 
-source.connect(bassEQ);
-console.log('Source conectado ao Bass EQ');
-
-bassEQ.connect(midEQ);
-console.log('Bass EQ conectado ao Mid EQ');
-
-midEQ.connect(trebleEQ);
-console.log('Mid EQ conectado ao Treble EQ');
-
-trebleEQ.connect(audioContext.destination);
-console.log('Treble EQ conectado ao destino de áudio');
-
-function adjustEqualizer(type, value) {
-    value = parseFloat(value);
-    console.log(`Ajustando ${type} para ${value}`);
-    switch(type) {
-        case 'bass':
-            bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
-        case 'mid':
-            midEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
-        case 'treble':
-            trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
+    function adjustEqualizer(type, value) {
+        value = parseFloat(value);
+        switch(type) {
+            case 'bass':
+                bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+            case 'mid':
+                midEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+            case 'treble':
+                trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+        }
+        console.log(`${type} set to ${value}`);
     }
-    console.log(`${type} ajustado para ${value}`);
-}
 
     stations.forEach(station => {
         const li = document.createElement('li');
@@ -107,9 +93,12 @@ function adjustEqualizer(type, value) {
         li.addEventListener('click', () => {
             console.log(`Playing: ${station.name} - URL: ${station.url}`);
             audioPlayer.src = station.url;
+            audioContext.resume().then(() => {
+                audioPlayer.play();
+            });
             statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
             statusMessage.classList.add('show'); // Mostrar mensagem de status
-        
+
             audioPlayer.play().then(() => {
                 statusMessage.textContent = ''; // Limpa a mensagem de carregamento
                 statusMessage.classList.remove('show'); // Esconde a mensagem de status
@@ -117,16 +106,16 @@ function adjustEqualizer(type, value) {
                 console.error('Playback failed', error);
                 statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
             });
-        
+
             audioPlayer.oncanplay = () => {
                 statusMessage.textContent = ''; // Limpa a mensagem de carregamento
                 statusMessage.classList.remove('show'); // Esconde a mensagem de status
             };
-        
+
             audioPlayer.onerror = () => {
                 statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
             };
-        
+
             if (currentPlaying) {
                 currentPlaying.classList.remove('playing'); // Remove a classe 'playing' da estação anterior
             }
@@ -295,114 +284,114 @@ function adjustEqualizer(type, value) {
     });
 
     // Lógica do Registro de Usuário
-const registerLink = document.getElementById('register-link');
-const registerModal = document.getElementById('registerModal');
-const closeRegisterModal = document.getElementById('closeRegisterModal');
-const registerButton = document.getElementById('registerButton');
+    const registerLink = document.getElementById('register-link');
+    const registerModal = document.getElementById('registerModal');
+    const closeRegisterModal = document.getElementById('closeRegisterModal');
+    const registerButton = document.getElementById('registerButton');
 
-registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerModal.style.display = 'block';
-});
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'block';
+    });
 
-closeRegisterModal.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === registerModal) {
+    closeRegisterModal.addEventListener('click', () => {
         registerModal.style.display = 'none';
-    }
-});
+    });
 
-registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (username && email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                username: username,
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.text();
-        alert(data);
-
-        if (response.ok) {
+    window.addEventListener('click', (event) => {
+        if (event.target === registerModal) {
             registerModal.style.display = 'none';
-        } else {
-            alert('Erro ao registrar usuário. Tente novamente.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
+    });
 
-// Lógica do Equalizador
-const equalizerIcon = document.querySelector('.equalizer-icon');
-const equalizerModal = document.getElementById('equalizerModal');
-const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+    registerButton.addEventListener('click', async () => {
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-equalizerIcon.addEventListener('click', () => {
-    equalizerModal.style.display = 'block';
-});
+        if (username && email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    username: username,
+                    email: email,
+                    password: password
+                })
+            });
 
-closeEqualizerModal.addEventListener('click', () => {
-    equalizerModal.style.display = 'none';
-});
+            const data = await response.text();
+            alert(data);
 
-window.addEventListener('click', (event) => {
-    if (event.target === equalizerModal) {
+            if (response.ok) {
+                registerModal.style.display = 'none';
+            } else {
+                alert('Erro ao registrar usuário. Tente novamente.');
+            }
+        } else {
+            alert('Por favor, preencha todos os campos.');
+        }
+    });
+
+    // Lógica do Equalizador
+    const equalizerIcon = document.querySelector('.equalizer-icon');
+    const equalizerModal = document.getElementById('equalizerModal');
+    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+
+    equalizerIcon.addEventListener('click', () => {
+        equalizerModal.style.display = 'block';
+    });
+
+    closeEqualizerModal.addEventListener('click', () => {
         equalizerModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === equalizerModal) {
+            equalizerModal.style.display = 'none';
+        }
+    });
+
+    const bassControl = document.getElementById('bass');
+    const midControl = document.getElementById('mid');
+    const trebleControl = document.getElementById('treble');
+
+    bassControl.addEventListener('input', (e) => {
+        adjustEqualizer('bass', e.target.value);
+    });
+
+    midControl.addEventListener('input', (e) => {
+        adjustEqualizer('mid', e.target.value);
+    });
+
+    trebleControl.addEventListener('input', (e) => {
+        adjustEqualizer('treble', e.target.value);
+    });
+
+    document.getElementById('resetEqualizer').addEventListener('click', () => {
+        bassControl.value = 0;
+        midControl.value = 0;
+        trebleControl.value = 0;
+        adjustEqualizer('bass', 0);
+        adjustEqualizer('mid', 0);
+        adjustEqualizer('treble', 0);
+    });
+
+    function adjustEqualizer(type, value) {
+        value = parseFloat(value);
+        switch(type) {
+            case 'bass':
+                bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+            case 'mid':
+                midEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+            case 'treble':
+                trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+        }
+        console.log(`${type} set to ${value}`);
     }
-});
-
-const bassControl = document.getElementById('bass');
-const midControl = document.getElementById('mid');
-const trebleControl = document.getElementById('treble');
-
-bassControl.addEventListener('input', (e) => {
-    adjustEqualizer('bass', e.target.value);
-});
-
-midControl.addEventListener('input', (e) => {
-    adjustEqualizer('mid', e.target.value);
-});
-
-trebleControl.addEventListener('input', (e) => {
-    adjustEqualizer('treble', e.target.value);
-});
-
-document.getElementById('resetEqualizer').addEventListener('click', () => {
-    bassControl.value = 0;
-    midControl.value = 0;
-    trebleControl.value = 0;
-    adjustEqualizer('bass', 0);
-    adjustEqualizer('mid', 0);
-    adjustEqualizer('treble', 0);
-});
-
-function adjustEqualizer(type, value) {
-    value = parseFloat(value);
-    switch(type) {
-        case 'bass':
-            bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
-        case 'mid':
-            midEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
-        case 'treble':
-            trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
-    }
-    console.log(`${type} set to ${value}`);
-}
 });
