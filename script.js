@@ -2,22 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const stationList = document.getElementById('station-list');
     const audioPlayer = document.getElementById('audio-player');
     const volumeControl = document.getElementById('volume-control');
-    const statusMessage = document.createElement('div');
+    const statusMessage = document.createElement('div'); // Elemento para mensagens de status
     statusMessage.id = 'status-message';
-    document.body.appendChild(statusMessage);
-
+    document.body.appendChild(statusMessage); // Adiciona o elemento de status ao corpo do documento
     let currentPlaying = null;
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || []; // Carrega favoritos do localStorage
 
     const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    if (!window.AudioContext && !window.webkitAudioContext) {
-        alert("Your browser does not support Web Audio API, please update your browser.");
-        return;
-    }
-
+    // Configuração da API Web Audio
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const source = audioContext.createMediaElementSource(audioPlayer);
 
@@ -39,26 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
     midEQ.connect(trebleEQ);
     trebleEQ.connect(audioContext.destination);
 
-    function adjustEqualizer(type, value) {
-        value = parseFloat(value);
-        switch(type) {
-            case 'bass':
-                bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-            case 'mid':
-                midEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-            case 'treble':
-                trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-        }
-        console.log(`${type} set to ${value}`);
-    }
-
     stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
 
+        // Adiciona ícone de coração
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
         if (favorites.includes(station.url)) {
@@ -76,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         li.appendChild(heartIcon);
 
+        // Adiciona ícone de compartilhamento
         const shareIcon = document.createElement('i');
         shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
         shareIcon.addEventListener('click', (e) => {
@@ -84,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         li.appendChild(shareIcon);
 
+        // Adiciona barras do espectro de áudio
         const spectrum = document.createElement('div');
         spectrum.classList.add('spectrum');
         for (let i = 0; i < 5; i++) {
@@ -97,30 +79,30 @@ document.addEventListener('DOMContentLoaded', () => {
             audioPlayer.src = station.url;
             audioContext.resume().then(() => {
                 audioPlayer.play().then(() => {
-                    statusMessage.textContent = ''; 
-                    statusMessage.classList.remove('show');
+                    statusMessage.textContent = ''; // Limpa a mensagem de carregamento
+                    statusMessage.classList.remove('show'); // Esconde a mensagem de status
                 }).catch(error => {
                     console.error('Playback failed', error);
-                    statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+                    statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
                 });
             });
-            statusMessage.textContent = 'Carregando...'; 
-            statusMessage.classList.add('show'); 
+            statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
+            statusMessage.classList.add('show'); // Mostrar mensagem de status
 
             audioPlayer.oncanplay = () => {
-                statusMessage.textContent = '';
-                statusMessage.classList.remove('show');
+                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
+                statusMessage.classList.remove('show'); // Esconde a mensagem de status
             };
 
             audioPlayer.onerror = () => {
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
             };
 
             if (currentPlaying) {
-                currentPlaying.classList.remove('playing');
+                currentPlaying.classList.remove('playing'); // Remove a classe 'playing' da estação anterior
             }
-            li.classList.add('playing');
-            currentPlaying = li;
+            li.classList.add('playing'); // Adiciona a classe 'playing' à estação atual
+            currentPlaying = li; // Atualiza a estação atual
         });
 
         stationList.appendChild(li);
@@ -131,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Volume: ${audioPlayer.volume}`);
     });
 
+    // Lógica do Temporizador
     const clockIcon = document.getElementById('clock-icon');
     const timerModal = document.getElementById('timerModal');
     const closeModal = document.getElementById('closeModal');
@@ -161,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const milliseconds = minutes * 60 * 1000;
         setTimeout(() => {
             audioPlayer.pause();
-            audioPlayer.currentTime = 0; 
+            audioPlayer.currentTime = 0; // Reinicia o áudio
             alert('O temporizador desligou a rádio.');
         }, milliseconds);
 
@@ -169,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`Temporizador definido para ${minutes} minutos.`);
     });
 
+    // Lógica do Compartilhamento
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
     const copyLinkButton = document.getElementById('copyLink');
@@ -209,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(twitterUrl, '_blank');
     });
 
+    // Lógica do Menu Sanduíche
     const menuToggle = document.querySelector('.menu-toggle');
     const menu = document.querySelector('.menu');
     
@@ -228,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+        // Lógica do Login de Usuário
     const loginLink = document.getElementById('login-link');
     const loginModal = document.getElementById('loginModal');
     const closeLoginModal = document.getElementById('closeLoginModal');
