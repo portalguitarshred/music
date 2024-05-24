@@ -43,6 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     li.appendChild(shareIcon);
 
+    // Adiciona barras do espectro de áudio
+    const spectrum = document.createElement('div');
+    spectrum.classList.add('spectrum');
+    for (let i = 0; i < 5; i++) {
+        const bar = document.createElement('div');
+        spectrum.appendChild(bar);
+    }
+    li.appendChild(spectrum);
+
     li.addEventListener('click', () => {
         console.log(`Playing: ${station.name} - URL: ${station.url}`);
         audioPlayer.src = station.url;
