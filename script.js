@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Configuração da API Web Audio
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const source = audioContext.createMediaElementSource(audioPlayer);
+
     const bassEQ = audioContext.createBiquadFilter();
     bassEQ.type = 'lowshelf';
     bassEQ.frequency.value = 500;
@@ -28,7 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     trebleEQ.type = 'highshelf';
     trebleEQ.frequency.value = 3000;
 
-    source.connect(bassEQ).connect(midEQ).connect(trebleEQ).connect(audioContext.destination);
+    // Conectando os filtros corretamente
+    source.connect(bassEQ);
+    bassEQ.connect(midEQ);
+    midEQ.connect(trebleEQ);
+    trebleEQ.connect(audioContext.destination);
 
     stations.forEach(station => {
         const li = document.createElement('li');
@@ -213,27 +218,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Lógica do Login de Usuário
-const loginLink = document.getElementById('login-link');
-const loginModal = document.getElementById('loginModal');
-const closeLoginModal = document.getElementById('closeLoginModal');
-const loginButton = document.getElementById('loginButton');
+    const loginLink = document.getElementById('login-link');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginButton = document.getElementById('loginButton');
 
-loginLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    loginModal.style.display = 'block';
-});
+    loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'block';
+    });
 
-closeLoginModal.addEventListener('click', () => {
-    loginModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === loginModal) {
+    closeLoginModal.addEventListener('click', () => {
         loginModal.style.display = 'none';
-    }
-});
+    });
 
-loginButton.addEventListener('click', async () => {
+    window.addEventListener('click', (event) => {
+        if (event.target === loginModal) {
+            loginModal.style.display = 'none';
+        }
+    });
+
+    loginButton.addEventListener('click', async () => {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
@@ -360,6 +365,7 @@ document.getElementById('resetEqualizer').addEventListener('click', () => {
 });
 
 function adjustEqualizer(type, value) {
+    value = parseFloat(value);
     switch(type) {
         case 'bass':
             bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
