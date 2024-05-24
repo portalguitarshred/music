@@ -153,26 +153,26 @@ document.addEventListener('click', (event) => {
 
     // Lógica do Login de Usuário
     const loginLink = document.getElementById('login-link');
-    const loginModal = document.getElementById('loginModal');
-    const closeLoginModal = document.getElementById('closeLoginModal');
-    const loginButton = document.getElementById('loginButton');
+const loginModal = document.getElementById('loginModal');
+const closeLoginModal = document.getElementById('closeLoginModal');
+const loginButton = document.getElementById('loginButton');
 
-    loginLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginModal.style.display = 'block';
-    });
+loginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginModal.style.display = 'block';
+});
 
-    closeLoginModal.addEventListener('click', () => {
+closeLoginModal.addEventListener('click', () => {
+    loginModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === loginModal) {
         loginModal.style.display = 'none';
-    });
+    }
+});
 
-    window.addEventListener('click', (event) => {
-        if (event.target === loginModal) {
-            loginModal.style.display = 'none';
-        }
-    });
-
-    loginButton.addEventListener('click', async () => {
+loginButton.addEventListener('click', async () => {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
@@ -202,7 +202,6 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Lógica do Registro de Usuário
 const registerLink = document.getElementById('register-link');
 const registerModal = document.getElementById('registerModal');
 const closeRegisterModal = document.getElementById('closeRegisterModal');
@@ -252,6 +251,7 @@ registerButton.addEventListener('click', async () => {
     } else {
         alert('Por favor, preencha todos os campos.');
     }
+});
 });
 
 // Lógica do Equalizador
