@@ -12,52 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    // Configuração da API Web Audio
-    let audioContext;
-    let source;
-    let bassEQ;
-    let midEQ;
-    let trebleEQ;
-
-    function setupWebAudioAPI() {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        source = audioContext.createMediaElementSource(audioPlayer);
-
-        bassEQ = audioContext.createBiquadFilter();
-        bassEQ.type = 'lowshelf';
-        bassEQ.frequency.value = 500;
-
-        midEQ = audioContext.createBiquadFilter();
-        midEQ.type = 'peaking';
-        midEQ.frequency.value = 1500;
-        midEQ.Q.value = 1;
-
-        trebleEQ = audioContext.createBiquadFilter();
-        trebleEQ.type = 'highshelf';
-        trebleEQ.frequency.value = 3000;
-
-        source.connect(bassEQ);
-        bassEQ.connect(midEQ);
-        midEQ.connect(trebleEQ);
-        trebleEQ.connect(audioContext.destination);
-    }
-
-    function adjustEqualizer(type, value) {
-        value = parseFloat(value);
-        switch(type) {
-            case 'bass':
-                bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-            case 'mid':
-                midEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-            case 'treble':
-                trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-        }
-        console.log(`${type} set to ${value}`);
-    }
-
     stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
@@ -101,12 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
         li.addEventListener('click', () => {
             console.log(`Playing: ${station.name} - URL: ${station.url}`);
             audioPlayer.src = station.url;
-            audioContext.resume().then(() => {
-                audioPlayer.play();
-            });
             statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
             statusMessage.classList.add('show'); // Mostrar mensagem de status
-
+        
             audioPlayer.play().then(() => {
                 statusMessage.textContent = ''; // Limpa a mensagem de carregamento
                 statusMessage.classList.remove('show'); // Esconde a mensagem de status
@@ -114,23 +65,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Playback failed', error);
                 statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
             });
-
+        
             audioPlayer.oncanplay = () => {
                 statusMessage.textContent = ''; // Limpa a mensagem de carregamento
                 statusMessage.classList.remove('show'); // Esconde a mensagem de status
             };
-
+        
             audioPlayer.onerror = () => {
                 statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
             };
-
+        
             if (currentPlaying) {
                 currentPlaying.classList.remove('playing'); // Remove a classe 'playing' da estação anterior
             }
             li.classList.add('playing'); // Adiciona a classe 'playing' à estação atual
             currentPlaying = li; // Atualiza a estação atual
-
-            setupWebAudioAPI(); // Configura a API Web Audio ao tocar a estação
         });
 
         stationList.appendChild(li);
@@ -389,6 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
         adjustEqualizer('treble', 0);
     });
 
+    // Função para ajustar o equalizador
     function adjustEqualizer(type, value) {
         value = parseFloat(value);
         switch(type) {
@@ -404,4 +354,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         console.log(`${type} set to ${value}`);
     }
+
+    // Configuração da API Web Audio
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioContext.createMediaElementSource(audioPlayer);
+
+    const bassEQ = audioContext.createBiquadFilter();
+    bassEQ.type = 'lowshelf';
+    bassEQ.frequency.value = 500;
+
+    const midEQ = audioContext.createBiquadFilter();
+    midEQ.type = 'peaking';
+    midEQ.frequency.value = 1500;
+    midEQ.Q.value = 1;
+
+    const trebleEQ = audioContext.createBiquadFilter();
+    trebleEQ.type = 'highshelf';
+    trebleEQ.frequency.value = 3000;
+
+    source.connect(bassEQ);
+    bassEQ.connect(midEQ);
+    midEQ.connect(trebleEQ);
+    trebleEQ.connect(audioContext.destination);
 });
