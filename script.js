@@ -13,26 +13,34 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // Configuração da API Web Audio
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const source = audioContext.createMediaElementSource(audioPlayer);
+    let audioContext;
+    let source;
+    let bassEQ;
+    let midEQ;
+    let trebleEQ;
 
-    const bassEQ = audioContext.createBiquadFilter();
-    bassEQ.type = 'lowshelf';
-    bassEQ.frequency.value = 500;
+    function setupWebAudioAPI() {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        source = audioContext.createMediaElementSource(audioPlayer);
 
-    const midEQ = audioContext.createBiquadFilter();
-    midEQ.type = 'peaking';
-    midEQ.frequency.value = 1500;
-    midEQ.Q.value = 1;
+        bassEQ = audioContext.createBiquadFilter();
+        bassEQ.type = 'lowshelf';
+        bassEQ.frequency.value = 500;
 
-    const trebleEQ = audioContext.createBiquadFilter();
-    trebleEQ.type = 'highshelf';
-    trebleEQ.frequency.value = 3000;
+        midEQ = audioContext.createBiquadFilter();
+        midEQ.type = 'peaking';
+        midEQ.frequency.value = 1500;
+        midEQ.Q.value = 1;
 
-    source.connect(bassEQ);
-    bassEQ.connect(midEQ);
-    midEQ.connect(trebleEQ);
-    trebleEQ.connect(audioContext.destination);
+        trebleEQ = audioContext.createBiquadFilter();
+        trebleEQ.type = 'highshelf';
+        trebleEQ.frequency.value = 3000;
+
+        source.connect(bassEQ);
+        bassEQ.connect(midEQ);
+        midEQ.connect(trebleEQ);
+        trebleEQ.connect(audioContext.destination);
+    }
 
     function adjustEqualizer(type, value) {
         value = parseFloat(value);
@@ -121,6 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             li.classList.add('playing'); // Adiciona a classe 'playing' à estação atual
             currentPlaying = li; // Atualiza a estação atual
+
+            setupWebAudioAPI(); // Configura a API Web Audio ao tocar a estação
         });
 
         stationList.appendChild(li);
