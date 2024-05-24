@@ -16,6 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const li = document.createElement('li');
     li.textContent = station.name;
 
+    // Adiciona ícone de coração
+    const heartIcon = document.createElement('i');
+    heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
+    if (favorites.includes(station.url)) {
+        heartIcon.classList.add('favorited');
+    }
+    heartIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        heartIcon.classList.toggle('favorited');
+        if (heartIcon.classList.contains('favorited')) {
+            favorites.push(station.url);
+        } else {
+            favorites = favorites.filter(fav => fav !== station.url);
+        }
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    });
+    li.appendChild(heartIcon);
+
     // Adiciona ícone de compartilhamento
     const shareIcon = document.createElement('i');
     shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
