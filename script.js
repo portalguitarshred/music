@@ -12,6 +12,58 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
+    // Configuração da API Web Audio
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+console.log('AudioContext criado:', audioContext);
+
+const source = audioContext.createMediaElementSource(audioPlayer);
+console.log('MediaElementSource criado:', source);
+
+const bassEQ = audioContext.createBiquadFilter();
+bassEQ.type = 'lowshelf';
+bassEQ.frequency.value = 500;
+console.log('Bass EQ criado:', bassEQ);
+
+const midEQ = audioContext.createBiquadFilter();
+midEQ.type = 'peaking';
+midEQ.frequency.value = 1500;
+midEQ.Q.value = 1;
+console.log('Mid EQ criado:', midEQ);
+
+const trebleEQ = audioContext.createBiquadFilter();
+trebleEQ.type = 'highshelf';
+trebleEQ.frequency.value = 3000;
+console.log('Treble EQ criado:', trebleEQ);
+
+source.connect(bassEQ);
+console.log('Source conectado ao Bass EQ');
+
+bassEQ.connect(midEQ);
+console.log('Bass EQ conectado ao Mid EQ');
+
+midEQ.connect(trebleEQ);
+console.log('Mid EQ conectado ao Treble EQ');
+
+trebleEQ.connect(audioContext.destination);
+console.log('Treble EQ conectado ao destino de áudio');
+
+function adjustEqualizer(type, value) {
+    value = parseFloat(value);
+    console.log(`Ajustando ${type} para ${value}`);
+    switch(type) {
+        case 'bass':
+            bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
+            break;
+        case 'mid':
+            midEQ.gain.setValueAtTime(value, audioContext.currentTime);
+            break;
+        case 'treble':
+            trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
+            break;
+    }
+    console.log(`${type} ajustado para ${value}`);
+}
+
     stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
