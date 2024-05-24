@@ -54,43 +54,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lógica do Temporizador
     const clockIcon = document.getElementById('clock-icon');
-    const timerModal = document.getElementById('timerModal');
-    const closeModal = document.getElementById('closeModal');
-    const setTimerButton = document.getElementById('setTimer');
-    const timerInput = document.getElementById('timer');
+const timerModal = document.getElementById('timerModal');
+const closeModal = document.getElementById('closeModal');
+const setTimerButton = document.getElementById('setTimer');
+const timerInput = document.getElementById('timer');
 
-    clockIcon.addEventListener('click', () => {
-        timerModal.style.display = 'block';
-    });
+clockIcon.addEventListener('click', () => {
+    timerModal.style.display = 'block';
+});
 
-    closeModal.addEventListener('click', () => {
+closeModal.addEventListener('click', () => {
+    timerModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === timerModal) {
         timerModal.style.display = 'none';
-    });
+    }
+});
 
-    window.addEventListener('click', (event) => {
-        if (event.target === timerModal) {
-            timerModal.style.display = 'none';
-        }
-    });
+setTimerButton.addEventListener('click', () => {
+    const minutes = parseInt(timerInput.value, 10);
+    if (isNaN(minutes) || minutes <= 0) {
+        alert('Por favor, insira um valor válido de minutos.');
+        return;
+    }
 
-    setTimerButton.addEventListener('click', () => {
-        const minutes = parseInt(timerInput.value, 10);
-        if (isNaN(minutes) || minutes <= 0) {
-            alert('Por favor, insira um valor válido de minutos.');
-            return;
-        }
+    const milliseconds = minutes * 60 * 1000;
+    setTimeout(() => {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0; // Reinicia o áudio
+        alert('O temporizador desligou a rádio.');
+    }, milliseconds);
 
-        const milliseconds = minutes * 60 * 1000;
-        setTimeout(() => {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0; // Reinicia o áudio
-            alert('O temporizador desligou a rádio.');
-        }, milliseconds);
-
-        timerModal.style.display = 'none';
-        alert(`Temporizador definido para ${minutes} minutos.`);
-    });
-
+    timerModal.style.display = 'none';
+    alert(`Temporizador definido para ${minutes} minutos.`);
+});
     // Lógica do Compartilhamento
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
