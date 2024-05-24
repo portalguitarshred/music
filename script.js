@@ -299,6 +299,11 @@ document.getElementById('resetEqualizer').addEventListener('click', () => {
 });
 
 function adjustEqualizer(type, value) {
+    if (typeof bassEQ === 'undefined' || typeof midEQ === 'undefined' || typeof trebleEQ === 'undefined' || typeof audioContext === 'undefined') {
+        console.error('Equalizer is not initialized properly.');
+        return;
+    }
+    
     value = parseFloat(value);
     switch(type) {
         case 'bass':
@@ -313,4 +318,3 @@ function adjustEqualizer(type, value) {
     }
     console.log(`${type} set to ${value}`);
 }
-});
