@@ -12,6 +12,24 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
+    // Configuração da API Web Audio
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioContext.createMediaElementSource(audioPlayer);
+    const bassEQ = audioContext.createBiquadFilter();
+    bassEQ.type = 'lowshelf';
+    bassEQ.frequency.value = 500;
+
+    const midEQ = audioContext.createBiquadFilter();
+    midEQ.type = 'peaking';
+    midEQ.frequency.value = 1500;
+    midEQ.Q.value = 1;
+
+    const trebleEQ = audioContext.createBiquadFilter();
+    trebleEQ.type = 'highshelf';
+    trebleEQ.frequency.value = 3000;
+
+    source.connect(bassEQ).connect(midEQ).connect(trebleEQ).connect(audioContext.destination);
+
     stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
@@ -192,57 +210,57 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Lógica do Login de Usuário
-    const loginLink = document.getElementById('login-link');
-    const loginModal = document.getElementById('loginModal');
-    const closeLoginModal = document.getElementById('closeLoginModal');
-    const loginButton = document.getElementById('loginButton');
+const loginLink = document.getElementById('login-link');
+const loginModal = document.getElementById('loginModal');
+const closeLoginModal = document.getElementById('closeLoginModal');
+const loginButton = document.getElementById('loginButton');
 
-    loginLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginModal.style.display = 'block';
-    });
+loginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginModal.style.display = 'block';
+});
 
-    closeLoginModal.addEventListener('click', () => {
+closeLoginModal.addEventListener('click', () => {
+    loginModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === loginModal) {
         loginModal.style.display = 'none';
-    });
+    }
+});
 
-    window.addEventListener('click', (event) => {
-        if (event.target === loginModal) {
+loginButton.addEventListener('click', async () => {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    if (email && password) {
+        const response = await fetch('http://musica.guitarshred.com.br/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await response.text();
+        alert(data);
+
+        if (response.ok) {
             loginModal.style.display = 'none';
-        }
-    });
-
-    loginButton.addEventListener('click', async () => {
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-
-        if (email && password) {
-            const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    email: email,
-                    password: password
-                })
-            });
-
-            const data = await response.text();
-            alert(data);
-
-            if (response.ok) {
-                loginModal.style.display = 'none';
-                // Aqui você pode salvar o token JWT ou outra informação de autenticação
-            } else {
-                alert('Erro ao realizar login. Verifique suas credenciais.');
-            }
+            // Aqui você pode salvar o token JWT ou outra informação de autenticação
         } else {
-            alert('Por favor, preencha todos os campos.');
+            alert('Erro ao realizar login. Verifique suas credenciais.');
         }
-    });
+    } else {
+        alert('Por favor, preencha todos os campos.');
+    }
+});
 
-    // Lógica do Registro de Usuário
+// Lógica do Registro de Usuário
 const registerLink = document.getElementById('register-link');
 const registerModal = document.getElementById('registerModal');
 const closeRegisterModal = document.getElementById('closeRegisterModal');
@@ -339,7 +357,17 @@ document.getElementById('resetEqualizer').addEventListener('click', () => {
 });
 
 function adjustEqualizer(type, value) {
+    switch(type) {
+        case 'bass':
+            bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
+            break;
+        case 'mid':
+            midEQ.gain.setValueAtTime(value, audioContext.currentTime);
+            break;
+        case 'treble':
+            trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
+            break;
+    }
     console.log(`${type} set to ${value}`);
-    // Implementar lógica para ajustar o equalizador
 }
 });
