@@ -2,114 +2,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const stationList = document.getElementById('station-list');
     const audioPlayer = document.getElementById('audio-player');
     const volumeControl = document.getElementById('volume-control');
+    let currentPlaying = null;
     const statusMessage = document.createElement('div'); // Elemento para mensagens de status
     statusMessage.id = 'status-message';
     document.body.appendChild(statusMessage); // Adiciona o elemento de status ao corpo do documento
-    let currentPlaying = null;
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || []; // Carrega favoritos do localStorage
 
     const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    / Configuração da API Web Audio
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-const source = audioContext.createMediaElementSource(audioPlayer);
+   // Configuração da API Web Audio
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioContext.createMediaElementSource(audioPlayer);
 
-const bassEQ = audioContext.createBiquadFilter();
-bassEQ.type = 'lowshelf';
-bassEQ.frequency.value = 500;
+    const bassEQ = audioContext.createBiquadFilter();
+    bassEQ.type = 'lowshelf';
+    bassEQ.frequency.value = 500;
 
-const midEQ = audioContext.createBiquadFilter();
-midEQ.type = 'peaking';
-midEQ.frequency.value = 1500;
-midEQ.Q.value = 1;
+    const midEQ = audioContext.createBiquadFilter();
+    midEQ.type = 'peaking';
+    midEQ.frequency.value = 1500;
+    midEQ.Q.value = 1;
 
-const trebleEQ = audioContext.createBiquadFilter();
-trebleEQ.type = 'highshelf';
-trebleEQ.frequency.value = 3000;
+    const trebleEQ = audioContext.createBiquadFilter();
+    trebleEQ.type = 'highshelf';
+    trebleEQ.frequency.value = 3000;
 
-// Conectando os filtros corretamente
-source.connect(bassEQ);
-bassEQ.connect(midEQ);
-midEQ.connect(trebleEQ);
-trebleEQ.connect(audioContext.destination);
+    source.connect(bassEQ);
+    bassEQ.connect(midEQ);
+    midEQ.connect(trebleEQ);
+    trebleEQ.connect(audioContext.destination);
 
     stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
 
-        // Adiciona ícone de coração
-        const heartIcon = document.createElement('i');
-        heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
-        if (favorites.includes(station.url)) {
-            heartIcon.classList.add('favorited');
-        }
-        heartIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            heartIcon.classList.toggle('favorited');
-            if (heartIcon.classList.contains('favorited')) {
-                favorites.push(station.url);
-            } else {
-                favorites = favorites.filter(fav => fav !== station.url);
-            }
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-        });
-        li.appendChild(heartIcon);
-
-        // Adiciona ícone de compartilhamento
-        const shareIcon = document.createElement('i');
-        shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
-        shareIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openShareModal(station.url);
-        });
-        li.appendChild(shareIcon);
-
-        // Adiciona barras do espectro de áudio
-        const spectrum = document.createElement('div');
-        spectrum.classList.add('spectrum');
-        for (let i = 0; i < 5; i++) {
-            const bar = document.createElement('div');
-            spectrum.appendChild(bar);
-        }
-        li.appendChild(spectrum);
-
         li.addEventListener('click', () => {
-    console.log(`Playing: ${station.name} - URL: ${station.url}`);
-    audioPlayer.src = station.url;
-    audioContext.resume().then(() => {
-    audioPlayer.play().then(() => {
-        statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-        statusMessage.classList.remove('show'); // Esconde a mensagem de status
-    }).catch(error => {
-        console.error('Playback failed', error);
-        statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
-    });
-});
-    statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
-    statusMessage.classList.add('show'); // Mostrar mensagem de status
+            console.log(`Playing: ${station.name} - URL: ${station.url}`);
+            audioPlayer.src = station.url;
+            audioContext.resume().then(() => {
+                audioPlayer.play().then(() => {
+                    statusMessage.textContent = ''; // Limpa a mensagem de carregamento
+                    statusMessage.classList.remove('show'); // Esconde a mensagem de status
+                }).catch(error => {
+                    console.error('Playback failed', error);
+                    statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
+                });
+            });
+            statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
+            statusMessage.classList.add('show'); // Mostrar mensagem de status
 
-    audioPlayer.oncanplay = () => {
-        statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-        statusMessage.classList.remove('show'); // Esconde a mensagem de status
-    };
+            audioPlayer.oncanplay = () => {
+                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
+                statusMessage.classList.remove('show'); // Esconde a mensagem de status
+            };
 
-    audioPlayer.onerror = () => {
-        statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
-    };
+            audioPlayer.onerror = () => {
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
+            };
 
-    if (currentPlaying) {
-        currentPlaying.classList.remove('playing'); // Remove a classe 'playing' da estação anterior
-    }
-    li.classList.add('playing'); // Adiciona a classe 'playing' à estação atual
-    currentPlaying = li; // Atualiza a estação atual
-});
-        
+            if (currentPlaying) {
+                currentPlaying.classList.remove('playing');
+            }
+            li.classList.add('playing');
+            currentPlaying = li;
+        });
+
         stationList.appendChild(li);
     });
 
-    // Controle de volume
     volumeControl.addEventListener('input', (e) => {
         audioPlayer.volume = e.target.value;
         console.log(`Volume: ${audioPlayer.volume}`);
@@ -319,62 +280,62 @@ registerButton.addEventListener('click', async () => {
 });
 
 // Lógica do Equalizador
-const equalizerIcon = document.querySelector('.equalizer-icon');
-const equalizerModal = document.getElementById('equalizerModal');
-const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+    const equalizerIcon = document.querySelector('.equalizer-icon');
+    const equalizerModal = document.getElementById('equalizerModal');
+    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
 
-equalizerIcon.addEventListener('click', () => {
-    equalizerModal.style.display = 'block';
-});
+    equalizerIcon.addEventListener('click', () => {
+        equalizerModal.style.display = 'block';
+    });
 
-closeEqualizerModal.addEventListener('click', () => {
-    equalizerModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === equalizerModal) {
+    closeEqualizerModal.addEventListener('click', () => {
         equalizerModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === equalizerModal) {
+            equalizerModal.style.display = 'none';
+        }
+    });
+
+    const bassControl = document.getElementById('bass');
+    const midControl = document.getElementById('mid');
+    const trebleControl = document.getElementById('treble');
+
+    bassControl.addEventListener('input', (e) => {
+        adjustEqualizer('bass', e.target.value);
+    });
+
+    midControl.addEventListener('input', (e) => {
+        adjustEqualizer('mid', e.target.value);
+    });
+
+    trebleControl.addEventListener('input', (e) => {
+        adjustEqualizer('treble', e.target.value);
+    });
+
+    document.getElementById('resetEqualizer').addEventListener('click', () => {
+        bassControl.value = 0;
+        midControl.value = 0;
+        trebleControl.value = 0;
+        adjustEqualizer('bass', 0);
+        adjustEqualizer('mid', 0);
+        adjustEqualizer('treble', 0);
+    });
+
+    function adjustEqualizer(type, value) {
+        value = parseFloat(value);
+        switch(type) {
+            case 'bass':
+                bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+            case 'mid':
+                midEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+            case 'treble':
+                trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+        }
+        console.log(`${type} set to ${value}`);
     }
-});
-
-const bassControl = document.getElementById('bass');
-const midControl = document.getElementById('mid');
-const trebleControl = document.getElementById('treble');
-
-bassControl.addEventListener('input', (e) => {
-    adjustEqualizer('bass', e.target.value);
-});
-
-midControl.addEventListener('input', (e) => {
-    adjustEqualizer('mid', e.target.value);
-});
-
-trebleControl.addEventListener('input', (e) => {
-    adjustEqualizer('treble', e.target.value);
-});
-
-document.getElementById('resetEqualizer').addEventListener('click', () => {
-    bassControl.value = 0;
-    midControl.value = 0;
-    trebleControl.value = 0;
-    adjustEqualizer('bass', 0);
-    adjustEqualizer('mid', 0);
-    adjustEqualizer('treble', 0);
-});
-
-function adjustEqualizer(type, value) {
-    value = parseFloat(value);
-    switch(type) {
-        case 'bass':
-            bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
-        case 'mid':
-            midEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
-        case 'treble':
-            trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
-            break;
-    }
-    console.log(`${type} set to ${value}`);
-}
 });
