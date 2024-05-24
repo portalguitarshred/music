@@ -12,6 +12,44 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
+    // Configuração da API Web Audio
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioContext.createMediaElementSource(audioPlayer);
+
+    const bassEQ = audioContext.createBiquadFilter();
+    bassEQ.type = 'lowshelf';
+    bassEQ.frequency.value = 500;
+
+    const midEQ = audioContext.createBiquadFilter();
+    midEQ.type = 'peaking';
+    midEQ.frequency.value = 1500;
+    midEQ.Q.value = 1;
+
+    const trebleEQ = audioContext.createBiquadFilter();
+    trebleEQ.type = 'highshelf';
+    trebleEQ.frequency.value = 3000;
+
+    source.connect(bassEQ);
+    bassEQ.connect(midEQ);
+    midEQ.connect(trebleEQ);
+    trebleEQ.connect(audioContext.destination);
+
+    function adjustEqualizer(type, value) {
+        value = parseFloat(value);
+        switch(type) {
+            case 'bass':
+                bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+            case 'mid':
+                midEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+            case 'treble':
+                trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
+                break;
+        }
+        console.log(`${type} set to ${value}`);
+    }
+
     stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
