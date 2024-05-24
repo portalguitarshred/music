@@ -133,23 +133,23 @@ shareTwitterButton.addEventListener('click', () => {
 
     // Lógica do Menu Sanduíche
     const menuToggle = document.querySelector('.menu-toggle');
-    const menu = document.querySelector('.menu');
-    
-    menuToggle.addEventListener('click', (event) => {
-        event.stopPropagation();
-        if (menu.style.display === 'none' || menu.style.display === '') {
-            menu.style.display = 'flex';
-        } else {
-            menu.style.display = 'none';
-        }
-    });
+const menu = document.querySelector('.menu');
 
-    document.addEventListener('click', (event) => {
-        const isClickInside = menu.contains(event.target) || menuToggle.contains(event.target);
-        if (!isClickInside) {
-            menu.style.display = 'none';
-        }
-    });
+menuToggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    if (menu.style.display === 'none' || menu.style.display === '') {
+        menu.style.display = 'flex';
+    } else {
+        menu.style.display = 'none';
+    }
+});
+
+document.addEventListener('click', (event) => {
+    const isClickInside = menu.contains(event.target) || menuToggle.contains(event.target);
+    if (!isClickInside) {
+        menu.style.display = 'none';
+    }
+});
 
     // Lógica do Login de Usuário
     const loginLink = document.getElementById('login-link');
