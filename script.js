@@ -11,28 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-   // Configuração da API Web Audio
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const source = audioContext.createMediaElementSource(audioPlayer);
-
-    const bassEQ = audioContext.createBiquadFilter();
-    bassEQ.type = 'lowshelf';
-    bassEQ.frequency.value = 500;
-
-    const midEQ = audioContext.createBiquadFilter();
-    midEQ.type = 'peaking';
-    midEQ.frequency.value = 1500;
-    midEQ.Q.value = 1;
-
-    const trebleEQ = audioContext.createBiquadFilter();
-    trebleEQ.type = 'highshelf';
-    trebleEQ.frequency.value = 3000;
-
-    source.connect(bassEQ);
-    bassEQ.connect(midEQ);
-    midEQ.connect(trebleEQ);
-    trebleEQ.connect(audioContext.destination);
-
     stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
@@ -40,14 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
         li.addEventListener('click', () => {
             console.log(`Playing: ${station.name} - URL: ${station.url}`);
             audioPlayer.src = station.url;
-            audioContext.resume().then(() => {
-                audioPlayer.play().then(() => {
-                    statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-                    statusMessage.classList.remove('show'); // Esconde a mensagem de status
-                }).catch(error => {
-                    console.error('Playback failed', error);
-                    statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
-                });
+            audioPlayer.play().then(() => {
+                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
+                statusMessage.classList.remove('show'); // Esconde a mensagem de status
+            }).catch(error => {
+                console.error('Playback failed', error);
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
             });
             statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
             statusMessage.classList.add('show'); // Mostrar mensagem de status
