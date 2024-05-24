@@ -1,51 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Configuração da API Web Audio
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const audioPlayer = document.getElementById('audio-player');
-    const source = audioContext.createMediaElementSource(audioPlayer);
-
-    const bassEQ = audioContext.createBiquadFilter();
-    bassEQ.type = 'lowshelf';
-    bassEQ.frequency.value = 500;
-
-    const midEQ = audioContext.createBiquadFilter();
-    midEQ.type = 'peaking';
-    midEQ.frequency.value = 1500;
-    midEQ.Q.value = 1;
-
-    const trebleEQ = audioContext.createBiquadFilter();
-    trebleEQ.type = 'highshelf';
-    trebleEQ.frequency.value = 3000;
-
-    source.connect(bassEQ);
-    bassEQ.connect(midEQ);
-    midEQ.connect(trebleEQ);
-    trebleEQ.connect(audioContext.destination);
-
-    function adjustEqualizer(type, value) {
-        value = parseFloat(value);
-        switch(type) {
-            case 'bass':
-                bassEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-            case 'mid':
-                midEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-            case 'treble':
-                trebleEQ.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-        }
-        console.log(`${type} set to ${value}`);
-    }
-
-    // Resto do código
     const stationList = document.getElementById('station-list');
+    const audioPlayer = document.getElementById('audio-player');
     const volumeControl = document.getElementById('volume-control');
-    const statusMessage = document.createElement('div'); // Elemento para mensagens de status
+    const statusMessage = document.createElement('div');
     statusMessage.id = 'status-message';
-    document.body.appendChild(statusMessage); // Adiciona o elemento de status ao corpo do documento
+    document.body.appendChild(statusMessage);
     let currentPlaying = null;
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || []; // Carrega favoritos do localStorage
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
     const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
@@ -55,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.textContent = station.name;
 
-        // Adiciona ícone de coração
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
         if (favorites.includes(station.url)) {
@@ -73,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         li.appendChild(heartIcon);
 
-        // Adiciona ícone de compartilhamento
         const shareIcon = document.createElement('i');
         shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
         shareIcon.addEventListener('click', (e) => {
@@ -82,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         li.appendChild(shareIcon);
 
-        // Adiciona barras do espectro de áudio
         const spectrum = document.createElement('div');
         spectrum.classList.add('spectrum');
         for (let i = 0; i < 5; i++) {
@@ -94,43 +52,41 @@ document.addEventListener('DOMContentLoaded', () => {
         li.addEventListener('click', () => {
             console.log(`Playing: ${station.name} - URL: ${station.url}`);
             audioPlayer.src = station.url;
-            statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
-            statusMessage.classList.add('show'); // Mostrar mensagem de status
-        
+            statusMessage.textContent = 'Carregando...';
+            statusMessage.classList.add('show');
+
             audioPlayer.play().then(() => {
-                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-                statusMessage.classList.remove('show'); // Esconde a mensagem de status
+                statusMessage.textContent = '';
+                statusMessage.classList.remove('show');
             }).catch(error => {
                 console.error('Playback failed', error);
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
             });
-        
+
             audioPlayer.oncanplay = () => {
-                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-                statusMessage.classList.remove('show'); // Esconde a mensagem de status
+                statusMessage.textContent = '';
+                statusMessage.classList.remove('show');
             };
-        
+
             audioPlayer.onerror = () => {
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
             };
-        
+
             if (currentPlaying) {
-                currentPlaying.classList.remove('playing'); // Remove a classe 'playing' da estação anterior
+                currentPlaying.classList.remove('playing');
             }
-            li.classList.add('playing'); // Adiciona a classe 'playing' à estação atual
-            currentPlaying = li; // Atualiza a estação atual
+            li.classList.add('playing');
+            currentPlaying = li;
         });
 
         stationList.appendChild(li);
     });
 
-    // Controle de volume
     volumeControl.addEventListener('input', (e) => {
         audioPlayer.volume = e.target.value;
         console.log(`Volume: ${audioPlayer.volume}`);
     });
 
-    // Lógica do Temporizador
     const clockIcon = document.getElementById('clock-icon');
     const timerModal = document.getElementById('timerModal');
     const closeModal = document.getElementById('closeModal');
@@ -161,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const milliseconds = minutes * 60 * 1000;
         setTimeout(() => {
             audioPlayer.pause();
-            audioPlayer.currentTime = 0; // Reinicia o áudio
+            audioPlayer.currentTime = 0;
             alert('O temporizador desligou a rádio.');
         }, milliseconds);
 
@@ -169,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`Temporizador definido para ${minutes} minutos.`);
     });
 
-    // Lógica do Compartilhamento
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
     const copyLinkButton = document.getElementById('copyLink');
@@ -210,10 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(twitterUrl, '_blank');
     });
 
-    // Lógica do Menu Sanduíche
     const menuToggle = document.querySelector('.menu-toggle');
     const menu = document.querySelector('.menu');
-    
+
     menuToggle.addEventListener('click', (event) => {
         event.stopPropagation();
         if (menu.style.display === 'none' || menu.style.display === '') {
@@ -230,79 +184,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Lógica do Login de Usuário
-const loginLink = document.getElementById('login-link');
-const loginModal = document.getElementById('loginModal');
-const closeLoginModal = document.getElementById('closeLoginModal');
-const loginButton = document.getElementById('loginButton');
+    const loginLink = document.getElementById('login-link');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginButton = document.getElementById('loginButton');
 
-loginLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    loginModal.style.display = 'block';
-});
+    loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'block';
+    });
 
-closeLoginModal.addEventListener('click', () => {
-    loginModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === loginModal) {
+    closeLoginModal.addEventListener('click', () => {
         loginModal.style.display = 'none';
-    }
-});
+    });
 
-loginButton.addEventListener('click', async () => {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    if (email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.text();
-        alert(data);
-
-        if (response.ok) {
+    window.addEventListener('click', (event) => {
+        if (event.target === loginModal) {
             loginModal.style.display = 'none';
-            // Aqui você pode salvar o token JWT ou outra informação de autenticação
-        } else {
-            alert('Erro ao realizar login. Verifique suas credenciais.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
+    });
 
-// Lógica do Registro de Usuário
-const registerLink = document.getElementById('register-link');
-const registerModal = document.getElementById('registerModal');
-const closeRegisterModal = document.getElementById('closeRegisterModal');
-const registerButton = document.getElementById('registerButton');
+    loginButton.addEventListener('click', async () => {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
 
-registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerModal.style.display = 'block';
-});
+        if (email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    email: email,
+                    password: password
+                })
+            });
 
-closeRegisterModal.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-});
+            const data = await response.text();
+            alert(data);
 
-window.addEventListener('click', (event) => {
-    if (event.target === registerModal) {
+            if (response.ok) {
+                loginModal.style.display = 'none';
+            } else {
+                alert('Erro ao realizar login. Verifique suas credenciais.');
+            }
+        } else {
+            alert('Por favor, preencha todos os campos.');
+        }
+    });
+
+    const registerLink = document.getElementById('register-link');
+    const registerModal = document.getElementById('registerModal');
+    const closeRegisterModal = document.getElementById('closeRegisterModal');
+    const registerButton = document.getElementById('registerButton');
+
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'block';
+    });
+
+    closeRegisterModal.addEventListener('click', () => {
         registerModal.style.display = 'none';
-    }
-});
+    });
 
-registerButton.addEventListener('click', async () => {
+    window.addEventListener('click', (event) => {
+        if (event.target === registerModal) {
+            registerModal.style.display = 'none';
+        }
+    });
+
+    registerButton.addEventListener('click', async () => {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -376,28 +327,6 @@ document.getElementById('resetEqualizer').addEventListener('click', () => {
     adjustEqualizer('mid', 0);
     adjustEqualizer('treble', 0);
 });
-
-// Configuração da API Web Audio
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-const source = audioContext.createMediaElementSource(audioPlayer);
-
-const bassEQ = audioContext.createBiquadFilter();
-bassEQ.type = 'lowshelf';
-bassEQ.frequency.value = 500;
-
-const midEQ = audioContext.createBiquadFilter();
-midEQ.type = 'peaking';
-midEQ.frequency.value = 1500;
-midEQ.Q.value = 1;
-
-const trebleEQ = audioContext.createBiquadFilter();
-trebleEQ.type = 'highshelf';
-trebleEQ.frequency.value = 3000;
-
-source.connect(bassEQ);
-bassEQ.connect(midEQ);
-midEQ.connect(trebleEQ);
-trebleEQ.connect(audioContext.destination);
 
 function adjustEqualizer(type, value) {
     value = parseFloat(value);
