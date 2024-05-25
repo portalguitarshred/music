@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Inicialize o Howler com a integração da Web Audio API
+    // Configurar Howler para a música local e aplicar filtros de equalização
     const sound = new Howl({
         src: ['musica.mp3'],
         volume: 1.0,
@@ -85,12 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Adicionar listeners ao player de áudio da estação para verificar status
+    // Adicionar listeners ao player de áudio da estação para verificar status e aplicar equalização
     audioPlayer.addEventListener('play', function() {
         audioContext.resume().then(() => {
             console.log("Audio context resumed para rádio");
             const source = audioContext.createMediaElementSource(audioPlayer);
             source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
+            audioPlayer.play(); // Garante que o player da rádio toque
         }).catch(error => {
             console.error("Erro ao retomar o contexto de áudio:", error);
         });
@@ -116,12 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
         audioPlayer.volume = e.target.value;
     });
 
-    // Adicionar listeners ao player de áudio local para verificar status
+    // Adicionar listeners ao player de áudio local para verificar status e aplicar equalização
     secondaryAudioPlayer.addEventListener('play', function() {
         audioContext.resume().then(() => {
             console.log("Audio context resumed para música local");
             const source = audioContext.createMediaElementSource(secondaryAudioPlayer);
             source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
+            secondaryAudioPlayer.play(); // Garante que o player local toque
         }).catch(error => {
             console.error("Erro ao retomar o contexto de áudio:", error);
         });
