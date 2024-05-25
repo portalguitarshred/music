@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lógica do Carrossel Touch
 
-        document.addEventListener('DOMContentLoaded', function() {
+       document.addEventListener('DOMContentLoaded', function() {
     const track = document.querySelector('.slider__track');
     const slides = Array.from(track.children);
     const nextButton = document.querySelector('.slider__button--right');
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dots = Array.from(dotsNav.children);
     const audioPlayer = document.getElementById('audio-player');
 
-    const slideWidth = slides[0].getBoundingClientRect().width;
+    let slideWidth = slides[0].getBoundingClientRect().width;
 
     const setSlidePosition = (slide, index) => {
         slide.style.left = slideWidth * index + 'px';
@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hideShowArrows(slides, prevButton, nextButton, targetIndex);
     });
 
+    // Suporte para eventos de toque
     let startX;
     let isDragging = false;
 
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isDragging) return;
         const currentSlide = track.querySelector('.current-slide');
         const moveX = e.touches[0].clientX - startX;
-        track.style.transform = `translateX(calc(${currentSlide.style.left} - ${moveX}px))`;
+        track.style.transform = `translateX(calc(-${currentSlide.style.left} + ${moveX}px))`;
     });
 
     track.addEventListener('touchend', e => {
@@ -151,17 +152,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSlide = track.querySelector('.current-slide');
         let targetSlide;
 
-        if (moveX < -50) {
-            targetSlide = currentSlide.nextElementSibling || currentSlide;
-        } else if (moveX > 50) {
-            targetSlide = currentSlide.previousElementSibling || currentSlide;
+        if (moveX < -50 && currentSlide.nextElementSibling) {
+            targetSlide = currentSlide.nextElementSibling;
+        } else if (moveX > 50 && currentSlide.previousElementSibling) {
+            targetSlide = currentSlide.previousElementSibling;
         } else {
             targetSlide = currentSlide;
         }
 
         moveToSlide(track, currentSlide, targetSlide);
     });
+
+    // Reajustar a largura do slide quando a janela é redimensionada
+    window.addEventListener('resize', () => {
+        slideWidth = slides[0].getBoundingClientRect().width;
+        slides.forEach(setSlidePosition);
+        const currentSlide = track.querySelector('.current-slide');
+        track.style.transform = 'translateX(-' + currentSlide.style.left + ')';
+    });
 });
+
 
         
     // Adiciona barras do espectro de áudio
