@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lógica do Carrossel Touch
 
-       <script>
+      <script>
     document.addEventListener('DOMContentLoaded', function() {
         const swiper = new Swiper('.swiper-container', {
             navigation: {
@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 </script>
+
 
         
     // Adiciona barras do espectro de áudio
