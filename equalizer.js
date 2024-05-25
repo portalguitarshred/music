@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM carregado");
+    console.log("DOM carregado e equalizer.js inicializado");
 
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const audioPlayer = document.getElementById('audio-player');
