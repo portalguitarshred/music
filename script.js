@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
     stations.forEach(station => {
