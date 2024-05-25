@@ -87,6 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
         player.addEventListener('play', function() {
             audioContext.resume().then(() => {
                 console.log("Audio context resumed");
+            }).catch(error => {
+                console.error("Erro ao retomar o contexto de áudio:", error);
             });
         });
 
