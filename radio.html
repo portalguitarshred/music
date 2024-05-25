@@ -6,6 +6,9 @@
     <title>Guitar Radio</title>
     <!-- Link para a biblioteca Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <!-- Outros links e meta tags -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <style>
         /* CSS existente */
         body {
@@ -656,6 +659,20 @@
         .carousel-button:hover {
             background-color: #04b65c;
         }
+
+        .swiper-container {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+        }
+        
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -676,10 +693,37 @@
         <a href="https://www.instagram.com/portalguitarshred" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
     </nav>
 </header>
-    <!-- Aqui está a capa das músicas da rádio -->
+    <!-- Conteúdo anterior do header -->
+    
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="capa1.jpg" alt="Capa 1" class="cover-image">
+                <div class="descript">
+                    <h3>Rock Music</h3>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="capa2.jpg" alt="Capa 2" class="cover-image">
+                <div class="descript">
+                    <h3>Jazz Music</h3>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="capa3.jpg" alt="Capa 3" class="cover-image">
+                <div class="descript">
+                    <h3>Pop Music</h3>
+                </div>
+            </div>
+        </div>
+        <!-- Adicione botões de navegação, se necessário -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <!-- Aqui está a capa das músicas da rádio 
     <img src="capa1.jpg" alt="Esta imagem ainda não foi carregada" class="cover-image">
     <div class="descript">
-        <h3>Rock Music</h3>
+        <h3>Rock Music</h3> -->
       <!--  <i>Nome do artista</i> -->
     </div>
     <!-- Novo player de áudio abaixo da imagem 
