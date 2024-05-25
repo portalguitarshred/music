@@ -667,11 +667,18 @@
         }
         
         .swiper-slide {
-            text-align: center;
-            font-size: 18px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+        }
+
+        .swiper-wrapper {
+            display: flex;
+        }
+        
+        .swiper-button-next, .swiper-button-prev {
+            color: #ffffff;
         }
     </style>
 </head>
@@ -716,6 +723,9 @@
                 </div>
             </div>
         </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
         <!-- Adicione botões de navegação, se necessário -->
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
