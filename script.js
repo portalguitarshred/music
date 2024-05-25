@@ -139,9 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     track.addEventListener('touchmove', e => {
         if (!isDragging) return;
-        const currentSlide = track.querySelector('.current-slide');
         const moveX = e.touches[0].clientX - startX;
-        track.style.transform = `translateX(calc(-${currentSlide.style.left} + ${moveX}px))`;
+        track.style.transform = `translateX(${moveX}px)`;
     });
 
     track.addEventListener('touchend', e => {
