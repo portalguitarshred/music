@@ -1,4 +1,4 @@
-/ equalizer.js
+// equalizer.js
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("equalizer.js carregado e DOMContentLoaded disparado");
