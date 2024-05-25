@@ -616,6 +616,49 @@
         }
 
         /* Estilos para o carrossel */
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .carousel {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel img {
+            width: calc((100% - 10px) / 3); /* Dividido por 3 capas com 5px de espaçamento */
+            margin: 0 5px;
+            border-radius: 8px;
+        }
+
+        .carousel-button {
+            background-color: #05d26d;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 0 5px;
+            font-size: 1em;
+        }
+
+        .carousel-button:hover {
+            background-color: #04b65c;
+        }
 
         .swiper-container {
             width: 100%;
@@ -645,46 +688,11 @@
             align-items: center;
         }
 
-        /* CSS para o slider */
-        .swiper-container {
-            width: 100%;
-            max-width: 600px;
-            margin: 20px auto;
+        .carousel-button-next,
+        .carousel-button-prev {
+            color: #ffffff;
         }
-
-        .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .swiper-slide img {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 8px;
-        }
-
-        .slider__button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 10px;
-            z-index: 10;
-        }
-
-        .slider__button--left {
-            left: 10px;
-        }
-
-        .slider__button--right {
-            right: 10px;
-        }
-
-            </style>
+    </style>
 </head>
 <body>
     <header>
@@ -704,17 +712,15 @@
         <a href="https://www.instagram.com/portalguitarshred" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
     </nav>
 </header>
+    <!-- Conteúdo anterior do header -->
     
-     <!-- HTML para o slider -->
-    <div class="swiper-container">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa1.jpg" alt="Capa 1"></div>
-        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa2.jpg" alt="Capa 2"></div>
-        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa3.jpg" alt="Capa 3"></div>
+    <div class="carousel-container">
+        <div class="carousel">
+            <img src="capa1.jpg" alt="Capa 1" class="cover-image">
+            <img src="capa2.jpg" alt="Capa 2" class="cover-image">
+            <img src="capa3.jpg" alt="Capa 3" class="cover-image">
+        </div>
     </div>
-    <div class="swiper-button-next slider__button slider__button--right"></div>
-    <div class="swiper-button-prev slider__button slider__button--left"></div>
-</div>
     
         <!-- Adicione botões de navegação, se necessário -->
         <div class="swiper-button-next"></div>
@@ -825,6 +831,5 @@
     </script>
     <script src="equalizer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </body>
 </html>
