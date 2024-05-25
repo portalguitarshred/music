@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("equalizer.js carregado e DOMContentLoaded disparado");
-
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const audioPlayer = document.getElementById('audio-player');
     const source = audioContext.createMediaElementSource(audioPlayer);
@@ -41,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 trebleFilter.gain.value = value;
                 break;
         }
-        console.log(`${type} set to ${value}`);
+        console.log(`${type} ajustado para ${value}`);
     }
 
     // Event listeners para os controles do equalizador
