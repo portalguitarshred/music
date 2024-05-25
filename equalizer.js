@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioPlayer = document.getElementById('audio-player');
     const source = audioContext.createMediaElementSource(audioPlayer);
 
+    console.log("Contexto de áudio e fonte criados");
+
     // Criação dos filtros
     const bassFilter = audioContext.createBiquadFilter();
     bassFilter.type = 'lowshelf';
@@ -19,11 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
     trebleFilter.frequency.value = 3000;
     trebleFilter.gain.value = 0;
 
+    console.log("Filtros de equalização criados");
+
     // Conexão dos filtros na cadeia de áudio
     source.connect(bassFilter);
     bassFilter.connect(midFilter);
     midFilter.connect(trebleFilter);
     trebleFilter.connect(audioContext.destination);
+
+    console.log("Filtros conectados na cadeia de áudio");
 
     // Controle dos filtros
     document.getElementById('bass').addEventListener('input', (e) => {
@@ -49,5 +55,22 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('mid').value = 0;
         document.getElementById('treble').value = 0;
         console.log('Equalizador resetado');
+    });
+
+    // Inicialização do player para verificar se o áudio está carregado
+    audioPlayer.addEventListener('play', () => {
+        console.log("Áudio está sendo reproduzido");
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+        console.log("Áudio foi pausado");
+    });
+
+    audioPlayer.addEventListener('ended', () => {
+        console.log("Áudio terminou");
+    });
+
+    audioPlayer.addEventListener('error', (e) => {
+        console.log("Erro no player de áudio:", e);
     });
 });
