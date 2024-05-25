@@ -1,74 +1,51 @@
-// equalizer.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("equalizer.js carregado e DOMContentLoaded disparado");
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioPlayer = document.getElementById('audio-player');
+    const source = audioContext.createMediaElementSource(audioPlayer);
 
-    const equalizerIcon = document.querySelector('.equalizer-icon');
-    const equalizerModal = document.getElementById('equalizerModal');
-    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+    // Configurar os filtros
+    const bassFilter = audioContext.createBiquadFilter();
+    bassFilter.type = 'lowshelf';
+    bassFilter.frequency.value = 200;
 
-    equalizerIcon.addEventListener('click', () => {
-        console.log("Ícone do equalizador clicado");
-        equalizerModal.style.display = 'block';
-    });
+    const midFilter = audioContext.createBiquadFilter();
+    midFilter.type = 'peaking';
+    midFilter.frequency.value = 1000;
+    midFilter.Q.value = 1;
 
-    closeEqualizerModal.addEventListener('click', () => {
-        console.log("Fechar modal do equalizador clicado");
-        equalizerModal.style.display = 'none';
-    });
+    const trebleFilter = audioContext.createBiquadFilter();
+    trebleFilter.type = 'highshelf';
+    trebleFilter.frequency.value = 3000;
 
-    window.addEventListener('click', (event) => {
-        if (event.target === equalizerModal) {
-            equalizerModal.style.display = 'none';
+    // Conectar os filtros em sequência
+    source.connect(bassFilter);
+    bassFilter.connect(midFilter);
+    midFilter.connect(trebleFilter);
+    trebleFilter.connect(audioContext.destination);
+
+    // Funções para ajustar os filtros
+    function adjustEqualizer(type, value) {
+        switch (type) {
+            case 'bass':
+                bassFilter.gain.value = value;
+                break;
+            case 'mid':
+                midFilter.gain.value = value;
+                break;
+            case 'treble':
+                trebleFilter.gain.value = value;
+                break;
         }
-    });
+        console.log(`${type} set to ${value}`);
+    }
 
-    const bassControl = document.getElementById('bass');
-    const midControl = document.getElementById('mid');
-    const trebleControl = document.getElementById('treble');
-
-    bassControl.addEventListener('input', (e) => {
-        console.log(`Bass control input: ${e.target.value}`);
-        adjustEqualizer('bass', e.target.value);
-    });
-
-    midControl.addEventListener('input', (e) => {
-        console.log(`Mid control input: ${e.target.value}`);
-        adjustEqualizer('mid', e.target.value);
-    });
-
-    trebleControl.addEventListener('input', (e) => {
-        console.log(`Treble control input: ${e.target.value}`);
-        adjustEqualizer('treble', e.target.value);
-    });
-
+    // Event listeners para os controles do equalizador
+    document.getElementById('bass').addEventListener('input', (e) => adjustEqualizer('bass', e.target.value));
+    document.getElementById('mid').addEventListener('input', (e) => adjustEqualizer('mid', e.target.value));
+    document.getElementById('treble').addEventListener('input', (e) => adjustEqualizer('treble', e.target.value));
     document.getElementById('resetEqualizer').addEventListener('click', () => {
-        bassControl.value = 0;
-        midControl.value = 0;
-        trebleControl.value = 0;
         adjustEqualizer('bass', 0);
         adjustEqualizer('mid', 0);
         adjustEqualizer('treble', 0);
     });
-
-    async function adjustEqualizer(type, value) {
-        console.log(`Adjusting ${type} to ${value}`);
-        try {
-            const response = await fetch(`https://suaapi.com/equalizer/${type}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ value: value })
-            });
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log(`${type} ajustado para ${value}`, responseData);
-            } else {
-                console.error(`Erro ao ajustar ${type}: ${response.statusText}`);
-            }
-        } catch (error) {
-            console.error(`Erro na requisição para ajustar ${type}:`, error);
-        }
-    }
 });
