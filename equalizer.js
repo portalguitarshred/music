@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded and parsed");
+
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const audioPlayer = document.getElementById('audio-player');
     const source = audioContext.createMediaElementSource(audioPlayer);
 
-    console.log("Contexto de áudio e fonte criados");
+    console.log("AudioContext and source created");
 
-    // Criação dos filtros
+    // Create the filters
     const bassFilter = audioContext.createBiquadFilter();
     bassFilter.type = 'lowshelf';
     bassFilter.frequency.value = 200;
@@ -21,30 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
     trebleFilter.frequency.value = 3000;
     trebleFilter.gain.value = 0;
 
-    console.log("Filtros de equalização criados");
+    console.log("Filters created");
 
-    // Conexão dos filtros na cadeia de áudio
+    // Connect the filters
     source.connect(bassFilter);
     bassFilter.connect(midFilter);
     midFilter.connect(trebleFilter);
     trebleFilter.connect(audioContext.destination);
 
-    console.log("Filtros conectados na cadeia de áudio");
+    console.log("Filters connected");
 
-    // Controle dos filtros
+    // Add event listeners for the sliders
     document.getElementById('bass').addEventListener('input', (e) => {
         bassFilter.gain.value = e.target.value;
-        console.log(`Graves ajustados para: ${e.target.value}`);
+        console.log(`Bass set to ${e.target.value}`);
     });
 
     document.getElementById('mid').addEventListener('input', (e) => {
         midFilter.gain.value = e.target.value;
-        console.log(`Médios ajustados para: ${e.target.value}`);
+        console.log(`Mid set to ${e.target.value}`);
     });
 
     document.getElementById('treble').addEventListener('input', (e) => {
         trebleFilter.gain.value = e.target.value;
-        console.log(`Agudos ajustados para: ${e.target.value}`);
+        console.log(`Treble set to ${e.target.value}`);
     });
 
     document.getElementById('resetEqualizer').addEventListener('click', () => {
@@ -54,23 +56,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('bass').value = 0;
         document.getElementById('mid').value = 0;
         document.getElementById('treble').value = 0;
-        console.log('Equalizador resetado');
+        console.log('Equalizer reset');
     });
 
-    // Inicialização do player para verificar se o áudio está carregado
+    // Add event listeners to check the audio player's state
     audioPlayer.addEventListener('play', () => {
-        console.log("Áudio está sendo reproduzido");
+        console.log("Audio is playing");
     });
 
     audioPlayer.addEventListener('pause', () => {
-        console.log("Áudio foi pausado");
+        console.log("Audio is paused");
     });
 
     audioPlayer.addEventListener('ended', () => {
-        console.log("Áudio terminou");
+        console.log("Audio playback ended");
     });
 
     audioPlayer.addEventListener('error', (e) => {
-        console.log("Erro no player de áudio:", e);
+        console.log("Audio playback error:", e);
     });
 });
