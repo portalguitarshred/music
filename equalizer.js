@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM carregado");
+
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const audioPlayer = document.getElementById('audio-player');
     const source = audioContext.createMediaElementSource(audioPlayer);
+
+    console.log("AudioContext e fonte de áudio criados");
 
     // Configurar os filtros
     const bassFilter = audioContext.createBiquadFilter();
@@ -22,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Conectar os filtros em sequência
     source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
+    console.log("Filtros conectados em sequência");
 
     // Funções para ajustar os filtros
     function adjustEqualizer(type, value) {
@@ -68,5 +73,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target === equalizerModal) {
             equalizerModal.style.display = 'none';
         }
+    });
+
+    // Adicionar listeners ao player de áudio para verificar status
+    audioPlayer.addEventListener('play', () => {
+        console.log("Áudio está tocando");
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+        console.log("Áudio foi pausado");
+    });
+
+    audioPlayer.addEventListener('ended', () => {
+        console.log("Reprodução do áudio terminou");
+    });
+
+    audioPlayer.addEventListener('error', (e) => {
+        console.log("Erro na reprodução do áudio:", e);
     });
 });
