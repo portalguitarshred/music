@@ -7,15 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const bassFilter = audioContext.createBiquadFilter();
     bassFilter.type = 'lowshelf';
     bassFilter.frequency.value = 200;
+    bassFilter.gain.value = 0;
 
     const midFilter = audioContext.createBiquadFilter();
     midFilter.type = 'peaking';
     midFilter.frequency.value = 1000;
     midFilter.Q.value = 1;
+    midFilter.gain.value = 0;
 
     const trebleFilter = audioContext.createBiquadFilter();
     trebleFilter.type = 'highshelf';
     trebleFilter.frequency.value = 3000;
+    trebleFilter.gain.value = 0;
 
     // Conectar os filtros em sequência
     source.connect(bassFilter);
