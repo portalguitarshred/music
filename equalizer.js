@@ -28,14 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Controle dos filtros
     document.getElementById('bass').addEventListener('input', (e) => {
         bassFilter.gain.value = e.target.value;
+        console.log(`Graves ajustados para: ${e.target.value}`);
     });
 
     document.getElementById('mid').addEventListener('input', (e) => {
         midFilter.gain.value = e.target.value;
+        console.log(`Médios ajustados para: ${e.target.value}`);
     });
 
     document.getElementById('treble').addEventListener('input', (e) => {
         trebleFilter.gain.value = e.target.value;
+        console.log(`Agudos ajustados para: ${e.target.value}`);
     });
 
     document.getElementById('resetEqualizer').addEventListener('click', () => {
@@ -45,5 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('bass').value = 0;
         document.getElementById('mid').value = 0;
         document.getElementById('treble').value = 0;
+        console.log('Equalizador resetado');
     });
 });
