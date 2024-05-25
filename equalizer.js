@@ -1,31 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM fully loaded and parsed");
-
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const audioPlayer = document.getElementById('audio-player');
     const source = audioContext.createMediaElementSource(audioPlayer);
 
-    console.log("AudioContext and source created");
+    const bassFilter = audioContext.createBiquadFilter();
+    bassFilter.type = 'lowshelf';
+    bassFilter.frequency.value = 200;
+    bassFilter.gain.value = 0;
 
-    // Conectando diretamente ao contexto de áudio
-    source.connect(audioContext.destination);
+    const midFilter = audioContext.createBiquadFilter();
+    midFilter.type = 'peaking';
+    midFilter.frequency.value = 1000;
+    midFilter.gain.value = 0;
 
-    console.log("Audio source connected directly to audio context destination");
+    source.connect(bassFilter);
+    bassFilter.connect(midFilter);
+    midFilter.connect(audioContext.destination);
 
-    // Adicionando listeners para depuração
-    audioPlayer.addEventListener('play', () => {
-        console.log("Audio is playing");
+    document.getElementById('bass').addEventListener('input', (e) => {
+        bassFilter.gain.value = e.target.value;
     });
 
-    audioPlayer.addEventListener('pause', () => {
-        console.log("Audio is paused");
-    });
-
-    audioPlayer.addEventListener('ended', () => {
-        console.log("Audio playback ended");
-    });
-
-    audioPlayer.addEventListener('error', (e) => {
-        console.log("Audio playback error:", e);
+    document.getElementById('mid').addEventListener('input', (e) => {
+        midFilter.gain.value = e.target.value;
     });
 });
