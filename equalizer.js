@@ -21,10 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     trebleFilter.gain.value = 0;
 
     // Conectar os filtros em sequência
-    source.connect(bassFilter);
-    bassFilter.connect(midFilter);
-    midFilter.connect(trebleFilter);
-    trebleFilter.connect(audioContext.destination);
+    source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
 
     // Funções para ajustar os filtros
     function adjustEqualizer(type, value) {
