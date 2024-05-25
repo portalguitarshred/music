@@ -59,4 +59,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Lógica para abrir e fechar o modal do equalizador
-    const equalizerIcon = docum
+    const equalizerIcon = document.querySelector('.equalizer-icon');
+    const equalizerModal = document.getElementById('equalizerModal');
+    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+
+    equalizerIcon.addEventListener('click', () => {
+        console.log("Ícone do equalizador clicado");
+        equalizerModal.style.display = 'block';
+    });
+
+    closeEqualizerModal.addEventListener('click', () => {
+        console.log("Fechar modal do equalizador clicado");
+        equalizerModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === equalizerModal) {
+            equalizerModal.style.display = 'none';
+        }
+    });
+
+    // Adicionar listeners ao player de áudio para verificar status
+    document.getElementById('audio-player').addEventListener('play', function() {
+        sound.play();
+    });
+
+    document.getElementById('audio-player').addEventListener('pause', function() {
+        sound.pause();
+    });
+
+    document.getElementById('audio-player').addEventListener('ended', function() {
+        sound.stop();
+    });
+
+    document.getElementById('volume-control').addEventListener('input', function(e) {
+        sound.volume(e.target.value);
+    });
+});
