@@ -2,11 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const stationList = document.getElementById('station-list');
     const audioPlayer = document.getElementById('audio-player');
     const volumeControl = document.getElementById('volume-control');
-    const statusMessage = document.createElement('div'); // Elemento para mensagens de status
+    const statusMessage = document.createElement('div'); 
     statusMessage.id = 'status-message';
-    document.body.appendChild(statusMessage); // Adiciona o elemento de status ao corpo do documento
+    document.body.appendChild(statusMessage); 
     let currentPlaying = null;
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || []; // Carrega favoritos do localStorage
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || []; 
 
     const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.textContent = station.name;
 
-        // Adiciona ícone de coração
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
         if (favorites.includes(station.url)) {
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         li.appendChild(heartIcon);
 
-        // Adiciona ícone de compartilhamento
         const shareIcon = document.createElement('i');
         shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
         shareIcon.addEventListener('click', (e) => {
@@ -45,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         li.appendChild(shareIcon);
 
-        // Adiciona barras do espectro de áudio
         const spectrum = document.createElement('div');
         spectrum.classList.add('spectrum');
         for (let i = 0; i < 5; i++) {
@@ -57,43 +54,41 @@ document.addEventListener('DOMContentLoaded', () => {
         li.addEventListener('click', () => {
             console.log(`Playing: ${station.name} - URL: ${station.url}`);
             audioPlayer.src = station.url;
-            statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
-            statusMessage.classList.add('show'); // Mostrar mensagem de status
+            statusMessage.textContent = 'Carregando...'; 
+            statusMessage.classList.add('show'); 
 
             audioPlayer.play().then(() => {
-                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-                statusMessage.classList.remove('show'); // Esconde a mensagem de status
+                statusMessage.textContent = ''; 
+                statusMessage.classList.remove('show'); 
             }).catch(error => {
                 console.error('Playback failed', error);
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; 
             });
 
             audioPlayer.oncanplay = () => {
-                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-                statusMessage.classList.remove('show'); // Esconde a mensagem de status
+                statusMessage.textContent = ''; 
+                statusMessage.classList.remove('show'); 
             };
 
             audioPlayer.onerror = () => {
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; 
             };
 
             if (currentPlaying) {
-                currentPlaying.classList.remove('playing'); // Remove a classe 'playing' da estação anterior
+                currentPlaying.classList.remove('playing'); 
             }
-            li.classList.add('playing'); // Adiciona a classe 'playing' à estação atual
-            currentPlaying = li; // Atualiza a estação atual
+            li.classList.add('playing'); 
+            currentPlaying = li; 
         });
 
         stationList.appendChild(li);
     });
 
-    // Controle de volume
     volumeControl.addEventListener('input', (e) => {
         audioPlayer.volume = e.target.value;
         console.log(`Volume: ${audioPlayer.volume}`);
     });
 
-    // Lógica do Temporizador
     const clockIcon = document.getElementById('clock-icon');
     const timerModal = document.getElementById('timerModal');
     const closeModal = document.getElementById('closeModal');
@@ -122,62 +117,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const milliseconds = minutes * 60 * 1000;
-setTimeout(() => {
-    audioPlayer.pause();
-    audioPlayer.currentTime = 0; // Reinicia o áudio
-    alert('O temporizador desligou a rádio.');
-}, milliseconds);
+        setTimeout(() => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; 
+            alert('O temporizador desligou a rádio.');
+        }, milliseconds);
 
-timerModal.style.display = 'none';
-alert(`Temporizador definido para ${minutes} minutos.`);
-});
-
-// Lógica do Compartilhamento
-const shareModal = document.getElementById('shareModal');
-const closeShareModal = document.getElementById('closeShareModal');
-const copyLinkButton = document.getElementById('copyLink');
-const shareFacebookButton = document.getElementById('shareFacebook');
-const shareTwitterButton = document.getElementById('shareTwitter');
-let currentShareUrl = '';
-
-closeShareModal.addEventListener('click', () => {
-    shareModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === shareModal) {
-        shareModal.style.display = 'none';
-    }
-});
-
-function openShareModal(url) {
-    currentShareUrl = url;
-    shareModal.style.display = 'block';
-}
-
-copyLinkButton.addEventListener('click', () => {
-    navigator.clipboard.writeText(currentShareUrl).then(() => {
-        alert('Link copiado para a área de transferência.');
-    }).catch(err => {
-        console.error('Erro ao copiar o link: ', err);
+        timerModal.style.display = 'none';
+        alert(`Temporizador definido para ${minutes} minutos.`);
     });
-});
 
-shareFacebookButton.addEventListener('click', () => {
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`;
-    window.open(facebookUrl, '_blank');
-});
+    const shareModal = document.getElementById('shareModal');
+    const closeShareModal = document.getElementById('closeShareModal');
+    const copyLinkButton = document.getElementById('copyLink');
+    const shareFacebookButton = document.getElementById('shareFacebook');
+    const shareTwitterButton = document.getElementById('shareTwitter');
+    let currentShareUrl = '';
 
-shareTwitterButton.addEventListener('click', () => {
-    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentShareUrl)}`;
-    window.open(twitterUrl, '_blank');
-});
+    closeShareModal.addEventListener('click', () => {
+        shareModal.style.display = 'none';
+    });
 
-// Lógica do Menu Sanduíche
-const menuToggle = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.menu');
+    window.addEventListener('click', (event) => {
+        if (event.target === shareModal) {
+            shareModal.style.display = 'none';
+        }
+    });
 
-menuToggle.addEventListener('click', (event) => {
+    function openShareModal(url) {
+        currentShareUrl = url;
+        shareModal.style.display = 'block';
+    }
+
+    copyLinkButton.addEventListener('click', () => {
+        navigator.clipboard.writeText(currentShareUrl).then(() => {
+            alert('Link copiado para a área de transferência.');
+        }).catch(err => {
+            console.error('Erro ao copiar o link: ', err);
+        });
+    });
+
+    shareFacebookButton.addEventListener('click', () => {
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`;
+        window.open(facebookUrl, '_blank');
+    });
+
+    shareTwitterButton.addEventListener('click', () => {
+        const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentShareUrl)}`;
+        window.open(twitterUrl, '_blank');
+    });
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+    
+    menuToggle.addEventListener('click', (event) => {
     event.stopPropagation();
     if (menu.style.display === 'none' || menu.style.display === '') {
         menu.style.display = 'flex';
@@ -296,19 +289,17 @@ registerButton.addEventListener('click', async () => {
     }
 });
 
-// Lógica do Carrossel Touch
-document.addEventListener('DOMContentLoaded', function() {
-    const swiper = new Swiper('.swiper-container', {
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+// Inicialização do Swiper
+const swiper = new Swiper('.swiper-container', {
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+    on: {
+        slideChange: function () {
+            const activeSlide = swiper.slides[swiper.activeIndex];
+            audioPlayer.src = activeSlide.dataset.url;
+            audioPlayer.play();
         },
-        on: {
-            slideChange: function () {
-                const activeSlide = swiper.slides[swiper.activeIndex];
-                audioPlayer.src = activeSlide.dataset.url;
-                audioPlayer.play();
-            },
-        },
-    });
+    },
 });
