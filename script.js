@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 audioPlayer.play();
             });
         });
-
+        
     // Adiciona barras do espectro de áudio
     const spectrum = document.createElement('div');
     spectrum.classList.add('spectrum');
