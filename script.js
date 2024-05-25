@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Seu código existente para outras funcionalidades
-    console.log("script.js carregado e DOMContentLoaded disparado");
-
     const stationList = document.getElementById('station-list');
     const audioPlayer = document.getElementById('audio-player');
     const volumeControl = document.getElementById('volume-control');
@@ -16,77 +13,77 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     stations.forEach(station => {
-        const li = document.createElement('li');
-        li.textContent = station.name;
+    const li = document.createElement('li');
+    li.textContent = station.name;
 
-        // Adiciona ícone de coração
-        const heartIcon = document.createElement('i');
-        heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
-        if (favorites.includes(station.url)) {
-            heartIcon.classList.add('favorited');
+    // Adiciona ícone de coração
+    const heartIcon = document.createElement('i');
+    heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
+    if (favorites.includes(station.url)) {
+        heartIcon.classList.add('favorited');
+    }
+    heartIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        heartIcon.classList.toggle('favorited');
+        if (heartIcon.classList.contains('favorited')) {
+            favorites.push(station.url);
+        } else {
+            favorites = favorites.filter(fav => fav !== station.url);
         }
-        heartIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            heartIcon.classList.toggle('favorited');
-            if (heartIcon.classList.contains('favorited')) {
-                favorites.push(station.url);
-            } else {
-                favorites = favorites.filter(fav => fav !== station.url);
-            }
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-        });
-        li.appendChild(heartIcon);
-
-        // Adiciona ícone de compartilhamento
-        const shareIcon = document.createElement('i');
-        shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
-        shareIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openShareModal(station.url);
-        });
-        li.appendChild(shareIcon);
-
-        // Adiciona barras do espectro de áudio
-        const spectrum = document.createElement('div');
-        spectrum.classList.add('spectrum');
-        for (let i = 0; i < 5; i++) {
-            const bar = document.createElement('div');
-            spectrum.appendChild(bar);
-        }
-        li.appendChild(spectrum);
-
-        li.addEventListener('click', () => {
-            console.log(`Playing: ${station.name} - URL: ${station.url}`);
-            audioPlayer.src = station.url;
-            statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
-            statusMessage.classList.add('show'); // Mostrar mensagem de status
-
-            audioPlayer.play().then(() => {
-                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-                statusMessage.classList.remove('show'); // Esconde a mensagem de status
-            }).catch(error => {
-                console.error('Playback failed', error);
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
-            });
-
-            audioPlayer.oncanplay = () => {
-                statusMessage.textContent = ''; // Limpa a mensagem de carregamento
-                statusMessage.classList.remove('show'); // Esconde a mensagem de status
-            };
-
-            audioPlayer.onerror = () => {
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
-            };
-
-            if (currentPlaying) {
-                currentPlaying.classList.remove('playing'); // Remove a classe 'playing' da estação anterior
-            }
-            li.classList.add('playing'); // Adiciona a classe 'playing' à estação atual
-            currentPlaying = li; // Atualiza a estação atual
-        });
-
-        stationList.appendChild(li);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
     });
+    li.appendChild(heartIcon);
+
+    // Adiciona ícone de compartilhamento
+    const shareIcon = document.createElement('i');
+    shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
+    shareIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openShareModal(station.url);
+    });
+    li.appendChild(shareIcon);
+
+    // Adiciona barras do espectro de áudio
+    const spectrum = document.createElement('div');
+    spectrum.classList.add('spectrum');
+    for (let i = 0; i < 5; i++) {
+        const bar = document.createElement('div');
+        spectrum.appendChild(bar);
+    }
+    li.appendChild(spectrum);
+
+    li.addEventListener('click', () => {
+        console.log(`Playing: ${station.name} - URL: ${station.url}`);
+        audioPlayer.src = station.url;
+        statusMessage.textContent = 'Carregando...'; // Mensagem de carregamento
+        statusMessage.classList.add('show'); // Mostrar mensagem de status
+
+        audioPlayer.play().then(() => {
+            statusMessage.textContent = ''; // Limpa a mensagem de carregamento
+            statusMessage.classList.remove('show'); // Esconde a mensagem de status
+        }).catch(error => {
+            console.error('Playback failed', error);
+            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
+        });
+
+        audioPlayer.oncanplay = () => {
+            statusMessage.textContent = ''; // Limpa a mensagem de carregamento
+            statusMessage.classList.remove('show'); // Esconde a mensagem de status
+        };
+
+        audioPlayer.onerror = () => {
+            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.'; // Mensagem de erro
+        };
+
+        if (currentPlaying) {
+            currentPlaying.classList.remove('playing'); // Remove a classe 'playing' da estação anterior
+        }
+        li.classList.add('playing'); // Adiciona a classe 'playing' à estação atual
+        currentPlaying = li; // Atualiza a estação atual
+    });
+
+    stationList.appendChild(li);
+});
 
     // Controle de volume
     volumeControl.addEventListener('input', (e) => {
@@ -162,6 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(err => {
             console.error('Erro ao copiar o link: ', err);
         });
+    });
+
+    shareFacebookButton.addEventListener('click', () => {
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`;
+        window.open(facebookUrl, '_blank');
     });
 
     shareTwitterButton.addEventListener('click', () => {
@@ -241,155 +243,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Lógica do Registro de Usuário
-    const registerLink = document.getElementById('register-link');
-    const registerModal = document.getElementById('registerModal');
-    const closeRegisterModal = document.getElementById('closeRegisterModal');
-    const registerButton = document.getElementById('registerButton');
+const registerLink = document.getElementById('register-link');
+const registerModal = document.getElementById('registerModal');
+const closeRegisterModal = document.getElementById('closeRegisterModal');
+const registerButton = document.getElementById('registerButton');
 
-    registerLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        registerModal.style.display = 'block';
-    });
+registerLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    registerModal.style.display = 'block';
+});
 
-    closeRegisterModal.addEventListener('click', () => {
+closeRegisterModal.addEventListener('click', () => {
+    registerModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === registerModal) {
         registerModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === registerModal) {
-            registerModal.style.display = 'none';
-        }
-    });
-
-    registerButton.addEventListener('click', async () => {
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        if (username && email && password) {
-            const response = await fetch('http://musica.guitarshred.com.br/register.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    username: username,
-                    email: email,
-                    password: password
-                })
-            });
-
-            const data = await response.text();
-            alert(data);
-
-            if (response.ok) {
-                registerModal.style.display = 'none';
-            } else {
-                alert('Erro ao registrar usuário. Tente novamente.');
-            }
-        } else {
-            alert('Por favor, preencha todos os campos.');
-        }
-    });
-
-    // Inicialização do contexto de áudio e da fonte de áudio
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const audioPlayer = document.getElementById('audio-player');
-    const source = audioContext.createMediaElementSource(audioPlayer);
-
-    console.log("AudioContext e source criados");
-
-    // Conectar diretamente ao contexto de áudio
-    source.connect(audioContext.destination);
-
-    console.log("Audio source conectado diretamente ao destino do contexto de áudio");
-
-    // Adicionar listeners para depuração
-    audioPlayer.addEventListener('play', () => {
-        console.log("Áudio está tocando");
-    });
-
-    audioPlayer.addEventListener('pause', () => {
-        console.log("Áudio foi pausado");
-    });
-
-    audioPlayer.addEventListener('ended', () => {
-        console.log("Reprodução do áudio terminou");
-    });
-
-    audioPlayer.addEventListener('error', (e) => {
-        console.log("Erro na reprodução do áudio:", e);
-    });
-
-    // Lógica do equalizador
-    const equalizerIcon = document.querySelector('.equalizer-icon');
-    const equalizerModal = document.getElementById('equalizerModal');
-    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
-
-    equalizerIcon.addEventListener('click', () => {
-        console.log("Ícone do equalizador clicado");
-        equalizerModal.style.display = 'block';
-    });
-
-    closeEqualizerModal.addEventListener('click', () => {
-        console.log("Fechar modal do equalizador clicado");
-        equalizerModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === equalizerModal) {
-            equalizerModal.style.display = 'none';
-        }
-    });
-
-    const bassControl = document.getElementById('bass');
-    const midControl = document.getElementById('mid');
-    const trebleControl = document.getElementById('treble');
-
-    bassControl.addEventListener('input', (e) => {
-        console.log(`Bass control input: ${e.target.value}`);
-        adjustEqualizer('bass', e.target.value);
-    });
-
-    midControl.addEventListener('input', (e) => {
-        console.log(`Mid control input: ${e.target.value}`);
-        adjustEqualizer('mid', e.target.value);
-    });
-
-    trebleControl.addEventListener('input', (e) => {
-        console.log(`Treble control input: ${e.target.value}`);
-        adjustEqualizer('treble', e.target.value);
-    });
-
-    document.getElementById('resetEqualizer').addEventListener('click', () => {
-        bassControl.value = 0;
-        midControl.value = 0;
-        trebleControl.value = 0;
-        adjustEqualizer('bass', 0);
-        adjustEqualizer('mid', 0);
-        adjustEqualizer('treble', 0);
-    });
-
-    async function adjustEqualizer(type, value) {
-        console.log(`Adjusting ${type} to ${value}`);
-        try {
-            const response = await fetch(`https://suaapi.com/equalizer/${type}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ value: value })
-            });
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log(`${type} ajustado para ${value}`, responseData);
-            } else {
-                console.error(`Erro ao ajustar ${type}: ${response.statusText}`);
-            }
-        } catch (error) {
-            console.error(`Erro na requisição para ajustar ${type}:`, error);
-        }
     }
 });
 
-   
+registerButton.addEventListener('click', async () => {
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (username && email && password) {
+        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                username: username,
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await response.text();
+        alert(data);
+
+        if (response.ok) {
+            registerModal.style.display = 'none';
+        } else {
+            alert('Erro ao registrar usuário. Tente novamente.');
+        }
+    } else {
+        alert('Por favor, preencha todos os campos.');
+    }
+});
+});
