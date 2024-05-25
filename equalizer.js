@@ -1,74 +1,76 @@
-// equalizer.js
-
 document.addEventListener('DOMContentLoaded', () => {
     console.log("equalizer.js carregado e DOMContentLoaded disparado");
 
-    const equalizerIcon = document.querySelector('.equalizer-icon');
-    const equalizerModal = document.getElementById('equalizerModal');
-    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioPlayer = document.getElementById('audio-player');
+    const source = audioContext.createMediaElementSource(audioPlayer);
 
-    equalizerIcon.addEventListener('click', () => {
-        console.log("Ícone do equalizador clicado");
-        equalizerModal.style.display = 'block';
+    // Criação dos filtros
+    const bassFilter = audioContext.createBiquadFilter();
+    bassFilter.type = 'lowshelf';
+    bassFilter.frequency.value = 200;
+    bassFilter.gain.value = 0;
+
+    const midFilter = audioContext.createBiquadFilter();
+    midFilter.type = 'peaking';
+    midFilter.frequency.value = 1000;
+    midFilter.gain.value = 0;
+
+    const trebleFilter = audioContext.createBiquadFilter();
+    trebleFilter.type = 'highshelf';
+    trebleFilter.frequency.value = 3000;
+    trebleFilter.gain.value = 0;
+
+    console.log("Filtros criados");
+
+    // Conexão dos filtros na cadeia de áudio
+    source.connect(bassFilter);
+    bassFilter.connect(midFilter);
+    midFilter.connect(trebleFilter);
+    trebleFilter.connect(audioContext.destination);
+
+    console.log("Filtros conectados na cadeia de áudio");
+
+    // Controle dos filtros
+    document.getElementById('bass').addEventListener('input', (e) => {
+        bassFilter.gain.value = e.target.value;
+        console.log(`Graves ajustados para: ${e.target.value}`);
     });
 
-    closeEqualizerModal.addEventListener('click', () => {
-        console.log("Fechar modal do equalizador clicado");
-        equalizerModal.style.display = 'none';
+    document.getElementById('mid').addEventListener('input', (e) => {
+        midFilter.gain.value = e.target.value;
+        console.log(`Médios ajustados para: ${e.target.value}`);
     });
 
-    window.addEventListener('click', (event) => {
-        if (event.target === equalizerModal) {
-            equalizerModal.style.display = 'none';
-        }
-    });
-
-    const bassControl = document.getElementById('bass');
-    const midControl = document.getElementById('mid');
-    const trebleControl = document.getElementById('treble');
-
-    bassControl.addEventListener('input', (e) => {
-        console.log(`Bass control input: ${e.target.value}`);
-        adjustEqualizer('bass', e.target.value);
-    });
-
-    midControl.addEventListener('input', (e) => {
-        console.log(`Mid control input: ${e.target.value}`);
-        adjustEqualizer('mid', e.target.value);
-    });
-
-    trebleControl.addEventListener('input', (e) => {
-        console.log(`Treble control input: ${e.target.value}`);
-        adjustEqualizer('treble', e.target.value);
+    document.getElementById('treble').addEventListener('input', (e) => {
+        trebleFilter.gain.value = e.target.value;
+        console.log(`Agudos ajustados para: ${e.target.value}`);
     });
 
     document.getElementById('resetEqualizer').addEventListener('click', () => {
-        bassControl.value = 0;
-        midControl.value = 0;
-        trebleControl.value = 0;
-        adjustEqualizer('bass', 0);
-        adjustEqualizer('mid', 0);
-        adjustEqualizer('treble', 0);
+        bassFilter.gain.value = 0;
+        midFilter.gain.value = 0;
+        trebleFilter.gain.value = 0;
+        document.getElementById('bass').value = 0;
+        document.getElementById('mid').value = 0;
+        document.getElementById('treble').value = 0;
+        console.log('Equalizador resetado');
     });
 
-    async function adjustEqualizer(type, value) {
-        console.log(`Adjusting ${type} to ${value}`);
-        try {
-            const response = await fetch(`https://suaapi.com/equalizer/${type}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ value: value })
-            });
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log(`${type} ajustado para ${value}`, responseData);
-            } else {
-                console.error(`Erro ao ajustar ${type}: ${response.statusText}`);
-            }
-        } catch (error) {
-            console.error(`Erro na requisição para ajustar ${type}:`, error);
-        }
-    }
+    // Inicialização do player para verificar se o áudio está carregado
+    audioPlayer.addEventListener('play', () => {
+        console.log("Áudio está sendo reproduzido");
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+        console.log("Áudio foi pausado");
+    });
+
+    audioPlayer.addEventListener('ended', () => {
+        console.log("Áudio terminou");
+    });
+
+    audioPlayer.addEventListener('error', (e) => {
+        console.log("Erro no player de áudio:", e);
+    });
 });
