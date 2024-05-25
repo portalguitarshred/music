@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("equalizer.js carregado e DOMContentLoaded disparado");
+
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const audioPlayer = document.getElementById('audio-player');
     const source = audioContext.createMediaElementSource(audioPlayer);
@@ -50,5 +52,26 @@ document.addEventListener('DOMContentLoaded', () => {
         adjustEqualizer('bass', 0);
         adjustEqualizer('mid', 0);
         adjustEqualizer('treble', 0);
+    });
+
+    // Lógica para abrir e fechar o modal do equalizador
+    const equalizerIcon = document.querySelector('.equalizer-icon');
+    const equalizerModal = document.getElementById('equalizerModal');
+    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+
+    equalizerIcon.addEventListener('click', () => {
+        console.log("Ícone do equalizador clicado");
+        equalizerModal.style.display = 'block';
+    });
+
+    closeEqualizerModal.addEventListener('click', () => {
+        console.log("Fechar modal do equalizador clicado");
+        equalizerModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === equalizerModal) {
+            equalizerModal.style.display = 'none';
+        }
     });
 });
