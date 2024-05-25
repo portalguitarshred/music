@@ -689,20 +689,20 @@
     </audio>
     
     <main>
-        <section id="highlights">
-       <!--    <div class="carousel-container">
+      <!--   <section id="highlights">
+          <div class="carousel-container">
                 <h2>Destaques</h2>
                 <div class="carousel-controls">
                     <button class="carousel-button" id="carousel-prev">&#9664;</button>
                     <button class="carousel-button" id="carousel-next">&#9654;</button>
                 </div>
-            </div> -->
+            </div> 
             <div class="carousel">
                 <div class="carousel-track">
                     <!-- Imagens das capas dos CDs serão adicionadas aqui -->
                 </div>
             </div>
-        </section>
+        </section> -->
         <section id="stations">
             <div class="equalizer-container">
                 <p class="equalizer-text">Equalizador digital</p>
@@ -723,29 +723,6 @@
             </div>
         </section>
     </main>
-
-    <!-- Modal do Equalizador -->
-    <div id="equalizerModal" class="modal">
-        <div class="modal-content">
-            <span id="closeEqualizerModal" class="close">&times;</span>
-            <h2>Equalizador</h2>
-            <div class="equalizer-control">
-                <label for="bass">Graves</label>
-                <input type="range" id="bass" min="-10" max="10" value="0">
-            </div>
-            <div class="equalizer-control">
-                <label for="mid">Médios</label>
-                <input type="range" id="mid" min="-10" max="10" value="0">
-            </div>
-            <div class="equalizer-control">
-                <label for="treble">Agudos</label>
-                <input type="range" id="treble" min="-10" max="10" value="0">
-            </div>
-            <div class="equalizer-control">
-                <button id="resetEqualizer">Resetar</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal para a programação do temporizador -->
     <div id="timerModal" class="modal">
@@ -800,18 +777,7 @@
     </div>
 
     <script src="script.js">
-        // Debug para verificar se o player secundário está carregando o arquivo corretamente
-  document.addEventListener('DOMContentLoaded', () => {
-      const secondaryAudioPlayer = document.getElementById('secondary-audio-player');
-      
-      secondaryAudioPlayer.addEventListener('error', (e) => {
-          console.error("Erro ao carregar o arquivo de áudio:", e);
-      });
-
-      secondaryAudioPlayer.addEventListener('canplaythrough', () => {
-          console.log("O arquivo de áudio foi carregado com sucesso.");
-      });
-  });
+        
     </script>
     <script src="equalizer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
