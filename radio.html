@@ -37,7 +37,7 @@
             box-sizing: border-box;
             position: relative;
         }
-
+        
         .equalizer-container {
             display: flex;
             align-items: center;
@@ -675,6 +675,7 @@
 
         .swiper-wrapper {
             display: flex;
+            transition: transform 0.3s ease-in-out; /* Suaviza a transição entre os slides */
         }
         
         .swiper-button-next, .swiper-button-prev {
@@ -685,6 +686,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        .carousel-button-next,
+        .carousel-button-prev {
+            color: #ffffff;
         }
     </style>
 </head>
