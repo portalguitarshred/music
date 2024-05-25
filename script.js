@@ -48,11 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lógica do Carrossel Touch
 
         document.addEventListener('DOMContentLoaded', function() {
-    const track = document.querySelector('.carousel__track');
+    const track = document.querySelector('.slider__track');
     const slides = Array.from(track.children);
-    const nextButton = document.querySelector('.carousel__button--right');
-    const prevButton = document.querySelector('.carousel__button--left');
-    const dotsNav = document.querySelector('.carousel__nav');
+    const nextButton = document.querySelector('.slider__button--right');
+    const prevButton = document.querySelector('.slider__button--left');
+    const dotsNav = document.querySelector('.slider__nav');
     const dots = Array.from(dotsNav.children);
 
     const slideWidth = slides[0].getBoundingClientRect().width;
