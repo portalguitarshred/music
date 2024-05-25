@@ -82,12 +82,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Adicionar listeners aos players de áudio para verificar status
+    // Adicionar listeners aos players de áudio para verificar status e garantir que o áudio seja liberado para tocar
     [audioPlayer, secondaryAudioPlayer].forEach(player => {
         player.addEventListener('play', function() {
             audioContext.resume().then(() => {
                 console.log("Audio context resumed");
             });
+        });
+
+        player.addEventListener('canplaythrough', () => {
+            console.log(`O áudio ${player.id} pode ser reproduzido`);
+        });
+
+        player.addEventListener('error', (e) => {
+            console.error(`Erro no player ${player.id}:`, e);
         });
     });
 });
