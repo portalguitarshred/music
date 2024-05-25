@@ -2,63 +2,60 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("equalizer.js carregado e DOMContentLoaded disparado");
 
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const audioPlayer = document.getElementById('audio-player');
-    const secondaryAudioPlayer = document.getElementById('secondary-audio-player');
 
-    // Crie as fontes de áudio
-    const source = audioContext.createMediaElementSource(audioPlayer);
-    const secondarySource = audioContext.createMediaElementSource(secondaryAudioPlayer);
+    // Inicialize o Howler com a integração da Web Audio API
+    const sound = new Howl({
+        src: ['musica.mp3'],
+        volume: 1.0,
+        html5: true,
+        onplay: function() {
+            const source = audioContext.createMediaElementSource(sound._sounds[0]._node);
 
-    // Crie os nós de filtro
-    const bassFilter = audioContext.createBiquadFilter();
-    bassFilter.type = 'lowshelf';
-    bassFilter.frequency.setValueAtTime(200, audioContext.currentTime);
-    bassFilter.gain.setValueAtTime(0, audioContext.currentTime);
+            // Configurar os filtros
+            const bassFilter = audioContext.createBiquadFilter();
+            bassFilter.type = 'lowshelf';
+            bassFilter.frequency.value = 200;
+            bassFilter.gain.value = 0;
 
-    const midFilter = audioContext.createBiquadFilter();
-    midFilter.type = 'peaking';
-    midFilter.frequency.setValueAtTime(1000, audioContext.currentTime);
-    midFilter.Q.setValueAtTime(1, audioContext.currentTime);
-    midFilter.gain.setValueAtTime(0, audioContext.currentTime);
+            const midFilter = audioContext.createBiquadFilter();
+            midFilter.type = 'peaking';
+            midFilter.frequency.value = 1000;
+            midFilter.Q.value = 1;
+            midFilter.gain.value = 0;
 
-    const trebleFilter = audioContext.createBiquadFilter();
-    trebleFilter.type = 'highshelf';
-    trebleFilter.frequency.setValueAtTime(3000, audioContext.currentTime);
-    trebleFilter.gain.setValueAtTime(0, audioContext.currentTime);
+            const trebleFilter = audioContext.createBiquadFilter();
+            trebleFilter.type = 'highshelf';
+            trebleFilter.frequency.value = 3000;
+            trebleFilter.gain.value = 0;
 
-    // Conecte os nós na cadeia de áudio
-    source.connect(bassFilter);
-    secondarySource.connect(bassFilter);
-    bassFilter.connect(midFilter);
-    midFilter.connect(trebleFilter);
-    trebleFilter.connect(audioContext.destination);
+            // Conectar os filtros em sequência
+            source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
 
-    // Funções para ajustar os filtros
-    function adjustEqualizer(type, value) {
-        switch (type) {
-            case 'bass':
-                bassFilter.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-            case 'mid':
-                midFilter.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
-            case 'treble':
-                trebleFilter.gain.setValueAtTime(value, audioContext.currentTime);
-                break;
+            // Funções para ajustar os filtros
+            function adjustEqualizer(type, value) {
+                switch (type) {
+                    case 'bass':
+                        bassFilter.gain.value = value;
+                        break;
+                    case 'mid':
+                        midFilter.gain.value = value;
+                        break;
+                    case 'treble':
+                        trebleFilter.gain.value = value;
+                        break;
+                }
+                console.log(`${type} ajustado para ${value}`);
+            }
+
+            document.getElementById('bass').addEventListener('input', (e) => adjustEqualizer('bass', e.target.value));
+            document.getElementById('mid').addEventListener('input', (e) => adjustEqualizer('mid', e.target.value));
+            document.getElementById('treble').addEventListener('input', (e) => adjustEqualizer('treble', e.target.value));
+            document.getElementById('resetEqualizer').addEventListener('click', () => {
+                adjustEqualizer('bass', 0);
+                adjustEqualizer('mid', 0);
+                adjustEqualizer('treble', 0);
+            });
         }
-        console.log(`${type} ajustado para ${value}`);
-    }
-
-    document.getElementById('bass').addEventListener('input', (e) => adjustEqualizer('bass', e.target.value));
-    document.getElementById('mid').addEventListener('input', (e) => adjustEqualizer('mid', e.target.value));
-    document.getElementById('treble').addEventListener('input', (e) => adjustEqualizer('treble', e.target.value));
-    document.getElementById('resetEqualizer').addEventListener('click', () => {
-        adjustEqualizer('bass', 0);
-        adjustEqualizer('mid', 0);
-        adjustEqualizer('treble', 0);
-        document.getElementById('bass').value = 0;
-        document.getElementById('mid').value = 0;
-        document.getElementById('treble').value = 0;
     });
 
     // Lógica para abrir e fechar o modal do equalizador
@@ -82,22 +79,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Adicionar listeners aos players de áudio para verificar status e garantir que o áudio seja liberado para tocar
-    [audioPlayer, secondaryAudioPlayer].forEach(player => {
-        player.addEventListener('play', function() {
-            audioContext.resume().then(() => {
-                console.log("Audio context resumed");
-            }).catch(error => {
-                console.error("Erro ao retomar o contexto de áudio:", error);
-            });
-        });
+    // Adicionar listeners ao player de áudio para verificar status
+    const audioPlayer = document.getElementById('audio-player');
+    audioPlayer.addEventListener('play', function() {
+        sound.play();
+    });
 
-        player.addEventListener('canplaythrough', () => {
-            console.log(`O áudio ${player.id} pode ser reproduzido`);
-        });
+    audioPlayer.addEventListener('pause', function() {
+        sound.pause();
+    });
 
-        player.addEventListener('error', (e) => {
-            console.error(`Erro no player ${player.id}:`, e);
+    audioPlayer.addEventListener('ended', function() {
+        sound.stop();
+    });
+
+    audioPlayer.addEventListener('canplaythrough', () => {
+        console.log(`O áudio ${audioPlayer.id} pode ser reproduzido`);
+    });
+
+    audioPlayer.addEventListener('error', (e) => {
+        console.error(`Erro no player ${audioPlayer.id}:`, e);
+    });
+
+    document.getElementById('volume-control').addEventListener('input', function(e) {
+        sound.volume(e.target.value);
+    });
+
+    const secondaryAudioPlayer = document.getElementById('secondary-audio-player');
+    secondaryAudioPlayer.addEventListener('play', function() {
+        audioContext.resume().then(() => {
+            console.log("Audio context resumed");
+        }).catch(error => {
+            console.error("Erro ao retomar o contexto de áudio:", error);
         });
+    });
+
+    secondaryAudioPlayer.addEventListener('canplaythrough', () => {
+        console.log(`O áudio ${secondaryAudioPlayer.id} pode ser reproduzido`);
+    });
+
+    secondaryAudioPlayer.addEventListener('error', (e) => {
+        console.error(`Erro no player ${secondaryAudioPlayer.id}:`, e);
     });
 });
