@@ -2,40 +2,48 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("equalizer.js carregado e DOMContentLoaded disparado");
 
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioPlayer = document.getElementById('audio-player');
     const secondaryAudioPlayer = document.getElementById('secondary-audio-player');
-    const source = audioContext.createMediaElementSource(secondaryAudioPlayer);
 
-    // Configurar os filtros
+    // Crie as fontes de áudio
+    const source = audioContext.createMediaElementSource(audioPlayer);
+    const secondarySource = audioContext.createMediaElementSource(secondaryAudioPlayer);
+
+    // Crie os nós de filtro
     const bassFilter = audioContext.createBiquadFilter();
     bassFilter.type = 'lowshelf';
-    bassFilter.frequency.value = 200;
-    bassFilter.gain.value = 0;
+    bassFilter.frequency.setValueAtTime(200, audioContext.currentTime);
+    bassFilter.gain.setValueAtTime(0, audioContext.currentTime);
 
     const midFilter = audioContext.createBiquadFilter();
     midFilter.type = 'peaking';
-    midFilter.frequency.value = 1000;
-    midFilter.Q.value = 1;
-    midFilter.gain.value = 0;
+    midFilter.frequency.setValueAtTime(1000, audioContext.currentTime);
+    midFilter.Q.setValueAtTime(1, audioContext.currentTime);
+    midFilter.gain.setValueAtTime(0, audioContext.currentTime);
 
     const trebleFilter = audioContext.createBiquadFilter();
     trebleFilter.type = 'highshelf';
-    trebleFilter.frequency.value = 3000;
-    trebleFilter.gain.value = 0;
+    trebleFilter.frequency.setValueAtTime(3000, audioContext.currentTime);
+    trebleFilter.gain.setValueAtTime(0, audioContext.currentTime);
 
-    // Conectar os filtros em sequência
-    source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
+    // Conecte os nós na cadeia de áudio
+    source.connect(bassFilter);
+    secondarySource.connect(bassFilter);
+    bassFilter.connect(midFilter);
+    midFilter.connect(trebleFilter);
+    trebleFilter.connect(audioContext.destination);
 
     // Funções para ajustar os filtros
     function adjustEqualizer(type, value) {
         switch (type) {
             case 'bass':
-                bassFilter.gain.value = value;
+                bassFilter.gain.setValueAtTime(value, audioContext.currentTime);
                 break;
             case 'mid':
-                midFilter.gain.value = value;
+                midFilter.gain.setValueAtTime(value, audioContext.currentTime);
                 break;
             case 'treble':
-                trebleFilter.gain.value = value;
+                trebleFilter.gain.setValueAtTime(value, audioContext.currentTime);
                 break;
         }
         console.log(`${type} ajustado para ${value}`);
@@ -48,6 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
         adjustEqualizer('bass', 0);
         adjustEqualizer('mid', 0);
         adjustEqualizer('treble', 0);
+        document.getElementById('bass').value = 0;
+        document.getElementById('mid').value = 0;
+        document.getElementById('treble').value = 0;
     });
 
     // Lógica para abrir e fechar o modal do equalizador
@@ -71,10 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Adicionar listeners ao player de áudio para verificar status
-    secondaryAudioPlayer.addEventListener('play', function() {
-        audioContext.resume().then(() => {
-            console.log("Audio context resumed");
+    // Adicionar listeners aos players de áudio para verificar status
+    [audioPlayer, secondaryAudioPlayer].forEach(player => {
+        player.addEventListener('play', function() {
+            audioContext.resume().then(() => {
+                console.log("Audio context resumed");
+            });
         });
     });
 });
