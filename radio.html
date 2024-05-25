@@ -646,35 +646,24 @@
         }
 
         /* CSS para o slider */
-        .slider {
-            position: relative;
-            overflow: hidden;
+        .swiper-container {
             width: 100%;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 20px auto;
         }
-        
-        .slider__track-container {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
-        
-        .slider__track {
+
+        .swiper-slide {
             display: flex;
-            transition: transform 0.5s ease-in;
+            justify-content: center;
+            align-items: center;
         }
-        
-        .slider__slide {
-            min-width: 100%;
-            box-sizing: border-box;
-        }
-        
-        .slider__slide img {
+
+        .swiper-slide img {
             width: 100%;
-            display: block;
+            max-width: 300px;
+            border-radius: 8px;
         }
-        
+
         .slider__button {
             position: absolute;
             top: 50%;
@@ -686,34 +675,13 @@
             padding: 10px;
             z-index: 10;
         }
-        
+
         .slider__button--left {
             left: 10px;
         }
-        
+
         .slider__button--right {
             right: 10px;
-        }
-        
-        .slider__nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        
-        .slider__indicator {
-            background-color: #333;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            padding: 5px;
-            margin: 0 5px;
-            opacity: 0.5;
-        }
-        
-        .slider__indicator.current-slide {
-            background-color: #000;
-            opacity: 1;
         }
 
             </style>
@@ -738,24 +706,14 @@
 </header>
     
      <!-- HTML para o slider -->
-    <!-- HTML para o slider -->
-    <div class="slider">
-        <div class="slider__track-container">
-            <ul class="slider__track">
-                <li class="slider__slide current-slide" data-url="https://stream1.example.com"><img src="capa1.jpg" alt="Slide 1"></li>
-                <li class="slider__slide" data-url="https://stream2.example.com"><img src="capa2.jpg" alt="Slide 2"></li>
-                <li class="slider__slide" data-url="https://stream3.example.com"><img src="capa3.jpg" alt="Slide 3"></li>
-                <!-- Adicione mais slides conforme necessário -->
-            </ul>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" data-url="https://stream1.example.com"><img src="capa1.jpg" alt="Capa 1"></div>
+            <div class="swiper-slide" data-url="https://stream2.example.com"><img src="capa2.jpg" alt="Capa 2"></div>
+            <div class="swiper-slide" data-url="https://stream3.example.com"><img src="capa3.jpg" alt="Capa 3"></div>
         </div>
-        <button class="slider__button slider__button--left">‹</button>
-        <button class="slider__button slider__button--right">›</button>
-        <div class="slider__nav">
-            <button class="slider__indicator current-slide"></button>
-            <button class="slider__indicator"></button>
-            <button class="slider__indicator"></button>
-            <!-- Adicione mais indicadores conforme necessário -->
-        </div>
+        <div class="swiper-button-next slider__button slider__button--right"></div>
+        <div class="swiper-button-prev slider__button slider__button--left"></div>
     </div>
     
         <!-- Adicione botões de navegação, se necessário -->
