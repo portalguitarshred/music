@@ -171,8 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         track.style.transform = 'translateX(-' + currentSlide.style.left + ')';
     });
 });
-
-
         
     // Adiciona barras do espectro de áudio
     const spectrum = document.createElement('div');
