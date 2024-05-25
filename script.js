@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevButton = document.querySelector('.slider__button--left');
     const dotsNav = document.querySelector('.slider__nav');
     const dots = Array.from(dotsNav.children);
+    const audioPlayer = document.getElementById('audio-player');
 
     const slideWidth = slides[0].getBoundingClientRect().width;
 
@@ -66,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
         currentSlide.classList.remove('current-slide');
         targetSlide.classList.add('current-slide');
+        audioPlayer.src = targetSlide.dataset.url;
+        audioPlayer.play();
     };
 
     const updateDots = (currentDot, targetDot) => {
@@ -124,7 +127,42 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDots(currentDot, targetDot);
         hideShowArrows(slides, prevButton, nextButton, targetIndex);
     });
+
+    let startX;
+    let isDragging = false;
+
+    track.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    });
+
+    track.addEventListener('touchmove', e => {
+        if (!isDragging) return;
+        const currentSlide = track.querySelector('.current-slide');
+        const moveX = e.touches[0].clientX - startX;
+        track.style.transform = `translateX(calc(${currentSlide.style.left} - ${moveX}px))`;
+    });
+
+    track.addEventListener('touchend', e => {
+        isDragging = false;
+        const endX = e.changedTouches[0].clientX;
+        const moveX = endX - startX;
+
+        const currentSlide = track.querySelector('.current-slide');
+        let targetSlide;
+
+        if (moveX < -50) {
+            targetSlide = currentSlide.nextElementSibling || currentSlide;
+        } else if (moveX > 50) {
+            targetSlide = currentSlide.previousElementSibling || currentSlide;
+        } else {
+            targetSlide = currentSlide;
+        }
+
+        moveToSlide(track, currentSlide, targetSlide);
+    });
 });
+
         
     // Adiciona barras do espectro de áudio
     const spectrum = document.createElement('div');
