@@ -47,30 +47,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lógica do Carrossel Touch
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const swiper = new Swiper('.swiper-container', {
-                slidesPerView: 1,
-                spaceBetween: 10,
-                loop: true,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.carousel');
+    const images = document.querySelectorAll('.carousel img');
+    let currentIndex = 0;
 
-            swiper.on('slideChange', function () {
-                const activeIndex = swiper.realIndex;
-                const stations = [
-                    { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
-                    { name: 'Jazz Station', url: 'https://stream.zeno.fm/qupiusi3w5jazz' },
-                    { name: 'Pop Station', url: 'https://stream.zeno.fm/qupiusi3w5pop' }
-                ];
-
-                const audioPlayer = document.getElementById('audio-player');
-                audioPlayer.src = stations[activeIndex].url;
-                audioPlayer.play();
-            });
+    function showImage(index) {
+        images.forEach((img, i) => {
+            if (i === index) {
+                img.classList.add('active');
+            } else {
+                img.classList.remove('active');
+            }
         });
+    }
+
+    carousel.addEventListener('touchstart', handleTouchStart, false);
+    carousel.addEventListener('touchmove', handleTouchMove, false);
+
+    let xStart = null;
+
+    function handleTouchStart(evt) {
+        const firstTouch = (evt.touches || evt.originalEvent.touches)[0];
+        xStart = firstTouch.clientX;
+    };
+
+    function handleTouchMove(evt) {
+        if (!xStart) {
+            return;
+        }
+
+        let xEnd = evt.touches[0].clientX;
+        let xDiff = xStart - xEnd;
+
+        if (xDiff > 0) {
+            currentIndex = (currentIndex + 1) % images.length;
+        } else {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+        }
+
+        showImage(currentIndex);
+        xStart = null; // Reset para o próximo evento de toque
+    }
+
+    showImage(currentIndex); // Mostra a imagem inicial
+});
         
     // Adiciona barras do espectro de áudio
     const spectrum = document.createElement('div');
