@@ -45,6 +45,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     li.appendChild(shareIcon);
 
+    // Lógica do Carrossel Touch
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const swiper = new Swiper('.swiper-container', {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        swiper.on('slideChange', function () {
+            const activeIndex = swiper.realIndex;
+            const stations = [
+                { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+                { name: 'Jazz Station', url: 'https://stream.zeno.fm/qupiusi3w5jazz' },
+                { name: 'Pop Station', url: 'https://stream.zeno.fm/qupiusi3w5pop' }
+            ];
+
+            const audioPlayer = document.getElementById('audio-player');
+            audioPlayer.src = stations[activeIndex].url;
+            audioPlayer.play();
+        });
+    });
+
     // Adiciona barras do espectro de áudio
     const spectrum = document.createElement('div');
     spectrum.classList.add('spectrum');
