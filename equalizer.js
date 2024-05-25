@@ -7,59 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log("AudioContext and source created");
 
-    // Create the filters
-    const bassFilter = audioContext.createBiquadFilter();
-    bassFilter.type = 'lowshelf';
-    bassFilter.frequency.value = 200;
-    bassFilter.gain.value = 0;
+    // Conectando diretamente ao contexto de áudio
+    source.connect(audioContext.destination);
 
-    const midFilter = audioContext.createBiquadFilter();
-    midFilter.type = 'peaking';
-    midFilter.frequency.value = 1000;
-    midFilter.gain.value = 0;
+    console.log("Audio source connected directly to audio context destination");
 
-    const trebleFilter = audioContext.createBiquadFilter();
-    trebleFilter.type = 'highshelf';
-    trebleFilter.frequency.value = 3000;
-    trebleFilter.gain.value = 0;
-
-    console.log("Filters created");
-
-    // Connect the filters
-    source.connect(bassFilter);
-    bassFilter.connect(midFilter);
-    midFilter.connect(trebleFilter);
-    trebleFilter.connect(audioContext.destination);
-
-    console.log("Filters connected");
-
-    // Add event listeners for the sliders
-    document.getElementById('bass').addEventListener('input', (e) => {
-        bassFilter.gain.value = e.target.value;
-        console.log(`Bass set to ${e.target.value}`);
-    });
-
-    document.getElementById('mid').addEventListener('input', (e) => {
-        midFilter.gain.value = e.target.value;
-        console.log(`Mid set to ${e.target.value}`);
-    });
-
-    document.getElementById('treble').addEventListener('input', (e) => {
-        trebleFilter.gain.value = e.target.value;
-        console.log(`Treble set to ${e.target.value}`);
-    });
-
-    document.getElementById('resetEqualizer').addEventListener('click', () => {
-        bassFilter.gain.value = 0;
-        midFilter.gain.value = 0;
-        trebleFilter.gain.value = 0;
-        document.getElementById('bass').value = 0;
-        document.getElementById('mid').value = 0;
-        document.getElementById('treble').value = 0;
-        console.log('Equalizer reset');
-    });
-
-    // Add event listeners to check the audio player's state
+    // Adicionando listeners para depuração
     audioPlayer.addEventListener('play', () => {
         console.log("Audio is playing");
     });
