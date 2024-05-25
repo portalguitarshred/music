@@ -44,8 +44,23 @@ document.addEventListener('DOMContentLoaded', () => {
         adjustEqualizer('treble', 0);
     });
 
-    function adjustEqualizer(type, value) {
+    async function adjustEqualizer(type, value) {
         console.log(`${type} set to ${value}`);
-        // Implementar lógica para ajustar o equalizador
+        try {
+            const response = await fetch(`https://suaapi.com/equalizer/${type}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ value: value })
+            });
+            if (response.ok) {
+                console.log(`${type} ajustado para ${value}`);
+            } else {
+                console.error(`Erro ao ajustar ${type}: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.error(`Erro na requisição para ajustar ${type}:`, error);
+        }
     }
 });
