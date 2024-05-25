@@ -11,7 +11,7 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <style>
         /* CSS existente */
-        body {
+       body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -37,7 +37,7 @@
             box-sizing: border-box;
             position: relative;
         }
-        
+
         .equalizer-container {
             display: flex;
             align-items: center;
@@ -58,7 +58,7 @@
             text-align: center;
         }
         
-        equalizer-icon {
+        .equalizer-icon {
             cursor: pointer;
             font-size: 1.2em;
             color: #ffffff;
@@ -136,15 +136,14 @@
         }
 
         .cover-image {
-            width: 250px;
-            height: 250px;
+            width: 220px;
+            height: 210px;
             border-radius: 8px;
             margin-top: 20px;
         }
 
         .descript {
-            width: 250px;
-            align: center;
+            width: 220px;
         }
 
         h3 {
@@ -336,182 +335,7 @@
             animation-delay: 0.4s;
         }
 
-        @keyframes bar-animation {
-            0%, 100% {
-                transform: scaleY(1);
-            }
-            50% {
-                transform: scaleY(0.5);
-            }
-        }
-
-        /* Estilos para o modal */
-        .modal {
-            display: none; /* Oculto por padrão */
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #1f1f1f;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 300px;
-            color: #ffffff;
-            border-radius: 10px;
-        }
-
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #ffffff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .timer-button {
-            background-color: #05d26d;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-
-        .timer-button:hover {
-            background-color: #04b65c;
-        }
-
-        .share-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .share-options button {
-            background-color: #05d26d;
-            color: #ffffff;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .share-options button:hover {
-            background-color: #04b65c;
-        }
-
-        #audio-player {
-            width: calc(100% - 40px);
-            margin: 0px 20px;
-            box-sizing: border-box;
-        }
-
-        #stations {
-            margin-bottom: 20px;
-            width: calc(100%);
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-
-        #audio-visualizer {
-            width: 100%;
-            height: 100px;
-            background-color: #000;
-        }
-
-        #volume-container {
-            display: flex;
-            align-items: center;
-            margin-top: 5px;
-            width: 100%;
-            padding: 0 20px;
-            box-sizing: border-box;
-            padding-bottom: 60px;
-        }
-
-        #volume-control {
-            width: 100%;
-            margin-left: 10px;
-            background-color: #333;
-            border: none;
-            border-radius: 5px;
-            height: 8px;
-            appearance: none;
-            cursor: pointer;
-        }
-
-        #volume-control::-webkit-slider-thumb {
-            width: 16px;
-            height: 16px;
-            background: #05d26d;
-            border-radius: 50%;
-            cursor: pointer;
-            appearance: none;
-        }
-
-        #volume-control::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
-            background: #05d26d;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        /* Adicionando o espectro de áudio falso */
-        li.playing .spectrum {
-            display: flex;
-            gap: 2px;
-            position: absolute;
-            right: 10px;
-        }
-
-        li.playing .spectrum div {
-            width: 2px;
-            background: #ffffff;
-            animation: bar-animation 0.5s infinite; /* Duração da animação ajustada para 0.5s */
-            animation-timing-function: linear;
-        }
-
-        li.playing .spectrum div:nth-child(1) {
-            height: 10px;
-            animation-delay: 0s;
-        }
-
-        li.playing .spectrum div:nth-child(2) {
-            height: 14px;
-            animation-delay: 0.1s;
-        }
-
-        li.playing .spectrum div:nth-child(3) {
-            height: 8px;
-            animation-delay: 0.2s;
-        }
-
-        li.playing .spectrum div:nth-child(4) {
-            height: 16px;
-            animation-delay: 0.3s;
-        }
-
-        li.playing .spectrum div:nth-child(5) {
+        .spectrum div:nth-child(5) {
             height: 12px;
             animation-delay: 0.4s;
         }
@@ -619,32 +443,31 @@
         .carousel-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             margin-bottom: 20px;
         }
 
-        .carousel-controls {
-            display: flex;
-            align-items: center;
-        }
-
         .carousel {
+            display: flex;
             overflow: hidden;
             width: 100%;
+            max-width: 300px;
             position: relative;
         }
 
-        .carousel-track {
-            display: flex;
+        .carousel img {
+            min-width: 100%;
             transition: transform 0.5s ease-in-out;
         }
 
-        .carousel img {
-            width: calc((100% - 10px) / 3); /* Dividido por 3 capas com 5px de espaçamento */
-            margin: 0 5px;
-            border-radius: 8px;
+        .carousel img:not(:first-child) {
+            display: none;
         }
 
+        .carousel img.active {
+            display: block;
+        }
+        
         .carousel-button {
             background-color: #05d26d;
             color: #ffffff;
@@ -654,8 +477,19 @@
             border-radius: 5px;
             margin: 0 5px;
             font-size: 1em;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
         }
-
+        
+        .carousel-button.prev {
+            left: 10px;
+        }
+        
+        .carousel-button.next {
+            right: 10px;
+        }
+        
         .carousel-button:hover {
             background-color: #04b65c;
         }
@@ -696,69 +530,38 @@
 </head>
 <body>
     <header>
-    <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet" />
-    <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet" />
-    <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <i class="fas fa-bars menu-toggle"></i>
-    <img src="logo.png" alt="Guitar Radio Logo" class="logo">
-  <span class="clock-icon" id="clock-icon">&#128339;</span>
-    <nav class="menu">
-        <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
-        <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
-        <a href="https://guitarshred.com.br" target="_blank"><i class="fas fa-newspaper"></i> Notícias</a>
-        <a href="https://guitarshredacademy.com.br" target="_blank"><i class="fas fa-guitar"></i> Cursos de Guitarra</a>
-        <a href="https://www.youtube.com/guitarshredofficial" target="_blank"><i class="fab fa-youtube"></i> Canal do YouTube</a>
-        <a href="https://www.instagram.com/portalguitarshred" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-    </nav>
-</header>
-    <!-- Conteúdo anterior do header -->
-    
-    <div class="carousel-container">
-        <div class="carousel">
-            <img src="capa1.jpg" alt="Capa 1" class="cover-image">
-            <img src="capa2.jpg" alt="Capa 2" class="cover-image">
-            <img src="capa3.jpg" alt="Capa 3" class="cover-image">
-        </div>
-    </div>
-    
-        <!-- Adicione botões de navegação, se necessário -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
-    <!-- Aqui está a capa das músicas da rádio 
-    <img src="capa1.jpg" alt="Esta imagem ainda não foi carregada" class="cover-image">
-    <div class="descript">
-        <h3>Rock Music</h3> -->
-      <!--  <i>Nome do artista</i> -->
-    </div>
-    <!-- Novo player de áudio abaixo da imagem 
-    <audio id="secondary-audio-player" controls style="width: 210px;">
-        <source src="musica.mp3" type="audio/mp3">
-        Seu navegador não suporta o elemento de áudio.
-    </audio> -->
-    
+        <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet" />
+        <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet" />
+        <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <i class="fas fa-bars menu-toggle"></i>
+        <img src="logo.png" alt="Guitar Radio Logo" class="logo">
+        <span class="clock-icon" id="clock-icon">&#128339;</span>
+        <nav class="menu">
+            <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
+            <a href="https://guitarshred.com.br" target="_blank"><i class="fas fa-newspaper"></i> Notícias</a>
+            <a href="https://guitarshredacademy.com.br" target="_blank"><i class="fas fa-guitar"></i> Cursos de Guitarra</a>
+            <a href="https://www.youtube.com/guitarshredofficial" target="_blank"><i class="fab fa-youtube"></i> Canal do YouTube</a>
+            <a href="https://www.instagram.com/portalguitarshred" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        </nav>
+    </header>
+
     <main>
-      <!--   <section id="highlights">
-          <div class="carousel-container">
-                <h2>Destaques</h2>
-                <div class="carousel-controls">
-                    <button class="carousel-button" id="carousel-prev">&#9664;</button>
-                    <button class="carousel-button" id="carousel-next">&#9654;</button>
-                </div>
-            </div> 
-            <div class="carousel">
-                <div class="carousel-track">
-                    <!-- Imagens das capas dos CDs serão adicionadas aqui 
+        <section id="highlights">
+            <div class="carousel-container">
+                <div class="carousel">
+                    <img src="capa1.jpg" alt="Capa 1" class="cover-image active">
+                    <img src="capa2.jpg" alt="Capa 2" class="cover-image">
+                    <img src="capa3.jpg" alt="Capa 3" class="cover-image">
                 </div>
             </div>
-        </section> -->
+        </section>
         <section id="stations">
-            <!-- <div class="equalizer-container">
+            <div class="equalizer-container">
                 <p class="equalizer-text">Equalizador digital</p>
                 <i class="fas fa-sliders-h equalizer-icon"></i>
-            </div> -->
-            </h2>
+            </div>
             <ul id="station-list">
                 <!-- Stations will be dynamically added here -->
             </ul>
@@ -774,18 +577,38 @@
         </section>
     </main>
 
-    <!-- Modal para a programação do temporizador -->
-    <div id="timerModal" class="modal">
+    <div id="equalizerModal" class="modal">
         <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <h3>Hora de dormir</h3> <!-- Frase ajustada -->
-            <label for="timer">Desligar após (minutos):</label>
-            <input type="number" id="timer" min="1" max="120" value="30">
-            <button class="timer-button" id="setTimer">Definir o tempo</button> <!-- Botão ajustado -->
+            <span id="closeEqualizerModal" class="close">&times;</span>
+            <h2>Equalizador</h2>
+            <div class="equalizer-control">
+                <label for="bass">Graves</label>
+                <input type="range" id="bass" min="-10" max="10" value="0">
+            </div>
+            <div class="equalizer-control">
+                <label for="mid">Médios</label>
+                <input type="range" id="mid" min="-10" max="10" value="0">
+            </div>
+            <div class="equalizer-control">
+                <label for="treble">Agudos</label>
+                <input type="range" id="treble" min="-10" max="10" value="0">
+            </div>
+            <div class="equalizer-control">
+                <button id="resetEqualizer">Resetar</button>
+            </div>
         </div>
     </div>
 
-    <!-- Modal para opções de compartilhamento -->
+    <div id="timerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Hora de dormir</h3>
+            <label for="timer">Desligar após (minutos):</label>
+            <input type="number" id="timer" min="1" max="120" value="30">
+            <button class="timer-button" id="setTimer">Definir o tempo</button>
+        </div>
+    </div>
+
     <div id="shareModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeShareModal">&times;</span>
@@ -798,7 +621,6 @@
         </div>
     </div>
 
-    <!-- Modal para login de usuário -->
     <div id="loginModal" class="modal-register">
         <div class="modal-content-register">
             <span class="close-register" id="closeLoginModal">&times;</span>
@@ -811,7 +633,6 @@
         </div>
     </div>
 
-    <!-- Modal para registro de usuário -->
     <div id="registerModal" class="modal-register">
         <div class="modal-content-register">
             <span class="close-register" id="closeRegisterModal">&times;</span>
@@ -826,9 +647,7 @@
         </div>
     </div>
 
-    <script src="script.js">
-        
-    </script>
+    <script src="script.js"></script>
     <script src="equalizer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
 </body>
