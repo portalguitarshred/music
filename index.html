@@ -799,7 +799,20 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js">
+        // Debug para verificar se o player secundário está carregando o arquivo corretamente
+    document.addEventListener('DOMContentLoaded', () => {
+        const secondaryAudioPlayer = document.getElementById('secondary-audio-player');
+        
+        secondaryAudioPlayer.addEventListener('error', (e) => {
+            console.error("Erro ao carregar o arquivo de áudio:", e);
+        });
+
+        secondaryAudioPlayer.addEventListener('canplaythrough', () => {
+            console.log("O arquivo de áudio foi carregado com sucesso.");
+        });
+    });
+    </script>
     <script src="equalizer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
 </body>
