@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = document.getElementById('new-close-modal');
     const setTimerButton = document.getElementById('new-set-timer');
     const timerInput = document.getElementById('new-timer');
-    const audioPlayer = document.getElementById('audio-player');
 
     // Função para abrir o modal do temporizador
     function openTimerModal() {
@@ -144,9 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
         closeTimerModal();
         alert(`Temporizador definido para ${minutes} minutos.`);
     });
-
-    console.log('Script carregado e eventos adicionados');
 });
+
 
 
 
