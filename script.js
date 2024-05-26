@@ -91,34 +91,38 @@ const closeModal = document.getElementById('closeModal');
 const setTimerButton = document.getElementById('setTimer');
 const timerInput = document.getElementById('timer');
 
-clockIcon.addEventListener('click', () => {
+// Função para abrir o modal do temporizador
+function openTimerModal() {
     timerModal.style.display = 'block';
-});
+}
 
-clockIcon.addEventListener('touchstart', () => {
-    timerModal.style.display = 'block';
-});
-
-closeModal.addEventListener('click', () => {
+// Função para fechar o modal do temporizador
+function closeTimerModal() {
     timerModal.style.display = 'none';
-});
+}
 
-closeModal.addEventListener('touchstart', () => {
-    timerModal.style.display = 'none';
-});
+// Adiciona eventos de clique e toque ao ícone do relógio
+clockIcon.addEventListener('click', openTimerModal);
+clockIcon.addEventListener('touchstart', openTimerModal);
 
+// Adiciona eventos de clique e toque ao botão de fechar o modal
+closeModal.addEventListener('click', closeTimerModal);
+closeModal.addEventListener('touchstart', closeTimerModal);
+
+// Adiciona eventos de clique e toque à janela para fechar o modal ao clicar fora dele
 window.addEventListener('click', (event) => {
     if (event.target === timerModal) {
-        timerModal.style.display = 'none';
+        closeTimerModal();
     }
 });
 
 window.addEventListener('touchstart', (event) => {
     if (event.target === timerModal) {
-        timerModal.style.display = 'none';
+        closeTimerModal();
     }
 });
 
+// Adiciona evento de clique ao botão de definir o temporizador
 setTimerButton.addEventListener('click', () => {
     const minutes = parseInt(timerInput.value, 10);
     if (isNaN(minutes) || minutes <= 0) {
@@ -133,7 +137,7 @@ setTimerButton.addEventListener('click', () => {
         alert('O temporizador desligou a rádio.');
     }, milliseconds);
 
-    timerModal.style.display = 'none';
+    closeTimerModal();
     alert(`Temporizador definido para ${minutes} minutos.`);
 });
 
