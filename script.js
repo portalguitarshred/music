@@ -8,36 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPlaying = null;
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    const stations = [
+   const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
         { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
         { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
+    const stationList = document.getElementById('station-list');
+    const audioPlayer = document.getElementById('audio-player');
+    let currentPlaying = null;
+
     // Função para tocar a estação e atualizar a UI
-    function playStation(station, li, index) {
-        console.log(`Playing: ${station.name} - URL: ${station.url}`);
+    function playStation(station, li) {
         audioPlayer.src = station.url;
-        statusMessage.textContent = 'Carregando...';
-        statusMessage.classList.add('show');
-
-        audioPlayer.play().then(() => {
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('show');
-        }).catch(error => {
-            console.error('Playback failed', error);
-            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-        });
-
-        audioPlayer.oncanplay = () => {
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('show');
-        };
-
-        audioPlayer.onerror = () => {
-            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-        };
-
+        audioPlayer.play();
         if (currentPlaying) {
             currentPlaying.classList.remove('playing');
             currentPlaying.style.backgroundColor = '';
@@ -46,7 +30,43 @@ document.addEventListener('DOMContentLoaded', () => {
         li.style.backgroundColor = '#05d26d'; // Cor verde padrão
         currentPlaying = li;
 
-        swiper.slideTo(index); // Atualiza o slider
+        // Atualizar o swiper para a estação selecionada
+        swiper.slideTo([...stationList.children].indexOf(li));
+
+        // Adiciona o falso espectro de áudio
+        const spectrums = document.querySelectorAll('.spectrum');
+        spectrums.forEach(spectrum => {
+            spectrum.style.display = 'none';
+        });
+        li.querySelector('.spectrum').style.display = 'flex';
+    }
+
+    stations.forEach((station, index) => {
+        const li = document.createElement('li');
+        li.textContent = station.name;
+
+        const spectrum = document.createElement('div');
+        spectrum.classList.add('spectrum');
+        for (let i = 0; i < 5; i++) {
+            const bar = document.createElement('div');
+            spectrum.appendChild(bar);
+        }
+        li.appendChild(spectrum);
+
+        li.addEventListener('click', () => {
+            playStation(station, li);
+        });
+
+        stationList.appendChild(li);
+    });
+
+    // Clique nas estações para atualizar o swiper
+    stationList.querySelectorAll('li').forEach((li, index) => {
+        li.addEventListener('click', () => {
+            swiper.slideTo(index);
+        });
+    });
+});
 
         // Adiciona o falso espectro de áudio
         const spectrums = document.querySelectorAll('.spectrum');
@@ -348,26 +368,17 @@ function playStation(station, li, index) {
 }
 
 // Inicializa o Swiper
-const swiper = new Swiper('.swiper-container', {
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    on: {
-        slideChange: function () {
-            const activeSlide = swiper.slides[swiper.activeIndex];
-            const stationIndex = activeSlide.dataset.index;
-            const station = stations[stationIndex];
-            playStation(station, document.querySelectorAll('#station-list li')[stationIndex], stationIndex);
+document.addEventListener('DOMContentLoaded', () => {
+    const swiper = new Swiper('.swiper-container', {
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
         },
-    },
-});
-
-// Evento para clicar em uma estação e atualizar o slider
-stations.forEach((station, index) => {
-    const li = document.querySelectorAll('#station-list li')[index];
-    li.addEventListener('click', () => {
-        playStation(station, li, index);
-        swiper.slideTo(index); // Atualiza o slider ao clicar na estação
+        on: {
+            slideChange: function () {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                const stationIndex = activeSlide.dataset.index;
+                playStation(stations[stationIndex], stationList.children[stationIndex]);
+            },
+        },
     });
-});
