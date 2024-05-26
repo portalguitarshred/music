@@ -288,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Inicializa o Swiper
+    document.addEventListener('DOMContentLoaded', () => {
     const swiper = new Swiper('.swiper-container', {
         navigation: {
             nextEl: '.swiper-button-next',
@@ -296,9 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
         on: {
             slideChange: function () {
                 const activeSlide = swiper.slides[swiper.activeIndex];
-                audioPlayer.src = activeSlide.dataset.url;
-                audioPlayer.play();
+                const stationIndex = activeSlide.dataset.index;
+                const station = stations[stationIndex];
+                playStation(station, document.querySelectorAll('#station-list li')[stationIndex], stationIndex);
             },
         },
     });
-});
