@@ -724,70 +724,70 @@
 
         /* Nova classo para o relógio */
 
-        .new-clock-icon {
-            cursor: pointer;
-            font-size: 1.5em;
-            color: #ffffff;
-            padding: 0.5em;
-            transition: color 0.3s ease;
-            z-index: 1001; /* Garante que o ícone fique acima de outros elementos */
-        }
-        
-        .new-clock-icon:hover {
-            color: #d3d3d3;
-        }
-        
-                .new-modal {
-            display: none; /* Oculto por padrão */
-            position: fixed;
-            z-index: 1000; /* Garante que o modal fique acima de outros elementos */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-        
-        .new-modal-content {
-            background-color: #1f1f1f;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 400px;
-            color: #ffffff;
-            border-radius: 10px;
-        }
-        
-                .new-close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
-        .new-close:hover,
-        .new-close:focus {
-            color: #ffffff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        .new-timer-button {
-            background-color: #05d26d;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-        
-        .new-timer-button:hover {
-            background-color: #04b65c;
-        }
+        .clock-icon-exclusive {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #ffffff;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.clock-icon-exclusive:hover {
+    color: #d3d3d3;
+}
+
+.modal-exclusive {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1000; /* Garante que o modal fique acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content-exclusive {
+    background-color: #1f1f1f;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.close-modal-exclusive {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-modal-exclusive:hover,
+.close-modal-exclusive:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.set-timer-button-exclusive {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.set-timer-button-exclusive:hover {
+    background-color: #04b65c;
+}
+
 
     </style>
 </head>
