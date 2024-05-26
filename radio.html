@@ -799,7 +799,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <i class="fas fa-bars menu-toggle"></i>
     <img src="logo.png" alt="Guitar Radio Logo" class="logo">
-    <span class="new-clock-icon" id="new-clock-icon">&#128339;</span>
+    <span class="clock-icon-exclusive" id="clock-icon-exclusive">&#128339;</span>
     <nav class="menu">
         <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
         <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
@@ -879,16 +879,16 @@
     </main>
 
     <!-- Modal para a programação do temporizador -->
-    <div id="new-timer-modal" class="new-modal">
-        <div class="new-modal-content">
-            <span class="new-close" id="new-close-modal">&times;</span>
-            <h3>Hora de dormir</h3>
-            <label for="new-timer">Desligar após (minutos):</label>
-            <input type="number" id="new-timer" min="1" max="120" value="30">
-            <button class="new-timer-button" id="new-set-timer">Definir o tempo</button>
-        </div>
+<div id="timer-modal-exclusive" class="modal-exclusive">
+    <div class="modal-content-exclusive">
+        <span class="close-modal-exclusive" id="close-modal-exclusive">&times;</span>
+        <h3>Hora de dormir</h3>
+        <label for="timer-input-exclusive">Desligar após (minutos):</label>
+        <input type="number" id="timer-input-exclusive" min="1" max="120" value="30">
+        <button class="set-timer-button-exclusive" id="set-timer-button-exclusive">Definir o tempo</button>
     </div>
-
+</div>
+    
     <!-- Modal para opções de compartilhamento -->
     <div id="shareModal" class="modal">
         <div class="modal-content">
@@ -934,6 +934,7 @@
         
     </script>
     <script src="equalizer.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
+    <script src="clock-exclusive.js"></script>
 </body>
 </html>
