@@ -289,16 +289,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializa o Swiper
     const swiper = new Swiper('.swiper-container', {
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+    on: {
+        slideChange: function () {
+            const activeSlide = swiper.slides[swiper.activeIndex];
+            const stationIndex = activeSlide.dataset.index;
+            const station = stations[stationIndex];
+            playStation(station, document.querySelectorAll('#station-list li')[stationIndex], stationIndex);
         },
-        on: {
-            slideChange: function () {
-                const activeSlide = swiper.slides[swiper.activeIndex];
-                audioPlayer.src = activeSlide.dataset.url;
-                audioPlayer.play();
-            },
-        },
-    });
+    },
 });
