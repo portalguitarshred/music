@@ -713,6 +713,14 @@
         .carousel-button-prev {
             color: #ffffff;
         }
+
+        li.playing {
+            color: #05d26d; /* Verde padrão */
+        }
+        
+        li.playing .spectrum {
+            display: flex;
+        }
     </style>
 </head>
 <body>
@@ -735,16 +743,21 @@
 </header>
     <!-- Conteúdo anterior do header -->
     
-    <<div class="swiper-container">
+    <div class="swiper-container">
     <div class="swiper-wrapper">
-        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa1.jpg" alt="Capa 1"></div>
-        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa2.jpg" alt="Capa 2"></div>
-        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa3.jpg" alt="Capa 3"></div>
+        <div class="swiper-slide" data-index="0">
+            <img src="capa1.jpg" alt="Capa 1" class="cover-image">
+        </div>
+        <div class="swiper-slide" data-index="1">
+            <img src="capa2.jpg" alt="Capa 2" class="cover-image">
+        </div>
+        <div class="swiper-slide" data-index="2">
+            <img src="capa3.jpg" alt="Capa 3" class="cover-image">
+        </div>
     </div>
-    <div class="swiper-button-next slider__button slider__button--right"></div>
-    <div class="swiper-button-prev slider__button slider__button--left"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
 </div>
-
     
         <!-- Adicione botões de navegação, se necessário -->
         <div class="swiper-button-next"></div>
