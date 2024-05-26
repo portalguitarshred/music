@@ -14,37 +14,27 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    const playStation = (station, li, index) => {
+    function playStation(station, li) {
         audioPlayer.src = station.url;
-        statusMessage.textContent = 'Carregando...';
-        statusMessage.classList.add('show');
-
-        audioPlayer.play().then(() => {
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('show');
-        }).catch(error => {
-            console.error('Playback failed', error);
-            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-        });
-
-        audioPlayer.oncanplay = () => {
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('show');
-        };
-
-        audioPlayer.onerror = () => {
-            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-        };
-
+        audioPlayer.play();
         if (currentPlaying) {
             currentPlaying.classList.remove('playing');
+            currentPlaying.style.backgroundColor = '';
         }
         li.classList.add('playing');
+        li.style.backgroundColor = '#05d26d'; // Cor verde padrão
         currentPlaying = li;
 
-        // Atualizar o carrossel
-        swiper.slideTo(index);
-    };
+        // Atualizar o swiper para a estação selecionada
+        swiper.slideTo([...stationList.children].indexOf(li));
+
+        // Adiciona o falso espectro de áudio
+        const spectrums = document.querySelectorAll('.spectrum');
+        spectrums.forEach(spectrum => {
+            spectrum.style.display = 'none';
+        });
+        li.querySelector('.spectrum').style.display = 'flex';
+    }
 
     stations.forEach((station, index) => {
         const li = document.createElement('li');
@@ -84,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(spectrum);
 
         li.addEventListener('click', () => {
-            playStation(station, li, index);
+            playStation(station, li);
         });
 
         stationList.appendChild(li);
@@ -236,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Aqui você pode salvar o token JWT ou outra informação de autenticação
             } else {
                 alert('Erro ao realizar login. Verifique suas credenciais.');
-            }
+                        }
         } else {
             alert('Por favor, preencha todos os campos.');
         }
@@ -263,49 +253,59 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-    if (username && email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                username: username,
-                email: email,
-                password: password
-            })
-        });
+        if (username && email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    username: username,
+                    email: email,
+                    password: password
+                })
+            });
 
-        const data = await response.text();
-        alert(data);
+            const data = await response.text();
+            alert(data);
 
-        if (response.ok) {
-            registerModal.style.display = 'none';
+            if (response.ok) {
+                registerModal.style.display = 'none';
+            } else {
+                alert('Erro ao registrar usuário. Tente novamente.');
+            }
         } else {
-            alert('Erro ao registrar usuário. Tente novamente.');
+            alert('Por favor, preencha todos os campos.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
+    });
 
-// Inicializa o Swiper
-const swiper = new Swiper('.swiper-container', {
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    on: {
-        slideChange: function () {
-            const activeSlide = swiper.slides[swiper.activeIndex];
-            const stationIndex = activeSlide.dataset.index;
-            const station = stations[stationIndex];
-            playStation(station, document.querySelectorAll('#station-list li')[stationIndex], stationIndex);
+    // Inicializa o Swiper
+    const swiper = new Swiper('.swiper-container', {
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
         },
-    },
-});
+        on: {
+            slideChange: function () {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                const stationIndex = activeSlide.dataset.index;
+                const station = stations[stationIndex];
+                playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
+            },
+        },
+    });
 
+    // Atualiza as capas do slider
+    const updateSlider = () => {
+        document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
+            slide.dataset.index = index;
+            slide.dataset.url = stations[index].url;
+        });
+    };
+
+    updateSlider();
+});
