@@ -14,29 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    function playStation(station, li) {
-        audioPlayer.src = station.url;
-        audioPlayer.play();
-        if (currentPlaying) {
-            currentPlaying.classList.remove('playing');
-            currentPlaying.style.backgroundColor = '';
-        }
-        li.classList.add('playing');
-        li.style.backgroundColor = '#05d26d'; // Cor verde padrão
-        currentPlaying = li;
-
-        // Atualizar o swiper para a estação selecionada
-        swiper.slideTo([...stationList.children].indexOf(li));
-
-        // Adiciona o falso espectro de áudio
-        const spectrums = document.querySelectorAll('.spectrum');
-        spectrums.forEach(spectrum => {
-            spectrum.style.display = 'none';
-        });
-        li.querySelector('.spectrum').style.display = 'flex';
-    }
-
-    stations.forEach((station, index) => {
+    stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
 
@@ -74,7 +52,33 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(spectrum);
 
         li.addEventListener('click', () => {
-            playStation(station, li);
+            console.log(`Playing: ${station.name} - URL: ${station.url}`);
+            audioPlayer.src = station.url;
+            statusMessage.textContent = 'Carregando...';
+            statusMessage.classList.add('show');
+
+            audioPlayer.play().then(() => {
+                statusMessage.textContent = '';
+                statusMessage.classList.remove('show');
+            }).catch(error => {
+                console.error('Playback failed', error);
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+            });
+
+            audioPlayer.oncanplay = () => {
+                statusMessage.textContent = '';
+                statusMessage.classList.remove('show');
+            };
+
+            audioPlayer.onerror = () => {
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+            };
+
+            if (currentPlaying) {
+                currentPlaying.classList.remove('playing');
+            }
+            li.classList.add('playing');
+            currentPlaying = li;
         });
 
         stationList.appendChild(li);
@@ -226,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Aqui você pode salvar o token JWT ou outra informação de autenticação
             } else {
                 alert('Erro ao realizar login. Verifique suas credenciais.');
-                        }
+            }
         } else {
             alert('Por favor, preencha todos os campos.');
         }
@@ -246,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
         registerModal.style.display = 'none';
     });
 
-    window.addEventListener('click', (event) => {
+        window.addEventListener('click', (event) => {
         if (event.target === registerModal) {
             registerModal.style.display = 'none';
         }
@@ -294,18 +298,86 @@ document.addEventListener('DOMContentLoaded', () => {
                 const activeSlide = swiper.slides[swiper.activeIndex];
                 const stationIndex = activeSlide.dataset.index;
                 const station = stations[stationIndex];
-                playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
+                playStation(station, document.querySelectorAll('#station-list li')[stationIndex], stationIndex);
             },
         },
     });
 
-    // Atualiza as capas do slider
-    const updateSlider = () => {
-        document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-            slide.dataset.index = index;
-            slide.dataset.url = stations[index].url;
-        });
-    };
+    function playStation(station, element, index) {
+        console.log(`Playing: ${station.name} - URL: ${station.url}`);
+        audioPlayer.src = station.url;
+        statusMessage.textContent = 'Carregando...';
+        statusMessage.classList.add('show');
 
-    updateSlider();
+        audioPlayer.play().then(() => {
+            statusMessage.textContent = '';
+            statusMessage.classList.remove('show');
+        }).catch(error => {
+            console.error('Playback failed', error);
+            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+        });
+
+        audioPlayer.oncanplay = () => {
+            statusMessage.textContent = '';
+            statusMessage.classList.remove('show');
+        };
+
+        audioPlayer.onerror = () => {
+            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+        };
+
+        if (currentPlaying) {
+            currentPlaying.classList.remove('playing');
+        }
+        element.classList.add('playing');
+        currentPlaying = element;
+
+        // Atualiza o slider
+        swiper.slideTo(index);
+    }
+
+    stations.forEach((station, index) => {
+        const li = document.createElement('li');
+        li.textContent = station.name;
+        li.dataset.index = index;
+
+        const heartIcon = document.createElement('i');
+        heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
+        if (favorites.includes(station.url)) {
+            heartIcon.classList.add('favorited');
+        }
+        heartIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            heartIcon.classList.toggle('favorited');
+            if (heartIcon.classList.contains('favorited')) {
+                favorites.push(station.url);
+            } else {
+                favorites = favorites.filter(fav => fav !== station.url);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        });
+        li.appendChild(heartIcon);
+
+        const shareIcon = document.createElement('i');
+        shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
+        shareIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openShareModal(station.url);
+        });
+        li.appendChild(shareIcon);
+
+        const spectrum = document.createElement('div');
+        spectrum.classList.add('spectrum');
+        for (let i = 0; i < 5; i++) {
+            const bar = document.createElement('div');
+            spectrum.appendChild(bar);
+        }
+        li.appendChild(spectrum);
+
+        li.addEventListener('click', () => {
+            playStation(station, li, index);
+        });
+
+        stationList.appendChild(li);
+    });
 });
