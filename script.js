@@ -86,48 +86,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const clockIcon = document.getElementById('clock-icon');
-const timerModal = document.getElementById('timerModal');
-const closeModal = document.getElementById('closeModal');
-const setTimerButton = document.getElementById('setTimer');
-const timerInput = document.getElementById('timer');
-
-clockIcon.addEventListener('click', () => {
-    timerModal.style.display = 'block';
-});
-
-closeModal.addEventListener('click', () => {
-    timerModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === timerModal) {
+    const timerModal = document.getElementById('timerModal');
+    const closeModal = document.getElementById('closeModal');
+    const setTimerButton = document.getElementById('setTimer');
+    const timerInput = document.getElementById('timer');
+    
+    clockIcon.addEventListener('click', (e) => {
+        e.stopPropagation(); // Adicionado para evitar conflito
+        timerModal.style.display = 'block';
+    });
+    
+    closeModal.addEventListener('click', () => {
         timerModal.style.display = 'none';
-    }
-});
+    });
+    
+    timerModal.addEventListener('click', (e) => {
+        e.stopPropagation(); // Adicionado para evitar conflito
+    });
+    
+    window.addEventListener('click', (event) => {
+        if (event.target === timerModal) {
+            timerModal.style.display = 'none';
+        }
+    });
+    
+    setTimerButton.addEventListener('click', () => {
+        const minutes = parseInt(timerInput.value, 10);
+        if (isNaN(minutes) || minutes <= 0) {
+            alert('Por favor, insira um valor válido de minutos.');
+            return;
+        }
 
-timerModal.addEventListener('click', (event) => {
-    event.stopPropagation();
-});
+        const milliseconds = minutes * 60 * 1000;
+        setTimeout(() => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            alert('O temporizador desligou a rádio.');
+        }, milliseconds);
 
-setTimerButton.addEventListener('click', () => {
-    const minutes = parseInt(timerInput.value, 10);
-    if (isNaN(minutes) || minutes <= 0) {
-        alert('Por favor, insira um valor válido de minutos.');
-        return;
-    }
-
-    const milliseconds = minutes * 60 * 1000;
-    setTimeout(() => {
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
-        alert('O temporizador desligou a rádio.');
-    }, milliseconds);
-
-    timerModal.style.display = 'none';
-    alert(`Temporizador definido para ${minutes} minutos.`);
-});
-
-
+        timerModal.style.display = 'none';
+        alert(`Temporizador definido para ${minutes} minutos.`);
+    });
 
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
@@ -291,26 +290,27 @@ setTimerButton.addEventListener('click', () => {
 
     // Inicializa o Swiper
     const swiper = new Swiper('.swiper-container', {
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    on: {
-        slideChange: function () {
-            const activeSlide = swiper.slides[swiper.activeIndex];
-            const stationIndex = activeSlide.dataset.index;
-            const station = stations[stationIndex];
-            playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
         },
-    },
-});
-
-// Atualiza as capas do slider
-const updateSlider = () => {
-    document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-        slide.dataset.index = index;
-        slide.dataset.url = stations[index].url;
+        on: {
+            slideChange: function () {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                const stationIndex = activeSlide.dataset.index;
+                const station = stations[stationIndex];
+                playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
+            },
+        },
     });
-};
 
-updateSlider();
+    // Atualiza as capas do slider
+    const updateSlider = () => {
+        document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
+            slide.dataset.index = index;
+            slide.dataset.url = stations[index].url;
+        });
+    };
+
+    updateSlider();
+});
