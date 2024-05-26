@@ -1,23 +1,41 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const stationList = document.getElementById('station-list');
     const audioPlayer = document.getElementById('audio-player');
     const volumeControl = document.getElementById('volume-control');
-    const statusMessage = document.createElement('div');
+    const statusMessage = document.createElement('div'); // Elemento para mensagens de status
     statusMessage.id = 'status-message';
-    document.body.appendChild(statusMessage);
+    document.body.appendChild(statusMessage); // Adiciona o elemento de status ao corpo do documento
     let currentPlaying = null;
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || []; // Carrega favoritos do localStorage
 
     const stations = [
-        { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
-        { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
-        { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv', cover: 'capa1.jpg' },
+        { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv', cover: 'capa2.jpg' },
+        { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv', cover: 'capa3.jpg' },
     ];
 
-    stations.forEach(station => {
+    // Inicializa o Swiper
+    const swiper = new Swiper('.swiper-container', {
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        on: {
+            slideChange: function () {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                const stationUrl = activeSlide.dataset.url;
+                audioPlayer.src = stationUrl;
+                audioPlayer.play();
+                updatePlayingStation(stationUrl);
+            },
+        },
+    });
+
+    stations.forEach((station, index) => {
         const li = document.createElement('li');
         li.textContent = station.name;
 
+        // Adiciona ícone de coração
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
         if (favorites.includes(station.url)) {
@@ -35,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         li.appendChild(heartIcon);
 
+        // Adiciona ícone de compartilhamento
         const shareIcon = document.createElement('i');
         shareIcon.classList.add('fa', 'fa-share-alt', 'share-icon');
         shareIcon.addEventListener('click', (e) => {
@@ -43,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         li.appendChild(shareIcon);
 
+        // Adiciona barras do espectro de áudio
         const spectrum = document.createElement('div');
         spectrum.classList.add('spectrum');
         for (let i = 0; i < 5; i++) {
@@ -52,43 +72,56 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(spectrum);
 
         li.addEventListener('click', () => {
-            console.log(`Playing: ${station.name} - URL: ${station.url}`);
-            audioPlayer.src = station.url;
-            statusMessage.textContent = 'Carregando...';
-            statusMessage.classList.add('show');
-
-            audioPlayer.play().then(() => {
-                statusMessage.textContent = '';
-                statusMessage.classList.remove('show');
-            }).catch(error => {
-                console.error('Playback failed', error);
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-            });
-
-            audioPlayer.oncanplay = () => {
-                statusMessage.textContent = '';
-                statusMessage.classList.remove('show');
-            };
-
-            audioPlayer.onerror = () => {
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-            };
-
-            if (currentPlaying) {
-                currentPlaying.classList.remove('playing');
-            }
-            li.classList.add('playing');
-            currentPlaying = li;
+            playStation(station.url);
+            swiper.slideTo(index);
         });
 
         stationList.appendChild(li);
     });
+
+    function playStation(url) {
+        console.log(`Playing station URL: ${url}`);
+        audioPlayer.src = url;
+        statusMessage.textContent = 'Carregando...';
+        statusMessage.classList.add('show');
+
+        audioPlayer.play().then(() => {
+            statusMessage.textContent = '';
+            statusMessage.classList.remove('show');
+        }).catch(error => {
+            console.error('Playback failed', error);
+            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+        });
+
+        audioPlayer.oncanplay = () => {
+            statusMessage.textContent = '';
+            statusMessage.classList.remove('show');
+        };
+
+        audioPlayer.onerror = () => {
+            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+        };
+
+        updatePlayingStation(url);
+    }
+
+    function updatePlayingStation(url) {
+        if (currentPlaying) {
+            currentPlaying.classList.remove('playing');
+        }
+        const playingStation = Array.from(stationList.children).find(li => li.querySelector('.heart-icon').nextSibling.nodeValue.trim() === stations.find(station => station.url === url).name);
+        if (playingStation) {
+            playingStation.classList.add('playing');
+            currentPlaying = playingStation;
+        }
+    }
 
     volumeControl.addEventListener('input', (e) => {
         audioPlayer.volume = e.target.value;
         console.log(`Volume: ${audioPlayer.volume}`);
     });
 
+    // Lógica do Temporizador
     const clockIcon = document.getElementById('clock-icon');
     const timerModal = document.getElementById('timerModal');
     const closeModal = document.getElementById('closeModal');
@@ -127,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`Temporizador definido para ${minutes} minutos.`);
     });
 
+    // Lógica do Compartilhamento
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
     const copyLinkButton = document.getElementById('copyLink');
@@ -167,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(twitterUrl, '_blank');
     });
 
+    // Lógica do Menu Sanduíche
     const menuToggle = document.querySelector('.menu-toggle');
     const menu = document.querySelector('.menu');
     
@@ -186,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Lógica do Login de Usuário
     const loginLink = document.getElementById('login-link');
     const loginModal = document.getElementById('loginModal');
     const closeLoginModal = document.getElementById('closeLoginModal');
@@ -206,13 +242,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    loginButton.addEventListener('click', async () => {
+        loginButton.addEventListener('click', async () => {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
 
         if (email && password) {
             const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-                                method: 'POST',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -236,6 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Lógica do Registro de Usuário
     const registerLink = document.getElementById('register-link');
     const registerModal = document.getElementById('registerModal');
     const closeRegisterModal = document.getElementById('closeRegisterModal');
@@ -285,21 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             alert('Por favor, preencha todos os campos.');
         }
-    });
-
-    // Inicializa o Swiper
-    const swiper = new Swiper('.swiper-container', {
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        on: {
-            slideChange: function () {
-                const activeSlide = swiper.slides[swiper.activeIndex];
-                audioPlayer.src = activeSlide.dataset.url;
-                audioPlayer.play();
-            },
-        },
     });
 });
 
