@@ -793,76 +793,37 @@
 </head>
 <body>
     <header>
-    <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet" />
-    <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet" />
-    <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <i class="fas fa-bars menu-toggle"></i>
-    <img src="logo.png" alt="Guitar Radio Logo" class="logo">
-    <span class="clock-icon-exclusive" id="clock-icon-exclusive">&#128339;</span>
-    <nav class="menu">
-        <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
-        <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
-        <a href="https://guitarshred.com.br" target="_blank"><i class="fas fa-newspaper"></i> Notícias</a>
-        <a href="https://guitarshredacademy.com.br" target="_blank"><i class="fas fa-guitar"></i> Cursos de Guitarra</a>
-        <a href="https://www.youtube.com/guitarshredofficial" target="_blank"><i class="fab fa-youtube"></i> Canal do YouTube</a>
-        <a href="https://www.instagram.com/portalguitarshred" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-    </nav>
-</header>
-    <!-- Conteúdo anterior do header -->
-    
+        <i class="fas fa-bars menu-toggle"></i>
+        <img src="logo.png" alt="Guitar Radio Logo" class="logo">
+        <span class="clock-icon-exclusive" id="clock-icon-exclusive">&#128339;</span>
+        <nav class="menu">
+            <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
+            <a href="https://guitarshred.com.br" target="_blank"><i class="fas fa-newspaper"></i> Notícias</a>
+            <a href="https://guitarshredacademy.com.br" target="_blank"><i class="fas fa-guitar"></i> Cursos de Guitarra</a>
+            <a href="https://www.youtube.com/guitarshredofficial" target="_blank"><i class="fab fa-youtube"></i> Canal do YouTube</a>
+            <a href="https://www.instagram.com/portalguitarshred" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        </nav>
+    </header>
+
     <div class="swiper-container">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide" data-index="0">
-            <img src="capa1.jpg" alt="Capa 1">
-        </div>
-        <div class="swiper-slide" data-index="1">
-            <img src="capa2.jpg" alt="Capa 2">
-        </div>
-        <div class="swiper-slide" data-index="2">
-            <img src="capa3.jpg" alt="Capa 3">
-        </div>
-    </div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-</div>
-    
-        <!-- Adicione botões de navegação, se necessário -->
-        <div class="swiper-button-next"></div>
-    </div>
-    <!-- Aqui está a capa das músicas da rádio 
-    <img src="capa1.jpg" alt="Esta imagem ainda não foi carregada" class="cover-image">
-    <div class="descript"> 
-        <h3>Rock Music</h3> -->
-      <!--  <i>Nome do artista</i> -->
-    </div>
-    <!-- Novo player de áudio abaixo da imagem 
-    <audio id="secondary-audio-player" controls style="width: 210px;">
-        <source src="musica.mp3" type="audio/mp3">
-        Seu navegador não suporta o elemento de áudio.
-    </audio> -->
-    
-    <main>
-      <!--   <section id="highlights">
-          <div class="carousel-container">
-                <h2>Destaques</h2>
-                <div class="carousel-controls">
-                    <button class="carousel-button" id="carousel-prev">&#9664;</button>
-                    <button class="carousel-button" id="carousel-next">&#9654;</button>
-                </div>
-            </div> 
-            <div class="carousel">
-                <div class="carousel-track">
-                    <!-- Imagens das capas dos CDs serão adicionadas aqui 
-                </div>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" data-index="0">
+                <img src="capa1.jpg" alt="Capa 1">
             </div>
-        </section> -->
+            <div class="swiper-slide" data-index="1">
+                <img src="capa2.jpg" alt="Capa 2">
+            </div>
+            <div class="swiper-slide" data-index="2">
+                <img src="capa3.jpg" alt="Capa 3">
+            </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <main>
         <section id="stations">
-            <!-- <div class="equalizer-container">
-                <p class="equalizer-text">Equalizador digital</p>
-                <i class="fas fa-sliders-h equalizer-icon"></i>
-            </div> -->
-            </h2>
             <ul id="station-list">
                 <!-- Stations will be dynamically added here -->
             </ul>
@@ -879,16 +840,16 @@
     </main>
 
     <!-- Modal para a programação do temporizador -->
-<div id="timer-modal-exclusive" class="modal-exclusive">
-    <div class="modal-content-exclusive">
-        <span class="close-modal-exclusive" id="close-modal-exclusive">&times;</span>
-        <h3>Hora de dormir</h3>
-        <label for="timer-input-exclusive">Desligar após (minutos):</label>
-        <input type="number" id="timer-input-exclusive" min="1" max="120" value="30">
-        <button class="set-timer-button-exclusive" id="set-timer-button-exclusive">Definir o tempo</button>
+    <div id="timer-modal-exclusive" class="modal-exclusive">
+        <div class="modal-content-exclusive">
+            <span class="close-modal-exclusive" id="close-modal-exclusive">&times;</span>
+            <h3>Hora de dormir</h3>
+            <label for="timer-input-exclusive">Desligar após (minutos):</label>
+            <input type="number" id="timer-input-exclusive" min="1" max="120" value="30">
+            <button class="set-timer-button-exclusive" id="set-timer-button-exclusive">Definir o tempo</button>
+        </div>
     </div>
-</div>
-    
+
     <!-- Modal para opções de compartilhamento -->
     <div id="shareModal" class="modal">
         <div class="modal-content">
@@ -930,9 +891,7 @@
         </div>
     </div>
 
-    <script src="script.js">
-        
-    </script>
+    <script src="script.js"></script>
     <script src="equalizer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
     <script src="clock-exclusive.js"></script>
