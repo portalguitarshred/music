@@ -96,9 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
         timerModal.style.display = 'block';
     });
     
-    closeModal.addEventListener('click', () => {
-        timerModal.style.display = 'none';
-    });
+    closeModal.addEventListener('click', (e) => {
+    e.stopPropagation(); // Adicionado para evitar conflito
+    timerModal.style.display = 'none';
+});
     
     timerModal.addEventListener('click', (e) => {
         e.stopPropagation(); // Adicionado para evitar conflito
