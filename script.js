@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Funções para abrir e fechar o modal do temporizador
     const openTimerModal = (event) => {
         event.preventDefault();
-        event.stopPropagation();
         timerModal.style.display = 'block';
     };
 
@@ -130,9 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`Temporizador definido para ${minutes} minutos.`);
     });
 });
-
-
-
 
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
