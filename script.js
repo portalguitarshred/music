@@ -9,15 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
     const stations = [
-        { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv', cover: 'capa1.jpg' },
-        { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv', cover: 'capa2.jpg' },
-        { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv', cover: 'capa3.jpg' },
+        { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    stations.forEach((station, index) => {
+    stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
-        li.dataset.index = index;
 
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
@@ -53,43 +52,37 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(spectrum);
 
         li.addEventListener('click', () => {
-            playStation(station, li, index);
+            console.log(`Playing: ${station.name} - URL: ${station.url}`);
+            audioPlayer.src = station.url;
+            statusMessage.textContent = 'Carregando...';
+            statusMessage.classList.add('show');
+
+            audioPlayer.play().then(() => {
+                statusMessage.textContent = '';
+                statusMessage.classList.remove('show');
+            }).catch(error => {
+                console.error('Playback failed', error);
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+            });
+
+            audioPlayer.oncanplay = () => {
+                statusMessage.textContent = '';
+                statusMessage.classList.remove('show');
+            };
+
+            audioPlayer.onerror = () => {
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+            };
+
+            if (currentPlaying) {
+                currentPlaying.classList.remove('playing');
+            }
+            li.classList.add('playing');
+            currentPlaying = li;
         });
 
         stationList.appendChild(li);
     });
-
-    const playStation = (station, li, index) => {
-        console.log(`Playing: ${station.name} - URL: ${station.url}`);
-        audioPlayer.src = station.url;
-        statusMessage.textContent = 'Carregando...';
-        statusMessage.classList.add('show');
-
-        audioPlayer.play().then(() => {
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('show');
-        }).catch(error => {
-            console.error('Playback failed', error);
-            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-        });
-
-        audioPlayer.oncanplay = () => {
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('show');
-        };
-
-        audioPlayer.onerror = () => {
-            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-        };
-
-        if (currentPlaying) {
-            currentPlaying.classList.remove('playing');
-        }
-        li.classList.add('playing');
-        currentPlaying = li;
-
-        swiper.slideTo(index);
-    };
 
     volumeControl.addEventListener('input', (e) => {
         audioPlayer.volume = e.target.value;
@@ -219,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (email && password) {
             const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-                method: 'POST',
+                                method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -243,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-        const registerLink = document.getElementById('register-link');
+    const registerLink = document.getElementById('register-link');
     const registerModal = document.getElementById('registerModal');
     const closeRegisterModal = document.getElementById('closeRegisterModal');
     const registerButton = document.getElementById('registerButton');
@@ -303,60 +296,9 @@ document.addEventListener('DOMContentLoaded', () => {
         on: {
             slideChange: function () {
                 const activeSlide = swiper.slides[swiper.activeIndex];
-                const stationIndex = activeSlide.dataset.index;
-                playStation(stations[stationIndex], document.querySelector(`li[data-index="${stationIndex}"]`), stationIndex);
+                audioPlayer.src = activeSlide.dataset.url;
+                audioPlayer.play();
             },
         },
     });
-
-    // Adiciona dataset de índice às capas do slider
-    document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-        slide.dataset.index = index;
-    });
-
-    // Função para sincronizar o slider com a estação ativa
-    const playStation = (station, li, index) => {
-        console.log(`Playing: ${station.name} - URL: ${station.url}`);
-        audioPlayer.src = station.url;
-        statusMessage.textContent = 'Carregando...';
-        statusMessage.classList.add('show');
-
-        audioPlayer.play().then(() => {
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('show');
-        }).catch(error => {
-            console.error('Playback failed', error);
-            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-        });
-
-        audioPlayer.oncanplay = () => {
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('show');
-        };
-
-        audioPlayer.onerror = () => {
-            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-        };
-
-        if (currentPlaying) {
-            currentPlaying.classList.remove('playing');
-        }
-        li.classList.add('playing');
-        currentPlaying = li;
-
-        swiper.slideTo(index);
-
-        // Atualiza a aparência da estação ativa
-        document.querySelectorAll('li').forEach(item => {
-            item.style.color = '';
-        });
-        li.style.color = '#05d26d'; // Verde padrão
-
-        // Atualiza o espectro de áudio falso
-        document.querySelectorAll('.spectrum').forEach(spectrum => {
-            spectrum.style.display = 'none';
-        });
-        li.querySelector('.spectrum').style.display = 'flex';
-    };
 });
-
