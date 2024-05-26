@@ -730,13 +730,14 @@
             color: #ffffff;
             padding: 0.5em;
             transition: color 0.3s ease;
+            z-index: 1001; /* Garante que o ícone fique acima de outros elementos */
         }
         
         .new-clock-icon:hover {
             color: #d3d3d3;
         }
         
-        .new-modal {
+                .new-modal {
             display: none; /* Oculto por padrão */
             position: fixed;
             z-index: 1000; /* Garante que o modal fique acima de outros elementos */
@@ -760,7 +761,7 @@
             border-radius: 10px;
         }
         
-        .new-close {
+                .new-close {
             color: #aaaaaa;
             float: right;
             font-size: 28px;
