@@ -86,54 +86,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const clockIcon = document.getElementById('clock-icon');
-const timerModal = document.getElementById('timerModal');
-const closeModal = document.getElementById('closeModal');
-const setTimerButton = document.getElementById('setTimer');
-const timerInput = document.getElementById('timer');
-
-// Adicione eventos de toque e clique para suportar dispositivos móveis
-clockIcon.addEventListener('click', () => {
-    timerModal.style.display = 'block';
-});
-clockIcon.addEventListener('touchstart', () => {
-    timerModal.style.display = 'block';
-});
-
-closeModal.addEventListener('click', () => {
-    timerModal.style.display = 'none';
-});
-closeModal.addEventListener('touchstart', () => {
-    timerModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === timerModal) {
+    const timerModal = document.getElementById('timerModal');
+    const closeModal = document.getElementById('closeModal');
+    const setTimerButton = document.getElementById('setTimer');
+    const timerInput = document.getElementById('timer');
+    
+    // Adicione eventos de toque e clique para suportar dispositivos móveis
+    const openTimerModal = () => {
+        timerModal.style.display = 'block';
+    };
+    
+    const closeTimerModal = () => {
         timerModal.style.display = 'none';
-    }
-});
-window.addEventListener('touchstart', (event) => {
-    if (event.target === timerModal) {
-        timerModal.style.display = 'none';
-    }
-});
+    };
+    
+    clockIcon.addEventListener('click', openTimerModal);
+    clockIcon.addEventListener('touchstart', openTimerModal);
+    
+    closeModal.addEventListener('click', closeTimerModal);
+    closeModal.addEventListener('touchstart', closeTimerModal);
+    
+    window.addEventListener('click', (event) => {
+        if (event.target === timerModal) {
+            closeTimerModal();
+        }
+    });
+    window.addEventListener('touchstart', (event) => {
+        if (event.target === timerModal) {
+            closeTimerModal();
+        }
+    });
+    
+    setTimerButton.addEventListener('click', () => {
+        const minutes = parseInt(timerInput.value, 10);
+        if (isNaN(minutes) || minutes <= 0) {
+            alert('Por favor, insira um valor válido de minutos.');
+            return;
+        }
+    
+        const milliseconds = minutes * 60 * 1000;
+        setTimeout(() => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            alert('O temporizador desligou a rádio.');
+        }, milliseconds);
+    
+        closeTimerModal();
+        alert(`Temporizador definido para ${minutes} minutos.`);
+    });
 
-setTimerButton.addEventListener('click', () => {
-    const minutes = parseInt(timerInput.value, 10);
-    if (isNaN(minutes) || minutes <= 0) {
-        alert('Por favor, insira um valor válido de minutos.');
-        return;
-    }
-
-    const milliseconds = minutes * 60 * 1000;
-    setTimeout(() => {
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
-        alert('O temporizador desligou a rádio.');
-    }, milliseconds);
-
-    timerModal.style.display = 'none';
-    alert(`Temporizador definido para ${minutes} minutos.`);
-});
 
 
     const shareModal = document.getElementById('shareModal');
