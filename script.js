@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
     const stations = [
-        { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv', image: 'capa1.jpg' },
-        { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv', image: 'capa2.jpg' },
-        { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv', image: 'capa3.jpg' }
+        { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
     stations.forEach(station => {
@@ -79,8 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             li.classList.add('playing');
             currentPlaying = li;
-            const swiperIndex = stations.findIndex(st => st.url === station.url);
-            swiper.slideTo(swiperIndex);
         });
 
         stationList.appendChild(li);
@@ -209,89 +207,87 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loginButton.addEventListener('click', async () => {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
 
-    if (email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                email: email,
-                password: password
-            })
-        });
+        if (email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/login.php', {
+                                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    email: email,
+                    password: password
+                })
+            });
 
-        const data = await response.text();
-        alert(data);
+            const data = await response.text();
+            alert(data);
 
-        if (response.ok) {
-            loginModal.style.display = 'none';
-            // Aqui você pode salvar o token JWT ou outra informação de autenticação
+            if (response.ok) {
+                loginModal.style.display = 'none';
+                // Aqui você pode salvar o token JWT ou outra informação de autenticação
+            } else {
+                alert('Erro ao realizar login. Verifique suas credenciais.');
+            }
         } else {
-            alert('Erro ao realizar login. Verifique suas credenciais.');
+            alert('Por favor, preencha todos os campos.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
+    });
 
-// Lógica do Registro de Usuário
-const registerLink = document.getElementById('register-link');
-const registerModal = document.getElementById('registerModal');
-const closeRegisterModal = document.getElementById('closeRegisterModal');
-const registerButton = document.getElementById('registerButton');
+    const registerLink = document.getElementById('register-link');
+    const registerModal = document.getElementById('registerModal');
+    const closeRegisterModal = document.getElementById('closeRegisterModal');
+    const registerButton = document.getElementById('registerButton');
 
-registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerModal.style.display = 'block';
-});
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'block';
+    });
 
-closeRegisterModal.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === registerModal) {
+    closeRegisterModal.addEventListener('click', () => {
         registerModal.style.display = 'none';
-    }
-});
+    });
 
-registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (username && email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                username: username,
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.text();
-        alert(data);
-
-        if (response.ok) {
+    window.addEventListener('click', (event) => {
+        if (event.target === registerModal) {
             registerModal.style.display = 'none';
-        } else {
-            alert('Erro ao registrar usuário. Tente novamente.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
+    });
 
-// Lógica do Slider e Sincronização com Estações
-document.addEventListener('DOMContentLoaded', function() {
+    registerButton.addEventListener('click', async () => {
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        if (username && email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    username: username,
+                    email: email,
+                    password: password
+                })
+            });
+
+            const data = await response.text();
+            alert(data);
+
+            if (response.ok) {
+                registerModal.style.display = 'none';
+            } else {
+                alert('Erro ao registrar usuário. Tente novamente.');
+            }
+        } else {
+            alert('Por favor, preencha todos os campos.');
+        }
+    });
+
+    // Inicializa o Swiper
     const swiper = new Swiper('.swiper-container', {
         navigation: {
             nextEl: '.swiper-button-next',
@@ -300,27 +296,9 @@ document.addEventListener('DOMContentLoaded', function() {
         on: {
             slideChange: function () {
                 const activeSlide = swiper.slides[swiper.activeIndex];
-                const audioPlayer = document.getElementById('audio-player');
-                const stationIndex = activeSlide.getAttribute('data-index');
-                const station = stations[stationIndex];
-                audioPlayer.src = station.url;
+                audioPlayer.src = activeSlide.dataset.url;
                 audioPlayer.play();
-                
-                // Atualiza a estação ativa na lista
-                const currentPlaying = document.querySelector('li.playing');
-                if (currentPlaying) {
-                    currentPlaying.classList.remove('playing');
-                }
-                const stationListItems = document.querySelectorAll('#station-list li');
-                stationListItems[stationIndex].classList.add('playing');
             },
         },
-    });
-
-    stations.forEach((station, index) => {
-        const li = document.querySelector(`#station-list li:nth-child(${index + 1})`);
-        li.addEventListener('click', () => {
-            swiper.slideTo(index);
-        });
     });
 });
