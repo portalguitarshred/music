@@ -8,79 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPlaying = null;
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-   const stations = [
+    const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
         { name: 'Classic Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
         { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    const stationList = document.getElementById('station-list');
-    const audioPlayer = document.getElementById('audio-player');
-    let currentPlaying = null;
-
-    // Função para tocar a estação e atualizar a UI
-    function playStation(station, li) {
-        audioPlayer.src = station.url;
-        audioPlayer.play();
-        if (currentPlaying) {
-            currentPlaying.classList.remove('playing');
-            currentPlaying.style.backgroundColor = '';
-        }
-        li.classList.add('playing');
-        li.style.backgroundColor = '#05d26d'; // Cor verde padrão
-        currentPlaying = li;
-
-        // Atualizar o swiper para a estação selecionada
-        swiper.slideTo([...stationList.children].indexOf(li));
-
-        // Adiciona o falso espectro de áudio
-        const spectrums = document.querySelectorAll('.spectrum');
-        spectrums.forEach(spectrum => {
-            spectrum.style.display = 'none';
-        });
-        li.querySelector('.spectrum').style.display = 'flex';
-    }
-
-    stations.forEach((station, index) => {
+    stations.forEach(station => {
         const li = document.createElement('li');
         li.textContent = station.name;
-
-        const spectrum = document.createElement('div');
-        spectrum.classList.add('spectrum');
-        for (let i = 0; i < 5; i++) {
-            const bar = document.createElement('div');
-            spectrum.appendChild(bar);
-        }
-        li.appendChild(spectrum);
-
-        li.addEventListener('click', () => {
-            playStation(station, li);
-        });
-
-        stationList.appendChild(li);
-    });
-
-    // Clique nas estações para atualizar o swiper
-    stationList.querySelectorAll('li').forEach((li, index) => {
-        li.addEventListener('click', () => {
-            swiper.slideTo(index);
-        });
-    });
-});
-
-        // Adiciona o falso espectro de áudio
-        const spectrums = document.querySelectorAll('.spectrum');
-        spectrums.forEach(spectrum => {
-            spectrum.style.display = 'none';
-        });
-        li.querySelector('.spectrum').style.display = 'flex';
-    }
-
-    // Adiciona as estações à lista e configura os eventos de clique
-    stations.forEach((station, index) => {
-        const li = document.createElement('li');
-        li.textContent = station.name;
-        li.dataset.index = index; // Adiciona o índice da estação
 
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
@@ -116,7 +52,33 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(spectrum);
 
         li.addEventListener('click', () => {
-            playStation(station, li, index);
+            console.log(`Playing: ${station.name} - URL: ${station.url}`);
+            audioPlayer.src = station.url;
+            statusMessage.textContent = 'Carregando...';
+            statusMessage.classList.add('show');
+
+            audioPlayer.play().then(() => {
+                statusMessage.textContent = '';
+                statusMessage.classList.remove('show');
+            }).catch(error => {
+                console.error('Playback failed', error);
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+            });
+
+            audioPlayer.oncanplay = () => {
+                statusMessage.textContent = '';
+                statusMessage.classList.remove('show');
+            };
+
+            audioPlayer.onerror = () => {
+                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+            };
+
+            if (currentPlaying) {
+                currentPlaying.classList.remove('playing');
+            }
+            li.classList.add('playing');
+            currentPlaying = li;
         });
 
         stationList.appendChild(li);
@@ -225,150 +187,107 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const loginLink = document.getElementById('login-link');
-const loginModal = document.getElementById('loginModal');
-const closeLoginModal = document.getElementById('closeLoginModal');
-const loginButton = document.getElementById('loginButton');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginButton = document.getElementById('loginButton');
 
-loginLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    loginModal.style.display = 'block';
-});
+    loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'block';
+    });
 
-closeLoginModal.addEventListener('click', () => {
-    loginModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === loginModal) {
+    closeLoginModal.addEventListener('click', () => {
         loginModal.style.display = 'none';
-    }
-});
+    });
 
-loginButton.addEventListener('click', async () => {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    if (email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.text();
-        alert(data);
-
-        if (response.ok) {
+    window.addEventListener('click', (event) => {
+        if (event.target === loginModal) {
             loginModal.style.display = 'none';
-            // Aqui você pode salvar o token JWT ou outra informação de autenticação
-        } else {
-            alert('Erro ao realizar login. Verifique suas credenciais.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
+    });
 
-const registerLink = document.getElementById('register-link');
-const registerModal = document.getElementById('registerModal');
-const closeRegisterModal = document.getElementById('closeRegisterModal');
-const registerButton = document.getElementById('registerButton');
+    loginButton.addEventListener('click', async () => {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
 
-registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerModal.style.display = 'block';
-});
+        if (email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/login.php', {
+                                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    email: email,
+                    password: password
+                })
+            });
 
-closeRegisterModal.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-});
+            const data = await response.text();
+            alert(data);
 
-window.addEventListener('click', (event) => {
-    if (event.target === registerModal) {
+            if (response.ok) {
+                loginModal.style.display = 'none';
+                // Aqui você pode salvar o token JWT ou outra informação de autenticação
+            } else {
+                alert('Erro ao realizar login. Verifique suas credenciais.');
+            }
+        } else {
+            alert('Por favor, preencha todos os campos.');
+        }
+    });
+
+    const registerLink = document.getElementById('register-link');
+    const registerModal = document.getElementById('registerModal');
+    const closeRegisterModal = document.getElementById('closeRegisterModal');
+    const registerButton = document.getElementById('registerButton');
+
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'block';
+    });
+
+    closeRegisterModal.addEventListener('click', () => {
         registerModal.style.display = 'none';
-    }
-});
+    });
 
-registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (username && email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                username: username,
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.text();
-        alert(data);
-
-        if (response.ok) {
+    window.addEventListener('click', (event) => {
+        if (event.target === registerModal) {
             registerModal.style.display = 'none';
-        } else {
-            alert('Erro ao registrar usuário. Tente novamente.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
-
-// Função para tocar a estação e atualizar a UI
-function playStation(station, li, index) {
-    console.log(`Playing: ${station.name} - URL: ${station.url}`);
-    audioPlayer.src = station.url;
-    statusMessage.textContent = 'Carregando...';
-    statusMessage.classList.add('show');
-
-    audioPlayer.play().then(() => {
-        statusMessage.textContent = '';
-        statusMessage.classList.remove('show');
-    }).catch(error => {
-        console.error('Playback failed', error);
-        statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
     });
 
-    audioPlayer.oncanplay = () => {
-        statusMessage.textContent = '';
-        statusMessage.classList.remove('show');
-    };
+    registerButton.addEventListener('click', async () => {
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-    audioPlayer.onerror = () => {
-        statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-    };
+        if (username && email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    username: username,
+                    email: email,
+                    password: password
+                })
+            });
 
-    if (currentPlaying) {
-        currentPlaying.classList.remove('playing');
-        currentPlaying.style.backgroundColor = '';
-    }
-    li.classList.add('playing');
-    li.style.backgroundColor = '#05d26d'; // Cor verde padrão
-    currentPlaying = li;
+            const data = await response.text();
+            alert(data);
 
-    swiper.slideTo(index); // Atualiza o slider
-
-    // Adiciona o falso espectro de áudio
-    const spectrums = document.querySelectorAll('.spectrum');
-    spectrums.forEach(spectrum => {
-        spectrum.style.display = 'none';
+            if (response.ok) {
+                registerModal.style.display = 'none';
+            } else {
+                alert('Erro ao registrar usuário. Tente novamente.');
+            }
+        } else {
+            alert('Por favor, preencha todos os campos.');
+        }
     });
-    li.querySelector('.spectrum').style.display = 'flex';
-}
 
-// Inicializa o Swiper
-document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa o Swiper
     const swiper = new Swiper('.swiper-container', {
         navigation: {
             nextEl: '.swiper-button-next',
@@ -377,8 +296,9 @@ document.addEventListener('DOMContentLoaded', () => {
         on: {
             slideChange: function () {
                 const activeSlide = swiper.slides[swiper.activeIndex];
-                const stationIndex = activeSlide.dataset.index;
-                playStation(stations[stationIndex], stationList.children[stationIndex]);
+                audioPlayer.src = activeSlide.dataset.url;
+                audioPlayer.play();
             },
         },
     });
+});
