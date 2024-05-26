@@ -1,9 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM completamente carregado e analisado');
+    
     const clockIcon = document.getElementById('clock-icon-exclusive');
     const timerModal = document.getElementById('timer-modal-exclusive');
     const closeModal = document.getElementById('close-modal-exclusive');
     const setTimerButton = document.getElementById('set-timer-button-exclusive');
     const timerInput = document.getElementById('timer-input-exclusive');
+
+    // Verificação dos elementos
+    console.log('clockIcon:', clockIcon);
+    console.log('timerModal:', timerModal);
+    console.log('closeModal:', closeModal);
+    console.log('setTimerButton:', setTimerButton);
+    console.log('timerInput:', timerInput);
 
     // Função para abrir o modal do temporizador
     function openTimerModal() {
@@ -18,7 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Adiciona eventos de clique ao ícone do relógio
-    clockIcon.addEventListener('click', openTimerModal);
+    clockIcon.addEventListener('click', () => {
+        console.log('Ícone do relógio clicado');
+        openTimerModal();
+    });
 
     // Adiciona eventos de clique ao botão de fechar o modal
     closeModal.addEventListener('click', closeTimerModal);
@@ -40,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const milliseconds = minutes * 60 * 1000;
         setTimeout(() => {
+            const audioPlayer = document.getElementById('audio-player');
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
             alert('O temporizador desligou a rádio.');
