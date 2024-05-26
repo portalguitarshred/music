@@ -85,55 +85,52 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Volume: ${audioPlayer.volume}`);
     });
 
+    document.addEventListener('DOMContentLoaded', () => {
     const clockIcon = document.getElementById('clock-icon');
     const timerModal = document.getElementById('timerModal');
     const closeModal = document.getElementById('closeModal');
     const setTimerButton = document.getElementById('setTimer');
     const timerInput = document.getElementById('timer');
-    
-    // Adicione eventos de toque e clique para suportar dispositivos móveis
-    const openTimerModal = () => {
+
+    // Funções para abrir e fechar o modal do temporizador
+    const openTimerModal = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         timerModal.style.display = 'block';
     };
-    
+
     const closeTimerModal = () => {
         timerModal.style.display = 'none';
     };
-    
+
     clockIcon.addEventListener('click', openTimerModal);
-    clockIcon.addEventListener('touchstart', openTimerModal);
-    
     closeModal.addEventListener('click', closeTimerModal);
-    closeModal.addEventListener('touchstart', closeTimerModal);
-    
+
     window.addEventListener('click', (event) => {
         if (event.target === timerModal) {
             closeTimerModal();
         }
     });
-    window.addEventListener('touchstart', (event) => {
-        if (event.target === timerModal) {
-            closeTimerModal();
-        }
-    });
-    
+
     setTimerButton.addEventListener('click', () => {
         const minutes = parseInt(timerInput.value, 10);
         if (isNaN(minutes) || minutes <= 0) {
             alert('Por favor, insira um valor válido de minutos.');
             return;
         }
-    
+
         const milliseconds = minutes * 60 * 1000;
         setTimeout(() => {
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
             alert('O temporizador desligou a rádio.');
         }, milliseconds);
-    
+
         closeTimerModal();
         alert(`Temporizador definido para ${minutes} minutos.`);
     });
+});
+
 
 
 
