@@ -85,61 +85,65 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Volume: ${audioPlayer.volume}`);
     });
 
-    const clockIcon = document.getElementById('clock-icon');
-const timerModal = document.getElementById('timerModal');
-const closeModal = document.getElementById('closeModal');
-const setTimerButton = document.getElementById('setTimer');
-const timerInput = document.getElementById('timer');
+    document.addEventListener('DOMContentLoaded', () => {
+    const clockIcon = document.getElementById('new-clock-icon');
+    const timerModal = document.getElementById('new-timer-modal');
+    const closeModal = document.getElementById('new-close-modal');
+    const setTimerButton = document.getElementById('new-set-timer');
+    const timerInput = document.getElementById('new-timer');
+    const audioPlayer = document.getElementById('audio-player');
 
-// Função para abrir o modal do temporizador
-function openTimerModal() {
-    timerModal.style.display = 'block';
-}
+    // Função para abrir o modal do temporizador
+    function openTimerModal() {
+        timerModal.style.display = 'block';
+    }
 
-// Função para fechar o modal do temporizador
-function closeTimerModal() {
-    timerModal.style.display = 'none';
-}
+    // Função para fechar o modal do temporizador
+    function closeTimerModal() {
+        timerModal.style.display = 'none';
+    }
 
-// Adiciona eventos de clique e toque ao ícone do relógio
-clockIcon.addEventListener('click', openTimerModal);
-clockIcon.addEventListener('touchstart', openTimerModal);
+    // Adiciona eventos de clique e toque ao ícone do relógio
+    clockIcon.addEventListener('click', openTimerModal);
+    clockIcon.addEventListener('touchstart', openTimerModal);
 
-// Adiciona eventos de clique e toque ao botão de fechar o modal
-closeModal.addEventListener('click', closeTimerModal);
-closeModal.addEventListener('touchstart', closeTimerModal);
+    // Adiciona eventos de clique e toque ao botão de fechar o modal
+    closeModal.addEventListener('click', closeTimerModal);
+    closeModal.addEventListener('touchstart', closeTimerModal);
 
-// Adiciona eventos de clique e toque à janela para fechar o modal ao clicar fora dele
-window.addEventListener('click', (event) => {
-    if (event.target === timerModal) {
+    // Adiciona eventos de clique e toque à janela para fechar o modal ao clicar fora dele
+    window.addEventListener('click', (event) => {
+        if (event.target === timerModal) {
+            closeTimerModal();
+        }
+    });
+
+    window.addEventListener('touchstart', (event) => {
+        if (event.target === timerModal) {
+            closeTimerModal();
+        }
+    });
+
+    // Adiciona evento de clique ao botão de definir o temporizador
+    setTimerButton.addEventListener('click', () => {
+        const minutes = parseInt(timerInput.value, 10);
+        if (isNaN(minutes) || minutes <= 0) {
+            alert('Por favor, insira um valor válido de minutos.');
+            return;
+        }
+
+        const milliseconds = minutes * 60 * 1000;
+        setTimeout(() => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            alert('O temporizador desligou a rádio.');
+        }, milliseconds);
+
         closeTimerModal();
-    }
+        alert(`Temporizador definido para ${minutes} minutos.`);
+    });
 });
 
-window.addEventListener('touchstart', (event) => {
-    if (event.target === timerModal) {
-        closeTimerModal();
-    }
-});
-
-// Adiciona evento de clique ao botão de definir o temporizador
-setTimerButton.addEventListener('click', () => {
-    const minutes = parseInt(timerInput.value, 10);
-    if (isNaN(minutes) || minutes <= 0) {
-        alert('Por favor, insira um valor válido de minutos.');
-        return;
-    }
-
-    const milliseconds = minutes * 60 * 1000;
-    setTimeout(() => {
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
-        alert('O temporizador desligou a rádio.');
-    }, milliseconds);
-
-    closeTimerModal();
-    alert(`Temporizador definido para ${minutes} minutos.`);
-});
 
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
