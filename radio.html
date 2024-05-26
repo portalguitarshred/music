@@ -656,13 +656,29 @@
             font-size: 1em;
         }
 
-        .carousel-button:hover {
-            background-color: #04b65c;
+        .slider__button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .slider__button--left {
+            left: 10px;
+        }
+
+        .slider__button--right {
+            right: 10px;
         }
 
         .swiper-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
             margin-top: 20px;
         }
         
@@ -719,14 +735,14 @@
 </header>
     <!-- Conteúdo anterior do header -->
     
-    <div class="swiper-container">
+    <<div class="swiper-container">
     <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="capa1.jpg" alt="Capa 1"></div>
-        <div class="swiper-slide"><img src="capa2.jpg" alt="Capa 2"></div>
-        <div class="swiper-slide"><img src="capa3.jpg" alt="Capa 3"></div>
+        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa1.jpg" alt="Capa 1"></div>
+        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa2.jpg" alt="Capa 2"></div>
+        <div class="swiper-slide" data-url="https://stream.zeno.fm/qupiusi3w5puv"><img src="capa3.jpg" alt="Capa 3"></div>
     </div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next slider__button slider__button--right"></div>
+    <div class="swiper-button-prev slider__button slider__button--left"></div>
 </div>
 
     
