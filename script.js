@@ -85,50 +85,44 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Volume: ${audioPlayer.volume}`);
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
     const clockIcon = document.getElementById('clock-icon');
     const timerModal = document.getElementById('timerModal');
     const closeModal = document.getElementById('closeModal');
     const setTimerButton = document.getElementById('setTimer');
     const timerInput = document.getElementById('timer');
-
-    // Funções para abrir e fechar o modal do temporizador
-    const openTimerModal = (event) => {
-        event.preventDefault();
+    
+    clockIcon.addEventListener('click', () => {
         timerModal.style.display = 'block';
-    };
-
-    const closeTimerModal = () => {
+    });
+    
+    closeModal.addEventListener('click', () => {
         timerModal.style.display = 'none';
-    };
-
-    clockIcon.addEventListener('click', openTimerModal);
-    closeModal.addEventListener('click', closeTimerModal);
-
+    });
+    
     window.addEventListener('click', (event) => {
         if (event.target === timerModal) {
-            closeTimerModal();
+            timerModal.style.display = 'none';
         }
     });
-
+    
     setTimerButton.addEventListener('click', () => {
         const minutes = parseInt(timerInput.value, 10);
         if (isNaN(minutes) || minutes <= 0) {
             alert('Por favor, insira um valor válido de minutos.');
             return;
         }
-
+    
         const milliseconds = minutes * 60 * 1000;
         setTimeout(() => {
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
             alert('O temporizador desligou a rádio.');
         }, milliseconds);
-
-        closeTimerModal();
+    
+        timerModal.style.display = 'none';
         alert(`Temporizador definido para ${minutes} minutos.`);
     });
-});
+
 
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
@@ -292,27 +286,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializa o Swiper
     const swiper = new Swiper('.swiper-container', {
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+    on: {
+        slideChange: function () {
+            const activeSlide = swiper.slides[swiper.activeIndex];
+            const stationIndex = activeSlide.dataset.index;
+            const station = stations[stationIndex];
+            playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
         },
-        on: {
-            slideChange: function () {
-                const activeSlide = swiper.slides[swiper.activeIndex];
-                const stationIndex = activeSlide.dataset.index;
-                const station = stations[stationIndex];
-                playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
-            },
-        },
-    });
-
-    // Atualiza as capas do slider
-    const updateSlider = () => {
-        document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-            slide.dataset.index = index;
-            slide.dataset.url = stations[index].url;
-        });
-    };
-
-    updateSlider();
+    },
 });
+
+// Atualiza as capas do slider
+const updateSlider = () => {
+    document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
+        slide.dataset.index = index;
+        slide.dataset.url = stations[index].url;
+    });
+};
+
+updateSlider();
