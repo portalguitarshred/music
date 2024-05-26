@@ -14,9 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Guitar Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    stations.forEach(station => {
+    stations.forEach((station, index) => {
         const li = document.createElement('li');
         li.textContent = station.name;
+        li.dataset.index = index;
 
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fa', 'fa-heart', 'heart-icon');
@@ -52,33 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(spectrum);
 
         li.addEventListener('click', () => {
-            console.log(`Playing: ${station.name} - URL: ${station.url}`);
-            audioPlayer.src = station.url;
-            statusMessage.textContent = 'Carregando...';
-            statusMessage.classList.add('show');
-
-            audioPlayer.play().then(() => {
-                statusMessage.textContent = '';
-                statusMessage.classList.remove('show');
-            }).catch(error => {
-                console.error('Playback failed', error);
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-            });
-
-            audioPlayer.oncanplay = () => {
-                statusMessage.textContent = '';
-                statusMessage.classList.remove('show');
-            };
-
-            audioPlayer.onerror = () => {
-                statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
-            };
-
-            if (currentPlaying) {
-                currentPlaying.classList.remove('playing');
-            }
-            li.classList.add('playing');
-            currentPlaying = li;
+            playStation(station, li, index);
         });
 
         stationList.appendChild(li);
@@ -212,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (email && password) {
             const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-                                method: 'POST',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -236,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const registerLink = document.getElementById('register-link');
+        const registerLink = document.getElementById('register-link');
     const registerModal = document.getElementById('registerModal');
     const closeRegisterModal = document.getElementById('closeRegisterModal');
     const registerButton = document.getElementById('registerButton');
@@ -296,9 +271,57 @@ document.addEventListener('DOMContentLoaded', () => {
         on: {
             slideChange: function () {
                 const activeSlide = swiper.slides[swiper.activeIndex];
-                audioPlayer.src = activeSlide.dataset.url;
-                audioPlayer.play();
+                const stationIndex = activeSlide.dataset.index;
+                playStation(stations[stationIndex], document.querySelectorAll('#station-list li')[stationIndex], stationIndex);
             },
         },
     });
+
+    function playStation(station, li, index) {
+        console.log(`Playing: ${station.name} - URL: ${station.url}`);
+        audioPlayer.src = station.url;
+        statusMessage.textContent = 'Carregando...';
+        statusMessage.classList.add('show');
+
+        audioPlayer.play().then(() => {
+            statusMessage.textContent = '';
+            statusMessage.classList.remove('show');
+        }).catch(error => {
+            console.error('Playback failed', error);
+            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+        });
+
+        audioPlayer.oncanplay = () => {
+            statusMessage.textContent = '';
+            statusMessage.classList.remove('show');
+        };
+
+        audioPlayer.onerror = () => {
+            statusMessage.textContent = 'Erro ao carregar a estação. Tente novamente.';
+        };
+
+        if (currentPlaying) {
+            currentPlaying.classList.remove('playing');
+            currentPlaying.style.backgroundColor = '';
+        }
+        li.classList.add('playing');
+        li.style.backgroundColor = '#05d26d'; // Cor verde padrão
+        currentPlaying = li;
+
+        swiper.slideTo(index);
+    }
 });
+
+
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'block';
+    });
+
+    closeRegisterModal.addEventListener('click', () => {
+        registerModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === registerModal) {
+           
