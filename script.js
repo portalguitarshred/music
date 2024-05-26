@@ -85,68 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Volume: ${audioPlayer.volume}`);
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-    const clockIcon = document.getElementById('new-clock-icon');
-    const timerModal = document.getElementById('new-timer-modal');
-    const closeModal = document.getElementById('new-close-modal');
-    const setTimerButton = document.getElementById('new-set-timer');
-    const timerInput = document.getElementById('new-timer');
-
-    // Função para abrir o modal do temporizador
-    function openTimerModal() {
-        console.log('Abrindo modal do temporizador');
-        timerModal.style.display = 'block';
-    }
-
-    // Função para fechar o modal do temporizador
-    function closeTimerModal() {
-        console.log('Fechando modal do temporizador');
-        timerModal.style.display = 'none';
-    }
-
-    // Adiciona eventos de clique e toque ao ícone do relógio
-    clockIcon.addEventListener('click', openTimerModal);
-    clockIcon.addEventListener('touchstart', openTimerModal);
-
-    // Adiciona eventos de clique e toque ao botão de fechar o modal
-    closeModal.addEventListener('click', closeTimerModal);
-    closeModal.addEventListener('touchstart', closeTimerModal);
-
-    // Adiciona eventos de clique e toque à janela para fechar o modal ao clicar fora dele
-    window.addEventListener('click', (event) => {
-        if (event.target === timerModal) {
-            closeTimerModal();
-        }
-    });
-
-    window.addEventListener('touchstart', (event) => {
-        if (event.target === timerModal) {
-            closeTimerModal();
-        }
-    });
-
-    // Adiciona evento de clique ao botão de definir o temporizador
-    setTimerButton.addEventListener('click', () => {
-        const minutes = parseInt(timerInput.value, 10);
-        if (isNaN(minutes) || minutes <= 0) {
-            alert('Por favor, insira um valor válido de minutos.');
-            return;
-        }
-
-        const milliseconds = minutes * 60 * 1000;
-        setTimeout(() => {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
-            alert('O temporizador desligou a rádio.');
-        }, milliseconds);
-
-        closeTimerModal();
-        alert(`Temporizador definido para ${minutes} minutos.`);
-    });
-});
-
-
-
+    // Evento do relógio retirado desta parte temporariamente para teste de forma isolada.
 
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
