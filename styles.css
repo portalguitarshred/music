@@ -594,7 +594,7 @@ li.playing .spectrum {
     color: #d3d3d3;
 }
 
-modal-exclusive {
+.modal-exclusive {
     display: none; /* Oculto por padrão */
     position: fixed;
     z-index: 1000; /* Garante que o modal fique acima de outros elementos */
@@ -616,6 +616,7 @@ modal-exclusive {
     max-width: 400px;
     color: #ffffff;
     border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .close-modal-exclusive {
@@ -632,21 +633,32 @@ modal-exclusive {
     cursor: pointer;
 }
 
-
-        width: 100%;
-        font-size: 1em;
-        padding: 10px;
-    }
+.set-timer-button-exclusive {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%; /* Garantir que o botão ocupe toda a largura do modal em telas menores */
+    font-size: 1em; /* Ajustar o tamanho da fonte para dispositivos móveis */
 }
+
 .set-timer-button-exclusive:hover {
     background-color: #04b65c;
 }
 
 /* Adicionando responsividade */
 @media (max-width: 768px) {
-    
-        padding: 90%;
+    .modal-content-exclusive {
+        width: 90%;
         max-width: none;
+    }
+
+    .set-timer-button-exclusive {
+        font-size: 1em;
+        padding: 10px;
     }
 }
 
