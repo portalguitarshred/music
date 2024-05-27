@@ -49,14 +49,14 @@ header {
     color: #000000;
     position: fixed;
     top: 0;
-    left: -70%;
+    left: 0; /* Mudar para 0 para que a transição funcione corretamente */
     height: 100%;
     width: 70%;
-    max-width: 300px;
+    max-width: 300px; /* Pode ajustar conforme necessário */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out;
     transform: translateX(-100%); /* Inicialmente fora da tela */
 }
 
