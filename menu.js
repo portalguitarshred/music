@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     function openMenu() {
+        console.log("Abrindo menu");
         document.querySelector('.menu').classList.add('open');
     }
 
     function closeMenu() {
+        console.log("Fechando menu");
         document.querySelector('.menu').classList.remove('open');
     }
 
