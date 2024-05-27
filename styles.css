@@ -116,6 +116,7 @@ header {
     max-width: 150px;
     margin-left: 10px;
     display: block;
+    padding-top: 10px;
 }
 
 main {
