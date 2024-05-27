@@ -594,10 +594,10 @@ li.playing .spectrum {
     color: #d3d3d3;
 }
 
-.modal-exclusive {
-    display: none;
+modal-exclusive {
+    display: none; /* Oculto por padrão */
     position: fixed;
-    z-index: 1000;
+    z-index: 1000; /* Garante que o modal fique acima de outros elementos */
     left: 0;
     top: 0;
     width: 100%;
@@ -619,7 +619,10 @@ li.playing .spectrum {
 }
 
 .close-modal-exclusive {
-    font-size: 24px;
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .close-modal-exclusive:hover,
@@ -646,8 +649,8 @@ li.playing .spectrum {
 /* Adicionando responsividade */
 @media (max-width: 768px) {
     .set-timer-button-exclusive {
-        padding: 8px 16px;
-        font-size: 0.9em;
+        padding: 90%;
+        max-width: none;
     }
 }
 
