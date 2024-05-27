@@ -632,23 +632,19 @@ modal-exclusive {
     cursor: pointer;
 }
 
-.set-timer-button-exclusive {
-    background-color: #05d26d;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 10px;
-    border-radius: 5px;
-}
 
+        width: 100%;
+        font-size: 1em;
+        padding: 10px;
+    }
+}
 .set-timer-button-exclusive:hover {
     background-color: #04b65c;
 }
 
 /* Adicionando responsividade */
 @media (max-width: 768px) {
-    .set-timer-button-exclusive {
+    
         padding: 90%;
         max-width: none;
     }
