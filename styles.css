@@ -68,6 +68,7 @@ header {
     border: none; /* Remove a borda padrão */
     border-top: 1px solid #121212; /* Adiciona uma borda superior cinza */
     margin: 10px 0; /* Espaçamento acima e abaixo da linha */
+    z-index: 1000;
 }
 
 /* Menu aberto */
