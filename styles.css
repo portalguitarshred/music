@@ -112,6 +112,12 @@ header {
     display: block;
 }
 
+.logo2 {
+    max-width: 150px;
+    margin-left: 10px;
+    display: block;
+}
+
 main {
     padding: 1em;
     max-width: 800px;
