@@ -49,14 +49,19 @@ header {
     color: #000000;
     position: fixed;
     top: 0;
-    left: -30%; /* Inicialmente fora da tela */
+    left: 0;
     height: 100%;
-    width: 30%; /* Ajustado para 80% */
+    width: 60%; /* Ajustado para 60% */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
     transition: transform 0.5s ease-in-out; /* Animação mais lenta */
     transform: translateX(-100%); /* Inicialmente fora da tela */
+}
+
+/* Menu aberto */
+.menu.open {
+    transform: translateX(0); /* Menu dentro no mobile */
 }
 
 /* Menu aberto */
