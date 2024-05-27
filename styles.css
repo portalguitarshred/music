@@ -150,10 +150,12 @@ li {
     align-items: center;
     justify-content: flex-start;
     position: relative;
+    transition: all 0.2s ease-in-out;
 }
 
 li:hover {
     background-color: #05d26d;
+    box-shadow: 0 0 15px #05d26d;
 }
 
 li.playing::before {
