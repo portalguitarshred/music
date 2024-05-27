@@ -41,6 +41,10 @@ header {
     color: #d3d3d3;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .menu {
     display: flex;
     flex-direction: column;
@@ -49,14 +53,14 @@ header {
     color: #000000;
     position: fixed;
     top: 0;
-    left: 0; /* Mudar para 0 para que a transição funcione corretamente */
+    left: 0;
     height: 100%;
-    width: 50%;
+    width: 60%; /* Ajuste para a largura desejada */
     max-width: 300px; /* Pode ajustar conforme necessário */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.5s ease-in-out; /* Ajusta a duração e a suavidade da transição */
     transform: translateX(-100%); /* Inicialmente fora da tela */
 }
 
