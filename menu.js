@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Função para abrir o menu
     function openMenu() {
         document.querySelector('.menu').classList.add('open');
     }
 
-    // Função para fechar o menu
     function closeMenu() {
         document.querySelector('.menu').classList.remove('open');
     }
