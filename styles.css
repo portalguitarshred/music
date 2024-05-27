@@ -541,8 +541,9 @@ li.playing .spectrum div:nth-child(5) {
 
 .swiper-container {
     width: 100%;
-    max-width: 600px;
-    margin-top: 20px;
+    max-width: 100%;
+    overflow: hidden; /* Impede que o conteúdo ultrapasse os limites do contêiner */
+    margin: 0 auto; /* Centraliza o contêiner */
 }
 
 .swiper-slide {
