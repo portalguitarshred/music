@@ -51,7 +51,7 @@ header {
     top: 0;
     left: 0; /* Mudar para 0 para que a transição funcione corretamente */
     height: 100%;
-    width: 70%;
+    width: 50%;
     max-width: 300px; /* Pode ajustar conforme necessário */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
