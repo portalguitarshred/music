@@ -64,6 +64,12 @@ header {
     transform: translateX(0); /* Menu dentro no mobile */
 }
 
+.menu-divider {
+    border: none; /* Remove a borda padrão */
+    border-top: 1px solid #cccccc; /* Adiciona uma borda superior cinza */
+    margin: 10px 0; /* Espaçamento acima e abaixo da linha */
+}
+
 /* Menu aberto */
 .menu.open {
     transform: translateX(0); /* Menu dentro no mobile */
