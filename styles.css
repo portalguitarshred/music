@@ -41,10 +41,6 @@ header {
     color: #d3d3d3;
 }
 
-* {
-    box-sizing: border-box;
-}
-
 .menu {
     display: flex;
     flex-direction: column;
