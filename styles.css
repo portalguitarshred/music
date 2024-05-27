@@ -49,9 +49,9 @@ header {
     color: #000000;
     position: fixed;
     top: 0;
-    left: -70%; /* Inicialmente fora da tela, reduzido para 60% */
+    left: -60%; /* Inicialmente fora da tela */
     height: 100%;
-    width: 70%; /* Reduzido para 60% */
+    width: 60%; /* Ajustado para 60% */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
