@@ -56,7 +56,6 @@ header {
     left: -60%; /* Inicialmente fora da tela, reduzido para 60% */
     height: 100%;
     width: 60%; /* Reduzido para 60% */
-    max-width: 60%; /* Garante que o menu não exceda 60% da largura da tela */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
