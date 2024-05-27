@@ -661,6 +661,12 @@ li.playing .spectrum {
         max-width: none;
     }
 
+    @media (max-width: 768px) {
+    .swiper-button-next, .swiper-button-prev {
+        display: none;
+    }
+}
+
     .set-timer-button-exclusive {
         font-size: 1em;
         padding: 10px;
