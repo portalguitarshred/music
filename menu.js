@@ -1,8 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    function toggleMenu() {
-        console.log("Toggle menu");
+    function openMenu() {
+        console.log("Abrindo menu");
         const menu = document.querySelector('.menu');
-        menu.classList.toggle('open');
+        menu.classList.remove('close');
+        menu.classList.add('open');
+    }
+
+    function closeMenu() {
+        console.log("Fechando menu");
+        const menu = document.querySelector('.menu');
+        menu.classList.remove('open');
+        menu.classList.add('close');
+    }
+
+    function toggleMenu() {
+        const menu = document.querySelector('.menu');
+        if (menu.classList.contains('open')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     }
 
     // Adicionar evento de clique ao ícone do menu
@@ -16,14 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const menu = document.querySelector('.menu');
         const menuToggle = document.querySelector('.menu-toggle');
         if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
-            menu.classList.remove('open');
+            closeMenu();
         }
     });
 
     // Fechar o menu ao clicar em um link dentro do menu
     document.querySelectorAll('.menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            document.querySelector('.menu').classList.remove('open');
-        });
+        link.addEventListener('click', closeMenu);
     });
 });
