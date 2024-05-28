@@ -20,7 +20,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: red;
+    background-color: #121212;
     color: #ffffff;
     padding: 1em;
     width: 100%;
@@ -39,6 +39,10 @@ header {
 
 .menu-toggle:hover {
     color: #d3d3d3;
+}
+
+.menu-toggle-checkbox {
+    display: none;
 }
 
 .menu {
@@ -60,13 +64,8 @@ header {
 }
 
 /* Menu aberto */
-.menu.open {
-    transform: translateX(0); /* Menu dentro no mobile */
-}
-
-/* Menu fechado */
-.menu.close {
-    transform: translateX(-100%);
+.menu-toggle-checkbox:checked + .menu-toggle + .logo + .clock-icon-exclusive + .menu {
+    transform: translateX(100%);
 }
 
 .menu-divider {
