@@ -77,6 +77,11 @@ header {
     transform: translateX(0); /* Menu dentro no mobile */
 }
 
+/* Menu fechado */
+.menu.closed {
+    transform: translateX(-100%); /* Menu fora da tela */
+}
+
 .menu a {
     display: flex;
     align-items: center;
