@@ -63,9 +63,8 @@ header {
     transform: translateX(-100%); /* Inicialmente fora da tela */
 }
 
-/* Menu aberto */
-.menu-toggle-checkbox:checked + .menu-toggle + .logo + .clock-icon-exclusive + .menu {
-    transform: translateX(100%);
+.menu-toggle-checkbox:checked ~ .menu {
+    transform: translateX(0); /* Menu dentro no mobile */
 }
 
 .menu-divider {
