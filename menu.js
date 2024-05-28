@@ -1,9 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Adicionar evento de clique ao ícone do menu para prevenir o comportamento padrão
-    document.querySelector('.menu-toggle').addEventListener('click', (event) => {
-        event.stopPropagation();
-    });
-
     // Fechar o menu ao clicar fora dele
     document.addEventListener('click', (event) => {
         const menu = document.querySelector('.menu');
