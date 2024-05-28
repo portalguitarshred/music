@@ -20,7 +20,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #121212;
+    background-color: #1f1f1f;
     color: #ffffff;
     padding: 1em;
     width: 100%;
@@ -41,10 +41,6 @@ header {
     color: #d3d3d3;
 }
 
-.menu-toggle-checkbox {
-    display: none;
-}
-
 .menu {
     display: flex;
     flex-direction: column;
@@ -63,9 +59,11 @@ header {
     transform: translateX(-100%); /* Inicialmente fora da tela */
 }
 
-.menu-toggle-checkbox:checked ~ .menu {
+/* Menu aberto */
+.menu.open {
     transform: translateX(0); /* Menu dentro no mobile */
 }
+
 
 .menu-divider {
     border: none; /* Remove a borda padrão */
