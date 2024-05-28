@@ -51,7 +51,7 @@ header {
     top: 0;
     left: 0;
     height: 100%;
-    width: 60%; /* Ajustado para 60% */
+    width: 30%; /* Ajustado para 40% */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
@@ -62,11 +62,6 @@ header {
 /* Menu aberto */
 .menu.open {
     transform: translateX(0); /* Menu dentro no mobile */
-}
-
-/* Menu fechado */
-.menu.closed {
-    transform: translateX(-100%); /* Menu fora da tela */
 }
 
 .menu-divider {
@@ -80,11 +75,6 @@ header {
 /* Menu aberto */
 .menu.open {
     transform: translateX(0); /* Menu dentro no mobile */
-}
-
-/* Menu fechado */
-.menu.closed {
-    transform: translateX(-100%); /* Menu fora da tela */
 }
 
 .menu a {
@@ -718,6 +708,10 @@ li.playing .spectrum {
         max-width: 120px;
     }
 
+    .menu {
+        width: 60%;
+    }
+
     .swiper-container {
         max-width: 100%;
     }
@@ -734,6 +728,4 @@ li.playing .spectrum {
     #audio-player, #volume-container {
         width: calc(100% - 40px);
         margin: 10px 20px;
-    }
-}
-
+   }
