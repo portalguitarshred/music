@@ -12,7 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adicionar evento de clique ao ícone do menu
     document.querySelector('.menu-toggle').addEventListener('click', (event) => {
         event.stopPropagation();
-        openMenu();
+        const menu = document.querySelector('.menu');
+        if (menu.classList.contains('open')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
 
     // Fechar o menu ao clicar fora dele
