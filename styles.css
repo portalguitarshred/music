@@ -64,6 +64,11 @@ header {
     transform: translateX(0); /* Menu dentro no mobile */
 }
 
+/* Menu fechado */
+.menu.close {
+    transform: translateX(-100%);
+}
+
 .menu-divider {
     border: none; /* Remove a borda padrão */
     border-top: 1px solid #CCCCCC; /* Adiciona uma borda superior cinza */
