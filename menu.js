@@ -35,4 +35,19 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.menu a').forEach(link => {
         link.addEventListener('click', closeMenu);
     });
+
+    // Adicionar logs para verificar se as estações estão sendo adicionadas
+    const stationList = document.getElementById('station-list');
+    const stations = [
+        { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Classic Rock', url: 'https://stream.zeno.fm/amepggt3jxptv' },
+        { name: 'Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+    ];
+
+    stations.forEach((station, index) => {
+        const li = document.createElement('li');
+        li.textContent = station.name;
+        console.log('Adicionando estação:', station.name); // Log para verificar a adição das estações
+        stationList.appendChild(li);
+    });
 });
