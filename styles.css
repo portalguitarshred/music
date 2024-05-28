@@ -61,7 +61,7 @@ header {
 
 /* Menu aberto */
 .menu.open {
-    transform: translateX(0); /* Menu dentro no mobile */
+    transform: translateX(0);
 }
 
 
