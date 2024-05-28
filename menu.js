@@ -1,12 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     function openMenu() {
         console.log("Abrindo menu");
-        document.querySelector('.menu').classList.add('open');
+        const menu = document.querySelector('.menu');
+        menu.classList.add('open');
+        menu.style.transform = 'translateX(0)';
     }
 
     function closeMenu() {
         console.log("Fechando menu");
-        document.querySelector('.menu').classList.remove('open');
+        const menu = document.querySelector('.menu');
+        menu.classList.remove('open');
+        menu.style.transform = 'translateX(-100%)';
     }
 
     // Adicionar evento de clique ao ícone do menu
