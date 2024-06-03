@@ -9,6 +9,8 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100vw;
+    height: 100vh;
+    overflow: hidden;
     box-sizing: border-box;
 }
 
@@ -21,6 +23,10 @@ header {
     padding: 1em;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
 }
 
 .header-left {
@@ -57,8 +63,10 @@ main {
     background-color: #1f1f1f;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    margin-top: 20px;
+    margin-top: 80px; /* Espaço para o cabeçalho fixo */
+    overflow-y: auto;
     box-sizing: border-box;
+    flex: 1;
 }
 
 h2 {
