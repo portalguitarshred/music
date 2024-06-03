@@ -10,7 +10,7 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden; /* Evita overflow na tela */
     box-sizing: border-box;
 }
 
@@ -67,6 +67,7 @@ main {
     overflow-y: auto;
     box-sizing: border-box;
     flex: 1;
+    height: calc(100vh - 80px); /* Ajuste para ocupar o espaço restante */
 }
 
 h2 {
