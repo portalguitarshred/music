@@ -151,34 +151,34 @@ document.addEventListener('DOMContentLoaded', () => {
     window.handleDeezerResponse = function(data) {
         console.log('Dados da busca:', data); // Log para depuração
         const tracks = data.data;
-        resultsList.innerHTML = ''; // Limpa os resultados anteriores
-        tracks.forEach(track => {
-            const li = document.createElement('li');
-            li.textContent = `${track.title} - ${track.artist.name}`;
-            const addButton = document.createElement('button');
-            addButton.textContent = 'Adicionar à Playlist';
-            addButton.addEventListener('click', () => addToPlaylist(track));
-            li.appendChild(addButton);
-            resultsList.appendChild(li);
-        });
+        showSearchResultsAsPlaylist(tracks);
     };
 
-    function addToPlaylist(track) {
-        const playlistName = prompt('Nome da playlist:');
-        if (playlistName && !userPlaylists[playlistName]) {
-            userPlaylists[playlistName] = [];
-        }
-        if (userPlaylists[playlistName]) {
-            userPlaylists[playlistName].push({
-                name: track.title,
-                artist: track.artist.name,
-                url: track.preview // URL para o preview da música
+    function showSearchResultsAsPlaylist(tracks) {
+        const playlistName = `Resultados de pesquisa para "${searchInput.value}"`;
+        playlistNameElement.textContent = playlistName;
+        playlistTracks.innerHTML = ''; // Limpar a lista de músicas
+        
+        tracks.forEach(track => {
+            const trackElement = document.createElement('li');
+            
+            const coverImage = document.createElement('div');
+            coverImage.classList.add('track-cover');
+
+            const trackName = document.createElement('div');
+            trackName.classList.add('track-name');
+            trackName.textContent = `${track.title} - ${track.artist.name}`;
+
+            trackElement.appendChild(coverImage);
+            trackElement.appendChild(trackName);
+            trackElement.dataset.url = track.preview;
+            trackElement.addEventListener('click', () => {
+                playTrack(track.preview);
             });
-            savePlaylists();
-            alert(`Música ${track.title} adicionada à playlist ${playlistName}`);
-        } else {
-            alert('Nome da playlist é inválido.');
-        }
+            playlistTracks.appendChild(trackElement);
+        });
+
+        playlistDetailsSection.classList.remove('hidden');
     }
 
     loadPlaylists();
