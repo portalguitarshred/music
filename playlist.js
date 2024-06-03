@@ -13,17 +13,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const newPlaylistTracks = document.getElementById('new-playlist-tracks');
     const savePlaylistButton = document.getElementById('save-playlist-button');
 
+    const searchButton = document.getElementById('search-button');
+    const searchInput = document.getElementById('search-input');
+    const resultsList = document.getElementById('results-list');
+
     let currentPlaylist = null;
     let currentAudio = new Audio();
-    let playlists = JSON.parse(localStorage.getItem('playlists')) || {};
+    let userPlaylists = JSON.parse(localStorage.getItem('userPlaylists')) || {};
 
     function savePlaylists() {
-        localStorage.setItem('playlists', JSON.stringify(playlists));
+        localStorage.setItem('userPlaylists', JSON.stringify(userPlaylists));
     }
 
     function loadPlaylists() {
         playlistsContainer.innerHTML = '';
-        for (let playlistName in playlists) {
+        for (let playlistName in userPlaylists) {
             const playlistElement = document.createElement('div');
             playlistElement.classList.add('playlist-item');
             playlistElement.textContent = playlistName;
@@ -75,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     savePlaylistButton.addEventListener('click', () => {
         const playlistName = newPlaylistNameInput.value;
-        if (playlistName && !playlists[playlistName]) {
+        if (playlistName && !userPlaylists[playlistName]) {
             const tracks = [];
             const trackElements = newPlaylistTracks.querySelectorAll('li');
             trackElements.forEach(trackElement => {
@@ -84,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     url: trackElement.dataset.url
                 });
             });
-            playlists[playlistName] = tracks;
+            userPlaylists[playlistName] = tracks;
             savePlaylists();
             loadPlaylists();
             popup.classList.add('hidden');
@@ -100,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showPlaylistDetails(playlistName) {
         playlistNameElement.textContent = playlistName;
         playlistTracks.innerHTML = ''; // Limpar a lista de músicas
-        const tracks = playlists[playlistName];
+        const tracks = userPlaylists[playlistName];
         tracks.forEach(track => {
             const trackElement = document.createElement('li');
             
@@ -131,6 +135,47 @@ document.addEventListener('DOMContentLoaded', () => {
             currentAudio.play();
         } else {
             currentAudio.pause();
+        }
+    }
+
+    // Função para buscar músicas na API do Deezer
+    searchButton.addEventListener('click', () => {
+        const query = searchInput.value;
+        searchTracks(query).then(tracks => {
+            resultsList.innerHTML = ''; // Limpa os resultados anteriores
+            tracks.forEach(track => {
+                const li = document.createElement('li');
+                li.textContent = `${track.title} - ${track.artist.name}`;
+                const addButton = document.createElement('button');
+                addButton.textContent = 'Adicionar à Playlist';
+                addButton.addEventListener('click', () => addToPlaylist(track));
+                li.appendChild(addButton);
+                resultsList.appendChild(li);
+            });
+        });
+    });
+
+    async function searchTracks(query) {
+        const response = await fetch(`https://api.deezer.com/search?q=${query}`);
+        const data = await response.json();
+        return data.data;
+    }
+
+    function addToPlaylist(track) {
+        const playlistName = prompt('Nome da playlist:');
+        if (playlistName && !userPlaylists[playlistName]) {
+            userPlaylists[playlistName] = [];
+        }
+        if (userPlaylists[playlistName]) {
+            userPlaylists[playlistName].push({
+                name: track.title,
+                artist: track.artist.name,
+                url: track.preview // URL para o preview da música
+            });
+            savePlaylists();
+            alert(`Música ${track.title} adicionada à playlist ${playlistName}`);
+        } else {
+            alert('Nome da playlist é inválido.');
         }
     }
 
