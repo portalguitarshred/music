@@ -139,37 +139,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para buscar músicas na API do Deezer
     searchButton.addEventListener('click', () => {
         const query = searchInput.value;
-        searchTracks(query).then(tracks => {
-            resultsList.innerHTML = ''; // Limpa os resultados anteriores
-            tracks.forEach(track => {
-                const li = document.createElement('li');
-                li.textContent = `${track.title} - ${track.artist.name}`;
-                const addButton = document.createElement('button');
-                addButton.textContent = 'Adicionar à Playlist';
-                addButton.addEventListener('click', () => addToPlaylist(track));
-                li.appendChild(addButton);
-                resultsList.appendChild(li);
-            });
-        }).catch(error => {
-            console.error('Erro na busca de músicas:', error);
-            alert('Erro na busca de músicas. Verifique o console para mais detalhes.');
-        });
+        searchTracks(query);
     });
 
-    async function searchTracks(query) {
-        const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${query}&output=jsonp&callback=callbackName`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
-        const text = await response.text();
-        const jsonpData = text.replace(/^callbackName\(/, '').replace(/\)$/, ''); // Remove o callback JSONP
-        const data = JSON.parse(jsonpData);
-        console.log('Dados da busca:', data); // Adicionar log para depuração
-        return data.data;
+    function searchTracks(query) {
+        const script = document.createElement('script');
+        script.src = `https://api.deezer.com/search?q=${query}&output=jsonp&callback=handleDeezerResponse`;
+        document.body.appendChild(script);
     }
+
+    window.handleDeezerResponse = function(data) {
+        console.log('Dados da busca:', data); // Log para depuração
+        const tracks = data.data;
+        resultsList.innerHTML = ''; // Limpa os resultados anteriores
+        tracks.forEach(track => {
+            const li = document.createElement('li');
+            li.textContent = `${track.title} - ${track.artist.name}`;
+            const addButton = document.createElement('button');
+            addButton.textContent = 'Adicionar à Playlist';
+            addButton.addEventListener('click', () => addToPlaylist(track));
+            li.appendChild(addButton);
+            resultsList.appendChild(li);
+        });
+    };
 
     function addToPlaylist(track) {
         const playlistName = prompt('Nome da playlist:');
