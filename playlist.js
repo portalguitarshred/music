@@ -142,24 +142,25 @@ document.addEventListener('DOMContentLoaded', () => {
         searchTracks(query);
     });
 
-    function searchTracks(query) {
-        const script = document.createElement('script');
-        script.src = `https://api.deezer.com/search?q=${query}&output=jsonp&callback=handleDeezerResponse`;
-        script.onerror = () => {
-            console.error('Erro ao carregar o script da API Deezer.');
-        };
-        document.body.appendChild(script);
-    }
+    async function searchTracks(query) {
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const targetUrl = `https://api.deezer.com/search?q=${query}&output=json`;
 
-    window.handleDeezerResponse = function(data) {
-        console.log('Dados da busca:', data); // Log para depuração
-        if (data && data.data) {
-            const tracks = data.data;
-            showSearchResultsAsPlaylist(tracks);
-        } else {
-            alert('Nenhum resultado encontrado.');
+        try {
+            const response = await fetch(proxyUrl + targetUrl);
+            const data = await response.json();
+            console.log('Dados da busca:', data); // Log para depuração
+            if (data && data.data) {
+                const tracks = data.data;
+                showSearchResultsAsPlaylist(tracks);
+            } else {
+                alert('Nenhum resultado encontrado.');
+            }
+        } catch (error) {
+            console.error('Erro ao buscar músicas:', error);
+            alert('Erro ao buscar músicas. Verifique o console para mais detalhes.');
         }
-    };
+    }
 
     function showSearchResultsAsPlaylist(tracks) {
         const playlistName = `Resultados de pesquisa para "${searchInput.value}"`;
