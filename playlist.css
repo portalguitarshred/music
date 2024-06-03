@@ -44,7 +44,7 @@ header {
 .logo {
     max-width: 150px;
     margin: 0 auto;
-    position: absolute;
+    position: relative;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -157,8 +157,6 @@ h2 {
 
     .logo {
         max-width: 120px;
-        left: 50%;
-        transform: translateX(-50%);
     }
 
     .menu-toggle, .clock-icon-exclusive {
