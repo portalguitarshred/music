@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlists - Guitar Shred Radio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <i class="fas fa-bars menu-toggle"></i>
+        <img src="logo.png" alt="Guitar Radio Logo" class="logo">
+        <span class="clock-icon-exclusive" id="clock-icon-exclusive">&#128339;</span>
+    </header>
+
+    <main>
+        <section id="playlist-section">
+            <h2>Minhas Playlists</h2>
+            <button id="create-playlist-button" class="btn">Criar Nova Playlist</button>
+            <div id="playlists-container">
+                <!-- Playlists serão adicionadas aqui -->
+            </div>
+        </section>
+
+        <section id="playlist-details-section" class="hidden">
+            <button id="back-to-playlists" class="btn">Voltar</button>
+            <h2 id="playlist-name">Nome da Playlist</h2>
+            <ul id="playlist-tracks">
+                <!-- Músicas da playlist serão adicionadas aqui -->
+            </ul>
+            <button id="add-track-button" class="btn">Adicionar Músicas</button>
+        </section>
+    </main>
+
+    <script src="playlist.js"></script>
+</body>
+</html>
