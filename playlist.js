@@ -3,61 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistsContainer = document.getElementById('playlists-container');
     const playlistDetailsSection = document.getElementById('playlist-details-section');
     const backToPlaylistsButton = document.getElementById('back-to-playlists');
-    const addTrackButton = document.getElementById('add-track-button');
+    const playlistNameElement = document.getElementById('playlist-name');
+    const playlistTracks = document.getElementById('playlist-tracks');
     const addTrackInput = document.getElementById('add-track-input');
+    const addTrackButton = document.getElementById('add-track-button');
 
-    let playlists = [];
+    let currentPlaylist = null;
 
-    function renderPlaylists() {
-        playlistsContainer.innerHTML = '';
-        playlists.forEach((playlist, index) => {
-            const playlistItem = document.createElement('div');
-            playlistItem.classList.add('playlist-item');
-            playlistItem.textContent = playlist.name;
-            playlistItem.addEventListener('click', () => showPlaylistDetails(index));
-            playlistsContainer.appendChild(playlistItem);
-        });
-    }
-
-    function showPlaylistDetails(index) {
-        const playlist = playlists[index];
-        const playlistName = document.getElementById('playlist-name');
-        const playlistTracks = document.getElementById('playlist-tracks');
-        
-        playlistName.textContent = playlist.name;
-        playlistTracks.innerHTML = '';
-        playlist.tracks.forEach(track => {
-            const trackItem = document.createElement('li');
-            trackItem.textContent = track.name;
-            playlistTracks.appendChild(trackItem);
-        });
-
-        playlistDetailsSection.classList.remove('hidden');
-        playlistsContainer.classList.add('hidden');
-        addTrackButton.dataset.playlistIndex = index;
-    }
-
-    function createPlaylist() {
+    createPlaylistButton.addEventListener('click', () => {
         const playlistName = prompt('Nome da nova playlist:');
         if (playlistName) {
-            playlists.push({ name: playlistName, tracks: [] });
-            renderPlaylists();
+            const playlistElement = document.createElement('div');
+            playlistElement.classList.add('playlist-item');
+            playlistElement.textContent = playlistName;
+            playlistElement.addEventListener('click', () => {
+                showPlaylistDetails(playlistName);
+            });
+            playlistsContainer.appendChild(playlistElement);
         }
-    }
-
-    function handleFiles(files, playlistIndex) {
-        const playlist = playlists[playlistIndex];
-        for (let file of files) {
-            playlist.tracks.push({ name: file.name, file: file });
-        }
-        showPlaylistDetails(playlistIndex);
-    }
-
-    createPlaylistButton.addEventListener('click', createPlaylist);
+    });
 
     backToPlaylistsButton.addEventListener('click', () => {
         playlistDetailsSection.classList.add('hidden');
-        playlistsContainer.classList.remove('hidden');
     });
 
     addTrackButton.addEventListener('click', () => {
@@ -65,9 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     addTrackInput.addEventListener('change', (event) => {
-        const playlistIndex = addTrackButton.dataset.playlistIndex;
-        handleFiles(event.target.files, playlistIndex);
+        const files = event.target.files;
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const trackElement = document.createElement('li');
+            trackElement.textContent = file.name;
+            playlistTracks.appendChild(trackElement);
+        }
     });
 
-    renderPlaylists();
+    function showPlaylistDetails(playlistName) {
+        playlistNameElement.textContent = playlistName;
+        playlistTracks.innerHTML = ''; // Limpar a lista de músicas
+        playlistDetailsSection.classList.remove('hidden');
+    }
 });
