@@ -56,12 +56,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const trackElement = document.createElement('li');
-                trackElement.textContent = file.name;
+                
+                const coverImage = document.createElement('div');
+                coverImage.classList.add('track-cover');
+                // Aqui você pode adicionar uma imagem de capa padrão ou permitir que o usuário defina uma
+                
+                const trackName = document.createElement('div');
+                trackName.classList.add('track-name');
+                trackName.textContent = file.name;
+
+                trackElement.appendChild(coverImage);
+                trackElement.appendChild(trackName);
                 trackElement.dataset.url = e.target.result;
                 trackElement.addEventListener('click', () => {
                     playTrack(e.target.result);
                 });
                 playlistTracks.appendChild(trackElement);
+                
                 playlists[playlistName].push({
                     name: file.name,
                     url: e.target.result
@@ -78,7 +89,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const tracks = playlists[playlistName];
         tracks.forEach(track => {
             const trackElement = document.createElement('li');
-            trackElement.textContent = track.name;
+            
+            const coverImage = document.createElement('div');
+            coverImage.classList.add('track-cover');
+            // Aqui você pode adicionar uma imagem de capa padrão ou permitir que o usuário defina uma
+
+            const trackName = document.createElement('div');
+            trackName.classList.add('track-name');
+            trackName.textContent = track.name;
+
+            trackElement.appendChild(coverImage);
+            trackElement.appendChild(trackName);
             trackElement.dataset.url = track.url;
             trackElement.addEventListener('click', () => {
                 playTrack(track.url);
