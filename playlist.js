@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistTracks = document.getElementById('playlist-tracks');
     const addTrackInput = document.getElementById('add-track-input');
     const addTrackButton = document.getElementById('add-track-button');
+    const popup = document.getElementById('playlist-popup');
+    const closePopup = document.getElementById('close-popup');
+    const newPlaylistNameInput = document.getElementById('new-playlist-name');
+    const newPlaylistTracks = document.getElementById('new-playlist-tracks');
+    const savePlaylistButton = document.getElementById('save-playlist-button');
 
     let currentPlaylist = null;
     let currentAudio = new Audio();
@@ -30,18 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     createPlaylistButton.addEventListener('click', () => {
-        const playlistName = prompt('Nome da nova playlist:');
-        if (playlistName && !playlists[playlistName]) {
-            playlists[playlistName] = [];
-            savePlaylists();
-            loadPlaylists();
-        } else {
-            alert('Nome da playlist já existe ou é inválido.');
-        }
+        newPlaylistNameInput.value = '';
+        newPlaylistTracks.innerHTML = '';
+        popup.classList.remove('hidden');
     });
 
-    backToPlaylistsButton.addEventListener('click', () => {
-        playlistDetailsSection.classList.add('hidden');
+    closePopup.addEventListener('click', () => {
+        popup.classList.add('hidden');
     });
 
     addTrackButton.addEventListener('click', () => {
@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     addTrackInput.addEventListener('change', (event) => {
         const files = event.target.files;
-        const playlistName = playlistNameElement.textContent;
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const reader = new FileReader();
@@ -68,19 +67,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 trackElement.appendChild(coverImage);
                 trackElement.appendChild(trackName);
                 trackElement.dataset.url = e.target.result;
-                trackElement.addEventListener('click', () => {
-                    playTrack(e.target.result);
-                });
-                playlistTracks.appendChild(trackElement);
-                
-                playlists[playlistName].push({
-                    name: file.name,
-                    url: e.target.result
-                });
-                savePlaylists();
+                newPlaylistTracks.appendChild(trackElement);
             };
             reader.readAsDataURL(file);
         }
+    });
+
+    savePlaylistButton.addEventListener('click', () => {
+        const playlistName = newPlaylistNameInput.value;
+        if (playlistName && !playlists[playlistName]) {
+            const tracks = [];
+            const trackElements = newPlaylistTracks.querySelectorAll('li');
+            trackElements.forEach(trackElement => {
+                tracks.push({
+                    name: trackElement.querySelector('.track-name').textContent,
+                    url: trackElement.dataset.url
+                });
+            });
+            playlists[playlistName] = tracks;
+            savePlaylists();
+            loadPlaylists();
+            popup.classList.add('hidden');
+        } else {
+            alert('Nome da playlist já existe ou é inválido.');
+        }
+    });
+
+    backToPlaylistsButton.addEventListener('click', () => {
+        playlistDetailsSection.classList.add('hidden');
     });
 
     function showPlaylistDetails(playlistName) {
