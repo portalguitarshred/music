@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistsContainer = document.getElementById('playlists-container');
     const playlistDetailsSection = document.getElementById('playlist-details-section');
     const backToPlaylistsButton = document.getElementById('back-to-playlists');
+    const addTrackButton = document.getElementById('add-track-button');
+    const addTrackInput = document.getElementById('add-track-input');
 
     let playlists = [];
 
@@ -26,12 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
         playlistTracks.innerHTML = '';
         playlist.tracks.forEach(track => {
             const trackItem = document.createElement('li');
-            trackItem.textContent = track;
+            trackItem.textContent = track.name;
             playlistTracks.appendChild(trackItem);
         });
 
         playlistDetailsSection.classList.remove('hidden');
         playlistsContainer.classList.add('hidden');
+        addTrackButton.dataset.playlistIndex = index;
     }
 
     function createPlaylist() {
@@ -42,10 +45,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function handleFiles(files, playlistIndex) {
+        const playlist = playlists[playlistIndex];
+        for (let file of files) {
+            playlist.tracks.push({ name: file.name, file: file });
+        }
+        showPlaylistDetails(playlistIndex);
+    }
+
     createPlaylistButton.addEventListener('click', createPlaylist);
+
     backToPlaylistsButton.addEventListener('click', () => {
         playlistDetailsSection.classList.add('hidden');
         playlistsContainer.classList.remove('hidden');
+    });
+
+    addTrackButton.addEventListener('click', () => {
+        addTrackInput.click();
+    });
+
+    addTrackInput.addEventListener('change', (event) => {
+        const playlistIndex = addTrackButton.dataset.playlistIndex;
+        handleFiles(event.target.files, playlistIndex);
     });
 
     renderPlaylists();
