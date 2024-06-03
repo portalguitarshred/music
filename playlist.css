@@ -4,12 +4,12 @@ body {
     background-color: #121212;
     color: #ffffff;
     margin: 0;
-    padding: 10px; /* Margem de 10px no topo e na parte inferior */
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: calc(100vh - 20px); /* Ajuste para compensar a margem de 10px no topo e na parte inferior */
+    height: 100vh;
     overflow: hidden; /* Evita overflow na tela */
     box-sizing: border-box;
 }
@@ -20,12 +20,12 @@ header {
     justify-content: space-between;
     background-color: #1f1f1f;
     color: #ffffff;
-    padding: 10px;
-    width: calc(100% - 20px); /* Ajuste para compensar a margem de 10px */
+    padding: 10px; /* Adiciona 10px de padding no topo e na parte inferior */
+    width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     position: fixed;
-    top: 10px;
+    top: 0;
     z-index: 1000;
 }
 
@@ -35,16 +35,13 @@ header {
     cursor: pointer;
     padding: 0.5em;
     transition: color 0.3s ease;
-    position: absolute;
-    left: 15px; /* Ajuste para compensar a margem */
-    top: 50%;
-    transform: translateY(-50%);
+    margin-left: 5px;
 }
 
 .logo {
     max-width: 150px;
     margin: 0 auto;
-    position: relative;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -55,10 +52,7 @@ header {
     cursor: pointer;
     padding: 0.5em;
     transition: color 0.3s ease;
-    position: absolute;
-    right: 15px; /* Ajuste para compensar a margem */
-    top: 50%;
-    transform: translateY(-50%);
+    margin-right: 5px;
 }
 
 .menu-toggle:hover, .clock-icon-exclusive:hover {
@@ -76,7 +70,7 @@ main {
     overflow-y: auto;
     box-sizing: border-box;
     flex: 1;
-    height: calc(100vh - 100px); /* Ajuste para compensar o cabeçalho fixo e a margem */
+    height: calc(100vh - 80px); /* Ajuste para ocupar o espaço restante */
 }
 
 h2 {
