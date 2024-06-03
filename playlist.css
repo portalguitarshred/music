@@ -131,17 +131,32 @@ h2 {
 }
 
 #playlist-tracks li {
+    display: flex;
+    align-items: center;
     background-color: #333333;
     padding: 10px;
-    border: 1px solid #444444;
-    border-radius: 4px;
+    border-bottom: 1px solid #444444; /* Linha de separação */
     cursor: pointer;
-    margin-bottom: 10px;
     transition: background-color 0.3s;
 }
 
 #playlist-tracks li:hover {
     background-color: #05d26d;
+}
+
+.track-cover {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    background-color: #555555;
+    border-radius: 4px;
+}
+
+.track-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Responsividade */
