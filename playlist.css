@@ -99,64 +99,51 @@ h2 {
     display: none;
 }
 
-/* Estilos Específicos para a Área de Playlists */
-#playlists-container {
+#search-section {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
-.playlist-item {
-    background-color: #333333;
+#search-input {
+    width: 60%;
     padding: 10px;
-    border: 1px solid #444444;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border: none;
+    border-radius: 5px;
 }
 
-.playlist-item:hover {
-    background-color: #05d26d;
-}
-
-#playlist-details-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#playlist-tracks {
+#results-list, #playlists-list, #new-playlist-tracks {
     list-style-type: none;
     padding: 0;
 }
 
-#playlist-tracks li {
-    display: flex;
-    align-items: center;
+#results-list li, #playlists-list li, #new-playlist-tracks li {
     background-color: #333333;
     padding: 10px;
-    border-bottom: 1px solid #444444; /* Linha de separação */
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border-bottom: 1px solid #444444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-#playlist-tracks li:hover {
+#results-list li:hover, #playlists-list li:hover, #new-playlist-tracks li:hover {
     background-color: #05d26d;
 }
 
-.track-cover {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    background-color: #555555;
-    border-radius: 4px;
+#results-list button, #new-playlist-tracks button {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.track-name {
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+#results-list button:hover, #new-playlist-tracks button:hover {
+    background-color: #04b65c;
 }
 
 /* Estilos para o Popup */
