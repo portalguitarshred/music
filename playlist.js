@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const coverImage = document.createElement('div');
                 coverImage.classList.add('track-cover');
-                // Aqui você pode adicionar uma imagem de capa padrão ou permitir que o usuário defina uma
                 
                 const trackName = document.createElement('div');
                 trackName.classList.add('track-name');
@@ -110,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const coverImage = document.createElement('div');
             coverImage.classList.add('track-cover');
-            // Aqui você pode adicionar uma imagem de capa padrão ou permitir que o usuário defina uma
 
             const trackName = document.createElement('div');
             trackName.classList.add('track-name');
@@ -156,16 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function searchTracks(query) {
-        const response = await fetch(`https://api.deezer.com/search?q=${query}&output=jsonp`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
-        const text = await response.text();
-        const jsonpData = text.slice(1, -1); // Remove parênteses do JSONP
-        const data = JSON.parse(jsonpData);
+        const response = await fetch(`https://api.deezer.com/search?q=${query}&output=json`);
+        const data = await response.json();
         return data.data;
     }
 
