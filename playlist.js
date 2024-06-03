@@ -150,12 +150,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.appendChild(addButton);
                 resultsList.appendChild(li);
             });
+        }).catch(error => {
+            console.error('Erro na busca de músicas:', error);
+            alert('Erro na busca de músicas. Verifique o console para mais detalhes.');
         });
     });
 
     async function searchTracks(query) {
-        const response = await fetch(`https://api.deezer.com/search?q=${query}&output=json`);
+        const response = await fetch(`https://api.deezer.com/search?q=${query}&output=json`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
         const data = await response.json();
+        console.log('Dados da busca:', data); // Adicionar log para depuração
         return data.data;
     }
 
