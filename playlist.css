@@ -1,4 +1,4 @@
-/* Estilos Gerais */
+ /* Estilos Gerais */
 body {
     font-family: Arial, sans-serif;
     background-color: #121212;
@@ -12,11 +12,6 @@ body {
     box-sizing: border-box;
 }
 
-.hidden {
-    display: none;
-}
-
-
 header {
     display: flex;
     align-items: center;
@@ -26,6 +21,12 @@ header {
     padding: 1em;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
 }
 
 .logo {
@@ -127,6 +128,11 @@ h2 {
 /* Responsividade */
 @media (max-width: 768px) {
     header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-left {
         flex-direction: column;
         align-items: center;
     }
