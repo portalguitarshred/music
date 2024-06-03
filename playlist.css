@@ -12,6 +12,11 @@ body {
     box-sizing: border-box;
 }
 
+.hidden {
+    display: none;
+}
+
+
 header {
     display: flex;
     align-items: center;
