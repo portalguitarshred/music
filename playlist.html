@@ -22,17 +22,22 @@
                 <!-- Playlists serão adicionadas aqui -->
             </div>
         </section>
-
-        <section id="playlist-details-section" class="hidden">
-            <button id="back-to-playlists" class="btn">Voltar</button>
-            <h2 id="playlist-name">Nome da Playlist</h2>
-            <ul id="playlist-tracks">
-                <!-- Músicas da playlist serão adicionadas aqui -->
-            </ul>
-            <input type="file" id="add-track-input" class="hidden" accept="audio/*" multiple>
-            <button id="add-track-button" class="btn">Adicionar Músicas</button>
-        </section>
     </main>
+
+    <!-- Popup para criar playlists -->
+    <div id="playlist-popup" class="hidden">
+        <div class="popup-content">
+            <span id="close-popup" class="close">&times;</span>
+            <h2>Criar Nova Playlist</h2>
+            <input type="text" id="new-playlist-name" placeholder="Nome da Playlist">
+            <input type="file" id="add-track-input" accept="audio/*" multiple>
+            <button id="add-track-button" class="btn">Adicionar Músicas</button>
+            <ul id="new-playlist-tracks">
+                <!-- Músicas adicionadas à nova playlist aparecerão aqui -->
+            </ul>
+            <button id="save-playlist-button" class="btn">Salvar Playlist</button>
+        </div>
+    </div>
 
     <script src="playlist.js"></script>
 </body>
