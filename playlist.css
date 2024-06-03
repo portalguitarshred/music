@@ -35,12 +35,18 @@ header {
     cursor: pointer;
     padding: 0.5em;
     transition: color 0.3s ease;
-    margin-left: 5px; /* Ajuste a margem esquerda */
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .logo {
     max-width: 150px;
     margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .clock-icon-exclusive {
@@ -49,7 +55,10 @@ header {
     cursor: pointer;
     padding: 0.5em;
     transition: color 0.3s ease;
-    margin-right: 5px; /* Ajuste a margem direita */
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .menu-toggle:hover, .clock-icon-exclusive:hover {
@@ -148,7 +157,8 @@ h2 {
 
     .logo {
         max-width: 120px;
-        margin: 0 auto;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .menu-toggle, .clock-icon-exclusive {
