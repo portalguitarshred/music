@@ -157,14 +157,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function searchTracks(query) {
-        const response = await fetch(`https://api.deezer.com/search?q=${query}&output=json`, {
+        const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${query}&output=jsonp&callback=callbackName`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         });
-        const data = await response.json();
+        const text = await response.text();
+        const jsonpData = text.replace(/^callbackName\(/, '').replace(/\)$/, ''); // Remove o callback JSONP
+        const data = JSON.parse(jsonpData);
         console.log('Dados da busca:', data); // Adicionar log para depuração
         return data.data;
     }
