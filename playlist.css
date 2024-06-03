@@ -29,23 +29,33 @@ header {
     z-index: 1000;
 }
 
-.header-left {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    max-width: 150px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.menu-toggle, .clock-icon-exclusive {
+.menu-toggle {
     font-size: 1.5em;
     color: #ffffff;
     cursor: pointer;
     padding: 0.5em;
     transition: color 0.3s ease;
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.logo {
+    max-width: 150px;
+    margin: 0 auto;
+}
+
+.clock-icon-exclusive {
+    font-size: 1.5em;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .menu-toggle:hover, .clock-icon-exclusive:hover {
@@ -142,12 +152,9 @@ h2 {
         align-items: center;
     }
 
-    .header-left {
-        justify-content: center;
-    }
-
     .logo {
         max-width: 120px;
+        margin: 0 auto;
     }
 
     .menu-toggle, .clock-icon-exclusive {
