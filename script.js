@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const spectrum = document.createElement('div');
         spectrum.classList.add('spectrum');
-        for (let i = 0; 0 < 5; i++) {
+        for (let i = 0; i < 5; i++) {
             const bar = document.createElement('div');
             spectrum.appendChild(bar);
         }
@@ -84,8 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
         audioPlayer.volume = e.target.value;
         console.log(`Volume: ${audioPlayer.volume}`);
     });
-
-    // Evento do relógio retirado desta parte temporariamente para teste de forma isolada.
 
     const shareModal = document.getElementById('shareModal');
     const closeShareModal = document.getElementById('closeShareModal');
@@ -142,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menu.classList.remove('open');
     }
 
-    // Adicionar evento de clique ao ícone do menu
+        // Adicionar evento de clique ao ícone do menu
     menuToggle.addEventListener('click', (event) => {
         event.stopPropagation();
         if (menu.classList.contains('open')) {
@@ -185,108 +183,109 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loginButton.addEventListener('click', async () => {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
 
-    if (email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                email: email,
-                password: password
-            })
-        });
+        if (email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    email: email,
+                    password: password
+                })
+            });
 
-        const data = await response.text();
-        alert(data);
+            const data = await response.text();
+            alert(data);
 
-        if (response.ok) {
-            loginModal.style.display = 'none';
-            // Aqui você pode salvar o token JWT ou outra informação de autenticação
+            if (response.ok) {
+                loginModal.style.display = 'none';
+                // Aqui você pode salvar o token JWT ou outra informação de autenticação
+            } else {
+                alert('Erro ao realizar login. Verifique suas credenciais.');
+            }
         } else {
-            alert('Erro ao realizar login. Verifique suas credenciais.');
+            alert('Por favor, preencha todos os campos.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
-
-const registerLink = document.getElementById('register-link');
-const registerModal = document.getElementById('registerModal');
-const closeRegisterModal = document.getElementById('closeRegisterModal');
-const registerButton = document.getElementById('registerButton');
-
-registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerModal.style.display = 'block';
-});
-
-closeRegisterModal.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === registerModal) {
-        registerModal.style.display = 'none';
-    }
-});
-
-registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (username && email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                username: username,
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.text();
-        alert(data);
-
-        if (response.ok) {
-            registerModal.style.display = 'none';
-        } else {
-            alert('Erro ao registrar usuário. Tente novamente.');
-        }
-    } else {
-        alert('Por favor, preencha todos os campos.');
-    }
-});
-
-// Inicializa o Swiper
-const swiper = new Swiper('.swiper-container', {
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    on: {
-        slideChange: function () {
-            const activeSlide = swiper.slides[swiper.activeIndex];
-            const stationIndex = activeSlide.dataset.index;
-            const station = stations[stationIndex];
-            playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
-        },
-    },
-});
-
-// Atualiza as capas do slider
-const updateSlider = () => {
-    document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-        slide.dataset.index = index;
-        slide.dataset.url = stations[index].url;
     });
-};
 
-updateSlider();
+    const registerLink = document.getElementById('register-link');
+    const registerModal = document.getElementById('registerModal');
+    const closeRegisterModal = document.getElementById('closeRegisterModal');
+    const registerButton = document.getElementById('registerButton');
+
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'block';
+    });
+
+    closeRegisterModal.addEventListener('click', () => {
+        registerModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === registerModal) {
+            registerModal.style.display = 'none';
+        }
+    });
+
+    registerButton.addEventListener('click', async () => {
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        if (username && email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    username: username,
+                    email: email,
+                    password: password
+                })
+            });
+
+            const data = await response.text();
+            alert(data);
+
+            if (response.ok) {
+                registerModal.style.display = 'none';
+            } else {
+                alert('Erro ao registrar usuário. Tente novamente.');
+            }
+        } else {
+            alert('Por favor, preencha todos os campos.');
+        }
+    });
+
+    // Inicializa o Swiper
+    const swiper = new Swiper('.swiper-container', {
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        on: {
+            slideChange: function () {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                const stationIndex = activeSlide.dataset.index;
+                const station = stations[stationIndex];
+                playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
+            },
+        },
+    });
+
+    // Atualiza as capas do slider
+    const updateSlider = () => {
+        document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
+            slide.dataset.index = index;
+            slide.dataset.url = stations[index].url;
+        });
+    };
+
+    updateSlider();
+});
