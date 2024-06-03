@@ -156,8 +156,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function searchTracks(query) {
-        const response = await fetch(`https://api.deezer.com/search?q=${query}`);
-        const data = await response.json();
+        const response = await fetch(`https://api.deezer.com/search?q=${query}&output=jsonp`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+        const text = await response.text();
+        const jsonpData = text.slice(1, -1); // Remove parênteses do JSONP
+        const data = JSON.parse(jsonpData);
         return data.data;
     }
 
