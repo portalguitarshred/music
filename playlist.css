@@ -1,0 +1,122 @@
+/* Adicione este CSS ao seu arquivo styles.css */
+
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    padding: 1em;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    max-width: 150px;
+}
+
+.menu-toggle, .clock-icon-exclusive {
+    font-size: 1.5em;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.menu-toggle:hover, .clock-icon-exclusive:hover {
+    color: #d3d3d3;
+}
+
+main {
+    padding: 1em;
+    max-width: 800px;
+    width: 100%;
+    background-color: #1f1f1f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+h2 {
+    margin: 0.5em 0;
+    color: #ffffff;
+}
+
+.btn {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #04b65c;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Estilos Específicos para a Área de Playlists */
+#playlists-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.playlist-item {
+    background-color: #333333;
+    padding: 10px;
+    border: 1px solid #444444;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.playlist-item:hover {
+    background-color: #05d26d;
+}
+
+#playlist-details-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#playlist-tracks {
+    list-style-type: none;
+    padding: 0;
+}
+
+#playlist-tracks li {
+    background-color: #333333;
+    padding: 10px;
+    border: 1px solid #444444;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+#playlist-tracks li:hover {
+    background-color: #05d26d;
+}
