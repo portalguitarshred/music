@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchButton = document.getElementById('search-button');
     const searchInput = document.getElementById('search-input');
+    const playlistNameElement = document.getElementById('playlist-name');
     const playlistTracks = document.getElementById('playlist-tracks');
 
     searchButton.addEventListener('click', async () => {
@@ -29,11 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showSearchResultsAsPlaylist(tracks) {
         const playlistName = `Resultados de pesquisa para "${searchInput.value}"`;
+        playlistNameElement.textContent = playlistName;
         playlistTracks.innerHTML = ''; // Limpar a lista de músicas
-        
+
         tracks.forEach(track => {
             const trackElement = document.createElement('li');
-            
+
             const coverImage = document.createElement('div');
             coverImage.classList.add('track-cover');
             const trackCoverImg = document.createElement('img');
