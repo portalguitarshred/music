@@ -35,10 +35,7 @@ header {
     cursor: pointer;
     padding: 0.5em;
     transition: color 0.3s ease;
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
+    margin-left: 5px; /* Ajuste a margem esquerda */
 }
 
 .logo {
@@ -52,10 +49,7 @@ header {
     cursor: pointer;
     padding: 0.5em;
     transition: color 0.3s ease;
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
+    margin-right: 5px; /* Ajuste a margem direita */
 }
 
 .menu-toggle:hover, .clock-icon-exclusive:hover {
@@ -148,7 +142,7 @@ h2 {
 /* Responsividade */
 @media (max-width: 768px) {
     header {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
     }
 
