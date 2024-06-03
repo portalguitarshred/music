@@ -145,6 +145,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function searchTracks(query) {
         const script = document.createElement('script');
         script.src = `https://api.deezer.com/search?q=${query}&output=jsonp&callback=handleDeezerResponse`;
+        script.onerror = () => {
+            console.error('Erro ao carregar o script da API Deezer.');
+        };
         document.body.appendChild(script);
     }
 
@@ -168,6 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const coverImage = document.createElement('div');
             coverImage.classList.add('track-cover');
+            const trackCoverImg = document.createElement('img');
+            trackCoverImg.src = track.album.cover_small;
+            coverImage.appendChild(trackCoverImg);
 
             const trackName = document.createElement('div');
             trackName.classList.add('track-name');
