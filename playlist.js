@@ -150,8 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.handleDeezerResponse = function(data) {
         console.log('Dados da busca:', data); // Log para depuração
-        const tracks = data.data;
-        showSearchResultsAsPlaylist(tracks);
+        if (data && data.data) {
+            const tracks = data.data;
+            showSearchResultsAsPlaylist(tracks);
+        } else {
+            alert('Nenhum resultado encontrado.');
+        }
     };
 
     function showSearchResultsAsPlaylist(tracks) {
