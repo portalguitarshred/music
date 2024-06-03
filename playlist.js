@@ -53,15 +53,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const playlistName = playlistNameElement.textContent;
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            playlists[playlistName].push(file.name);
-            const trackElement = document.createElement('li');
-            trackElement.textContent = file.name;
-            trackElement.addEventListener('click', () => {
-                playTrack(file);
-            });
-            playlistTracks.appendChild(trackElement);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const trackElement = document.createElement('li');
+                trackElement.textContent = file.name;
+                trackElement.dataset.url = e.target.result;
+                trackElement.addEventListener('click', () => {
+                    playTrack(e.target.result);
+                });
+                playlistTracks.appendChild(trackElement);
+                playlists[playlistName].push({
+                    name: file.name,
+                    url: e.target.result
+                });
+                savePlaylists();
+            };
+            reader.readAsDataURL(file);
         }
-        savePlaylists();
     });
 
     function showPlaylistDetails(playlistName) {
@@ -70,18 +78,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const tracks = playlists[playlistName];
         tracks.forEach(track => {
             const trackElement = document.createElement('li');
-            trackElement.textContent = track;
+            trackElement.textContent = track.name;
+            trackElement.dataset.url = track.url;
             trackElement.addEventListener('click', () => {
-                playTrack(track);
+                playTrack(track.url);
             });
             playlistTracks.appendChild(trackElement);
         });
         playlistDetailsSection.classList.remove('hidden');
     }
 
-    function playTrack(track) {
-        if (currentAudio.src !== track) {
-            currentAudio.src = URL.createObjectURL(track);
+    function playTrack(url) {
+        if (currentAudio.src !== url) {
+            currentAudio.src = url;
             currentAudio.play();
         } else if (currentAudio.paused) {
             currentAudio.play();
