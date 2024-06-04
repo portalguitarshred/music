@@ -98,7 +98,48 @@ volumeControl.addEventListener('input', (e) => {
     console.log(`Volume: ${audioPlayer.volume}`);
 });
 
-// Código para o modal de compartilhamento e outras funcionalidades permanece inalterado...
+const shareModal = document.getElementById('shareModal');
+const closeShareModal = document.getElementById('closeShareModal');
+const copyLinkButton = document.getElementById('copyLink');
+const shareFacebookButton = document.getElementById('shareFacebook');
+const shareTwitterButton = document.getElementById('shareTwitter');
+let currentShareUrl = '';
+
+closeShareModal.addEventListener('click', () => {
+    shareModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === shareModal) {
+        shareModal.style.display = 'none';
+    }
+});
+
+function openShareModal(url) {
+    currentShareUrl = url;
+    shareModal.style.display = 'block';
+}
+
+copyLinkButton.addEventListener('click', () => {
+    navigator.clipboard.writeText(currentShareUrl).then(() => {
+        alert('Link copiado para a área de transferência.');
+    }).catch(err => {
+        console.error('Erro ao copiar o link: ', err);
+    });
+});
+
+shareFacebookButton.addEventListener('click', () => {
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`;
+    window.open(facebookUrl, '_blank');
+});
+
+shareTwitterButton.addEventListener('click', () => {
+    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentShareUrl)}`;
+    window.open(twitterUrl, '_blank');
+});
+
+const menuToggle = document.querySelector('.menu-toggle');
+const menu = document.querySelector('.menu');
 
 // Função para abrir o menu
 function openMenu() {
@@ -232,6 +273,7 @@ registerButton.addEventListener('click', async () => {
         }
     } else {
         alert('Por favor, preencha todos os campos.');
+    }
 });
 
 // Inicializa o Swiper
@@ -260,3 +302,4 @@ const updateSlider = () => {
 
 updateSlider();
 });
+
