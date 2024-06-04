@@ -897,4 +897,14 @@ body.light-theme .play-pause-icon {
     color: #121212;
 }
 
+/* Tema Escuro */
+#site-logo {
+    content: url('path/to/logo.png');
+}
+
+/* Tema Claro */
+body.light-theme #site-logo {
+    content: url('path/to/logo2.png');
+}
+
 /* Adicione outros ajustes necessários para o tema claro */
