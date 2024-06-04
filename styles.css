@@ -899,6 +899,16 @@ body.light-theme .play-pause-icon {
     color: #121212;
 }
 
+.theme-toggle .slider {
+    position: relative;
+    width: 50px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 25px;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+}
+
 /* Tema Escuro */
 body.dark-theme .logo {
     content: url('logo1.png');
