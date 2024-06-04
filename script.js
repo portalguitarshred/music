@@ -281,8 +281,8 @@ const swiper = new Swiper('.swiper-container', {
             const stationIndex = activeSlide.dataset.index;
             const station = stations[stationIndex];
 
-            // Pausa a estação atual se estiver tocando
-            if (currentPlaying && currentPlaying !== document.querySelectorAll('#station-list li')[stationIndex]) {
+            // Atualiza a estação tocando e desativa a anterior
+            if (currentPlaying) {
                 currentPlaying.classList.remove('playing');
                 currentPlaying.style.backgroundColor = '';
                 currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
@@ -290,13 +290,13 @@ const swiper = new Swiper('.swiper-container', {
                 currentPlaying.querySelector('.spectrum').style.display = 'none';
             }
 
-            // Atualiza a estação que deve ser destacada
             const li = document.querySelectorAll('#station-list li')[stationIndex];
             li.classList.add('playing');
             li.style.backgroundColor = '#05d26d';
             li.querySelector('.play-pause-icon').classList.remove('fa-play');
             li.querySelector('.play-pause-icon').classList.add('fa-pause');
             li.querySelector('.spectrum').style.display = 'flex';
+            currentPlaying = li;
 
             // Toca a estação selecionada pelo slider
             playStation(station, li);
