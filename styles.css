@@ -889,4 +889,8 @@ input:checked + .slider:before {
     color: #000;
 }
 
+body.light-theme main {
+    background-color: #c2c2c2;
+}
+
 /* Adicione outros ajustes necessários para o tema claro */
