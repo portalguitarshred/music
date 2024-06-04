@@ -311,3 +311,4 @@ themeToggle.addEventListener('click', () => {
     const theme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
     localStorage.setItem('theme', theme);
 });
+});
