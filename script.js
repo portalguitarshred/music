@@ -236,12 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target === registerModal) {
-            registerModal.style.display = 'none';
-        }
-    });
+    if (event.target === registerModal) {
+        registerModal.style.display = 'none';
+    }
+});
 
-    registerButton.addEventListener('click', async () => {
+// Adiciona o evento de clique no botão de registro
+registerButton.addEventListener('click', async () => {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -283,6 +284,18 @@ const swiper = new Swiper('.swiper-container', {
             const activeSlide = swiper.slides[swiper.activeIndex];
             const stationIndex = activeSlide.dataset.index;
             const station = stations[stationIndex];
+            
+            // Pausa a estação atual se estiver tocando
+            if (currentPlaying) {
+                currentPlaying.classList.remove('playing');
+                currentPlaying.style.backgroundColor = '';
+                currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
+                currentPlaying.querySelector('.play-pause-icon').classList.add('fa-play');
+                currentPlaying.querySelector('.spectrum').style.display = 'none';
+                currentPlaying = null;
+            }
+
+            // Toca a estação selecionada pelo slider
             playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
         },
     },
