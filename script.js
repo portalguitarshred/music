@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(statusMessage);
     let currentPlaying = null;
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const themeToggle = document.getElementById('theme-toggle');
+
+    // Set default theme to dark
+    document.body.classList.add('dark-theme');
 
     const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
@@ -299,19 +301,16 @@ const updateSlider = () => {
 
 updateSlider();
 
-// Função para alternar o tema
+// Tema claro/escuro
 const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
-
 themeToggle.addEventListener('click', () => {
-    body.classList.toggle('light-theme');
-    localStorage.setItem('theme', body.classList.contains('light-theme') ? 'light' : 'dark');
+    document.body.classList.toggle('dark-theme');
+    document.body.classList.toggle('light-theme');
+    themeToggle.textContent = document.body.classList.contains('dark-theme') ? 'Tema Claro' : 'Tema Escuro';
 });
 
-// Verifica o tema salvo no localStorage
-if (localStorage.getItem('theme') === 'light') {
-    body.classList.add('light-theme');
-} else {
-    body.classList.add('dark-theme');
-}
+// Configura o tema inicial como escuro
+document.body.classList.add('dark-theme');
+themeToggle.textContent = 'Tema Claro';
 });
+
