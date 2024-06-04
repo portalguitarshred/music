@@ -945,11 +945,11 @@ body.light-theme .logo {
 }
 
 .theme-toggle .fa-moon {
-    margin-right: 0px;
+    margin-right: 5px;
 }
 
 .theme-toggle .fa-sun {
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 .theme-toggle input[type="checkbox"] {
