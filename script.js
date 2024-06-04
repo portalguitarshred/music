@@ -291,7 +291,6 @@ const swiper = new Swiper('.swiper-container', {
                 currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
                 currentPlaying.querySelector('.play-pause-icon').classList.add('fa-play');
                 currentPlaying.querySelector('.spectrum').style.display = 'none';
-                currentPlaying = null;
             }
 
             // Atualiza a estação que deve ser destacada
