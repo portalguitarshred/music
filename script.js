@@ -30,9 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         li.querySelector('.play-pause-icon').classList.add('fa-pause');
         li.querySelector('.spectrum').style.display = 'flex';
         currentPlaying = li;
-
-        // Atualizar o swiper para a estação selecionada
-        swiper.slideTo([...stationList.children].indexOf(li));
     }
 
     function pauseStation(li) {
@@ -285,7 +282,7 @@ const swiper = new Swiper('.swiper-container', {
             const station = stations[stationIndex];
 
             // Pausa a estação atual se estiver tocando
-            if (currentPlaying) {
+            if (currentPlaying && currentPlaying !== document.querySelectorAll('#station-list li')[stationIndex]) {
                 currentPlaying.classList.remove('playing');
                 currentPlaying.style.backgroundColor = '';
                 currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
@@ -316,4 +313,4 @@ const updateSlider = () => {
 };
 
 updateSlider();
-
+});
