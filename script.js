@@ -297,4 +297,24 @@ const updateSlider = () => {
 };
 
 updateSlider();
+
+// Alternância de Tema Claro/Escuro
+const themeToggleButton = document.createElement('button');
+themeToggleButton.id = 'theme-toggle';
+themeToggleButton.textContent = 'Alternar Tema';
+menu.appendChild(themeToggleButton);
+
+themeToggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('light-theme');
+    // Salvar preferências do usuário no localStorage
+    const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+    localStorage.setItem('theme', currentTheme);
 });
+
+// Carregar tema salvo
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    document.body.classList.add(savedTheme === 'light' ? 'light-theme' : 'dark-theme');
+} else {
+    document.body.classList.add('dark-theme');
+}
