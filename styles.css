@@ -898,13 +898,13 @@ body.light-theme .play-pause-icon {
 }
 
 /* Tema Escuro */
-#site-logo {
-    content: url('path/to/logo1.png');
+body.dark-theme .logo {
+    content: url('logo1.png');
 }
 
 /* Tema Claro */
-body.light-theme #site-logo {
-    content: url('path/to/logo2.png');
+body.light-theme .logo {
+    content: url('logo2.png');
 }
 
 /* Adicione outros ajustes necessários para o tema claro */
