@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function playStation(station, li) {
         audioPlayer.src = station.url;
         audioPlayer.play();
-        if (currentPlaying) {
+        if (currentPlaying && currentPlaying !== li) {
             currentPlaying.classList.remove('playing');
             currentPlaying.style.backgroundColor = '';
             currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
@@ -316,3 +316,4 @@ const updateSlider = () => {
 };
 
 updateSlider();
+
