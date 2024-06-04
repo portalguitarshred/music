@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPlaying = null;
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    // Set default theme to dark
-    document.body.classList.add('dark-theme');
-
     const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
         { name: 'Classic Rock', url: 'https://stream.zeno.fm/amepggt3jxptv' },
@@ -194,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    loginButton.addEventListener('click', async () => {
+        loginButton.addEventListener('click', async () => {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
 
@@ -245,72 +242,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-    if (username && email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                username: username,
-                email: email,
-                password: password
-            })
-        });
+        if (username && email && password) {
+            const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    username: username,
+                    email: email,
+                    password: password
+                })
+            });
 
-        const data = await response.text();
-        alert(data);
+            const data = await response.text();
+            alert(data);
 
-        if (response.ok) {
-            registerModal.style.display = 'none';
+            if (response.ok) {
+                registerModal.style.display = 'none';
+            } else {
+                alert('Erro ao registrar usuário. Tente novamente.');
+            }
         } else {
-            alert('Erro ao registrar usuário. Tente novamente.');
+            alert('Por favor, preencha todos os campos.');
         }
-    } else {
-        alert('Por favor, preencha todos os campos.');
+    });
+
+    // Inicializa o Swiper
+    const swiper = new Swiper('.swiper-container', {
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        on: {
+            slideChange: function () {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                const stationIndex = activeSlide.dataset.index;
+                const station = stations[stationIndex];
+                playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
+            },
+        },
+    });
+
+    // Atualiza as capas do slider
+    const updateSlider = () => {
+        document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
+            slide.dataset.index = index;
+            slide.dataset.url = stations[index].url;
+        });
+    };
+
+    updateSlider();
+
+    // Alternar entre temas claro e escuro
+    const themeToggle = document.getElementById('theme-toggle');
+    const setTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    };
+
+    themeToggle.addEventListener('change', () => {
+        const theme = themeToggle.checked ? 'light' : 'dark';
+        setTheme(theme);
+    });
+
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        themeToggle.checked = currentTheme === 'light';
     }
 });
-
-// Inicializa o Swiper
-const swiper = new Swiper('.swiper-container', {
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    on: {
-        slideChange: function () {
-            const activeSlide = swiper.slides[swiper.activeIndex];
-            const stationIndex = activeSlide.dataset.index;
-            const station = stations[stationIndex];
-            playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
-        },
-    },
-});
-
-// Atualiza as capas do slider
-const updateSlider = () => {
-    document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-        slide.dataset.index = index;
-        slide.dataset.url = stations[index].url;
-    });
-};
-
-updateSlider();
-
-// Tema claro/escuro
-const themeToggle = document.getElementById('theme-toggle');
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-    document.body.classList.toggle('light-theme');
-    themeToggle.textContent = document.body.classList.contains('dark-theme') ? 'Tema Claro' : 'Tema Escuro';
-});
-
-// Configura o tema inicial como escuro
-document.body.classList.add('dark-theme');
-themeToggle.textContent = 'Tema Claro';
-});
-
