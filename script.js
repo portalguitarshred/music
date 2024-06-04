@@ -298,25 +298,25 @@ const updateSlider = () => {
 
 updateSlider();
 
-// Função para alternar o tema
+// Tema claro/escuro
 const toggleThemeButton = document.createElement('button');
-toggleThemeButton.textContent = 'Alternar Tema';
-toggleThemeButton.classList.add('theme-toggle');
-const menu = document.querySelector('.menu');
-const menuDivider = document.querySelector('.menu-divider');
-menu.insertBefore(toggleThemeButton, menuDivider.nextSibling);
+toggleThemeButton.id = 'toggle-theme';
+toggleThemeButton.textContent = 'Toggle Theme';
+document.querySelector('.menu').appendChild(toggleThemeButton);
+
+const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+};
 
 toggleThemeButton.addEventListener('click', () => {
-    document.body.classList.toggle('light-theme');
-    if (document.body.classList.contains('light-theme')) {
-        localStorage.setItem('theme', 'light');
-    } else {
-        localStorage.removeItem('theme');
-    }
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
 });
 
-// Verifica o tema armazenado no localStorage
-if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.add('light-theme');
-}
+// Aplica o tema salvo no carregamento
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
 });
+
