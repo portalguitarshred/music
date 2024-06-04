@@ -740,3 +740,54 @@ li.playing .spectrum {
         width: calc(100% - 40px);
         margin: 10px 20px;
    }
+
+body.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.light-theme header {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+body.light-theme .menu {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.light-theme .menu a {
+    color: #000000;
+}
+
+body.light-theme .menu a:hover {
+    background-color: #e0e0e0;
+}
+
+body.light-theme .clock-icon-exclusive,
+body.light-theme .menu-toggle {
+    color: #000000;
+}
+
+body.light-theme li {
+    background-color: #f9f9f9;
+    color: #000000;
+    border: 1px solid #dddddd;
+}
+
+body.light-theme li.playing {
+    background-color: #d0f0c0;
+}
+
+body.light-theme .modal-content,
+body.light-theme .modal-content-register,
+body.light-theme .modal-content-exclusive {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.light-theme .close,
+body.light-theme .close-register,
+body.light-theme .close-modal-exclusive {
+    color: #000000;
+}
