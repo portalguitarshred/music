@@ -822,9 +822,6 @@ body.dark-theme {
     align-items: center;
     cursor: pointer;
     display: flex;
-    width: 60px;
-    height: 34px;
-    margin-top: -20px;
 }
 
 .theme-toggle input {
