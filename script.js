@@ -192,68 +192,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loginButton.addEventListener('click', async () => {
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
 
-        if (email && password) {
-            const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    email: email,
-                    password: password
-                })
-            });
-
-            const data = await response.text();
-            alert(data);
-
-            if (response.ok) {
-                loginModal.style.display = 'none';
-                // Aqui você pode salvar o token JWT ou outra informação de autenticação
-            } else {
-                alert('Erro ao realizar login. Verifique suas credenciais.');
-            }
-        } else {
-            alert('Por favor, preencha todos os campos.');
-        }
-    });
-
-    const registerLink = document.getElementById('register-link');
-    const registerModal = document.getElementById('registerModal');
-    const closeRegisterModal = document.getElementById('closeRegisterModal');
-    const registerButton = document.getElementById('registerButton');
-
-    registerLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        registerModal.style.display = 'block';
-    });
-
-    closeRegisterModal.addEventListener('click', () => {
-        registerModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === registerModal) {
-            registerModal.style.display = 'none';
-        }
-    });
-
-    registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (username && email && password) {
-        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+    if (email && password) {
+        const response = await fetch('http://musica.guitarshred.com.br/login.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
-                username: username,
                 email: email,
                 password: password
             })
@@ -263,9 +211,10 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(data);
 
         if (response.ok) {
-            registerModal.style.display = 'none';
+            loginModal.style.display = 'none';
+            // Aqui você pode salvar o token JWT ou outra informação de autenticação
         } else {
-            alert('Erro ao registrar usuário. Tente novamente.');
+            alert('Erro ao realizar login. Verifique suas credenciais.');
         }
     } else {
         alert('Por favor, preencha todos os campos.');
@@ -283,6 +232,14 @@ const swiper = new Swiper('.swiper-container', {
             const activeSlide = swiper.slides[swiper.activeIndex];
             const stationIndex = activeSlide.dataset.index;
             const station = stations[stationIndex];
+            // Desativar a estação anterior se houver
+            if (currentPlaying) {
+                currentPlaying.classList.remove('playing');
+                currentPlaying.style.backgroundColor = '';
+                currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
+                currentPlaying.querySelector('.play-pause-icon').classList.add('fa-play');
+                currentPlaying.querySelector('.spectrum').style.display = 'none';
+            }
             playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
         },
     },
@@ -297,4 +254,4 @@ const updateSlider = () => {
 };
 
 updateSlider();
-});
+};
