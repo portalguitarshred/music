@@ -791,3 +791,34 @@ body.light-theme .close-register,
 body.light-theme .close-modal-exclusive {
     color: #000000;
 }
+
+:root {
+    --bg-color-dark: #121212;
+    --text-color-dark: #ffffff;
+    --bg-color-light: #f0f0f0;
+    --text-color-light: #000000;
+    --main-bg-color-light: #e0e0e0;
+}
+
+[data-theme="dark"] {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+
+[data-theme="light"] {
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+}
+
+main {
+    background-color: var(--main-bg-color-light); /* Tom de cinza claro */
+}
+
+.menu {
+    background-color: var(--bg-color-dark);
+}
+
+[data-theme="light"] .menu {
+    background-color: var(--bg-color-light);
+}
+
