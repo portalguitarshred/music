@@ -952,4 +952,16 @@ body.light-theme .logo {
     margin-left: 10px;
 }
 
+.theme-toggle input[type="checkbox"] {
+    display: none;
+}
+
+#theme-toggle:checked + .slider {
+    background-color: #05d26d;
+}
+
+#theme-toggle:checked + .slider:before {
+    transform: translateX(20px);
+}
+
 /* Adicione outros ajustes necessários para o tema claro */
