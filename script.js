@@ -298,21 +298,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateSlider();
 
-    // Alternar entre temas claro e escuro
-    const themeToggle = document.getElementById('theme-toggle');
-    const setTheme = (theme) => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-    };
+// Tema claro/escuro
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
 
-    themeToggle.addEventListener('change', () => {
-        const theme = themeToggle.checked ? 'light' : 'dark';
-        setTheme(theme);
-    });
-
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        themeToggle.checked = currentTheme === 'light';
+themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+        body.classList.add('light-theme');
+    } else {
+        body.classList.remove('light-theme');
     }
 });
