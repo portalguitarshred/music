@@ -283,23 +283,7 @@ const swiper = new Swiper('.swiper-container', {
             const activeSlide = swiper.slides[swiper.activeIndex];
             const stationIndex = activeSlide.dataset.index;
             const station = stations[stationIndex];
-
-            if (currentPlaying && currentPlaying !== document.querySelectorAll('#station-list li')[stationIndex]) {
-                // Resetar a estação atualmente tocando
-                currentPlaying.classList.remove('playing');
-                currentPlaying.style.backgroundColor = '';
-                currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
-                currentPlaying.querySelector('.play-pause-icon').classList.add('fa-play');
-                currentPlaying.querySelector('.spectrum').style.display = 'none';
-            }
-
-            // Atualizar a estação que deve ser destacada
-            const li = document.querySelectorAll('#station-list li')[stationIndex];
-            li.classList.add('playing');
-            li.style.backgroundColor = '#05d26d';
-            li.querySelector('.play-pause-icon').classList.remove('fa-play');
-            li.querySelector('.play-pause-icon').classList.add('fa-pause');
-            li.querySelector('.spectrum').style.display = 'flex';
+            playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
         },
     },
 });
