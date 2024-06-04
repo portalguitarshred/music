@@ -921,6 +921,14 @@ body.light-theme .play-pause-icon {
     transition: transform 0.3s;
 }
 
+.theme-toggle input:checked + .slider {
+    background-color: #05d26d;
+}
+
+.theme-toggle input:checked + .slider:before {
+    transform: translateX(25px);
+}
+
 /* Tema Escuro */
 body.dark-theme .logo {
     content: url('logo1.png');
