@@ -842,6 +842,13 @@ body.dark-theme {
     border-radius: 34px;
 }
 
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;  /* Ajuste a largura conforme necessário */
+  height: 16px; /* Ajuste a altura conforme necessário */
+}
+
 .slider:before {
     position: absolute;
     content: "";
