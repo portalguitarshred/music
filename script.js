@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function playStation(station, li) {
         audioPlayer.src = station.url;
         audioPlayer.play();
-        if (currentPlaying && currentPlaying !== li) {
+        if (currentPlaying) {
             currentPlaying.classList.remove('playing');
             currentPlaying.style.backgroundColor = '';
             currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         li.querySelector('.play-pause-icon').classList.add('fa-pause');
         li.querySelector('.spectrum').style.display = 'flex';
         currentPlaying = li;
+
+        // Atualizar o swiper para a estação selecionada
+        swiper.slideTo([...stationList.children].indexOf(li));
     }
 
     function pauseStation(li) {
@@ -280,26 +283,7 @@ const swiper = new Swiper('.swiper-container', {
             const activeSlide = swiper.slides[swiper.activeIndex];
             const stationIndex = activeSlide.dataset.index;
             const station = stations[stationIndex];
-
-            // Atualiza a estação tocando e desativa a anterior
-            if (currentPlaying) {
-                currentPlaying.classList.remove('playing');
-                currentPlaying.style.backgroundColor = '';
-                currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
-                currentPlaying.querySelector('.play-pause-icon').classList.add('fa-play');
-                currentPlaying.querySelector('.spectrum').style.display = 'none';
-            }
-
-            const li = document.querySelectorAll('#station-list li')[stationIndex];
-            li.classList.add('playing');
-            li.style.backgroundColor = '#05d26d';
-            li.querySelector('.play-pause-icon').classList.remove('fa-play');
-            li.querySelector('.play-pause-icon').classList.add('fa-pause');
-            li.querySelector('.spectrum').style.display = 'flex';
-            currentPlaying = li;
-
-            // Toca a estação selecionada pelo slider
-            playStation(station, li);
+            playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
         },
     },
 });
