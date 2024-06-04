@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPlaying.querySelector('.spectrum').style.display = 'none';
         }
         li.classList.add('playing');
-        li.style.backgroundColor = '#05d26d';
+        li.style.backgroundColor = '#05d26d'; // Cor verde padrão
         li.querySelector('.play-pause-icon').classList.remove('fa-play');
         li.querySelector('.play-pause-icon').classList.add('fa-pause');
         li.querySelector('.spectrum').style.display = 'flex';
@@ -283,15 +283,6 @@ const swiper = new Swiper('.swiper-container', {
             const activeSlide = swiper.slides[swiper.activeIndex];
             const stationIndex = activeSlide.dataset.index;
             const station = stations[stationIndex];
-            
-            if (currentPlaying) {
-                currentPlaying.classList.remove('playing');
-                currentPlaying.style.backgroundColor = '';
-                currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
-                currentPlaying.querySelector('.play-pause-icon').classList.add('fa-play');
-                currentPlaying.querySelector('.spectrum').style.display = 'none';
-            }
-            
             playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
         },
     },
@@ -306,3 +297,4 @@ const updateSlider = () => {
 };
 
 updateSlider();
+});
