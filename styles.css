@@ -29,6 +29,16 @@ header {
     position: relative;
 }
 
+.play-pause-icon {
+    cursor: pointer;
+    font-size: 1.2em;
+    position: absolute;
+    right: 10px;
+    color: #ffffff;
+    transition: color 0.3s;
+    margin-right: 10px;
+}
+
 .menu-toggle {
     font-size: 1.5em;
     color: #ffffff;
