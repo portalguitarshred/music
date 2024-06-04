@@ -20,7 +20,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #1f1f1f;
+    background-color: red;
     color: #ffffff;
     padding: 1em;
     width: 100%;
