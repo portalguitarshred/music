@@ -909,6 +909,18 @@ body.light-theme .play-pause-icon {
     transition: background-color 0.3s;
 }
 
+.theme-toggle .slider:before {
+    content: "";
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background-color: #fff;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
 /* Tema Escuro */
 body.dark-theme .logo {
     content: url('logo1.png');
