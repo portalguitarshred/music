@@ -914,7 +914,7 @@ body.light-theme .play-pause-icon {
     border-radius: 50%;
     background-color: #fff;
     top: 2px;
-    left: 2px;
+    left: 5px;
     transition: transform 0.3s;
 }
 
