@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-        loginButton.addEventListener('click', async () => {
+    loginButton.addEventListener('click', async () => {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
 
@@ -242,70 +242,73 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     registerButton.addEventListener('click', async () => {
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-        if (username && email && password) {
-            const response = await fetch('http://musica.guitarshred.com.br/register.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    username: username,
-                    email: email,
-                    password: password
-                })
-            });
-
-            const data = await response.text();
-            alert(data);
-
-            if (response.ok) {
-                registerModal.style.display = 'none';
-            } else {
-                alert('Erro ao registrar usuário. Tente novamente.');
-            }
-        } else {
-            alert('Por favor, preencha todos os campos.');
-        }
-    });
-
-    // Inicializa o Swiper
-    const swiper = new Swiper('.swiper-container', {
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        on: {
-            slideChange: function () {
-                const activeSlide = swiper.slides[swiper.activeIndex];
-                const stationIndex = activeSlide.dataset.index;
-                const station = stations[stationIndex];
-                playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
+    if (username && email && password) {
+        const response = await fetch('http://musica.guitarshred.com.br/register.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-        },
-    });
-
-    // Atualiza as capas do slider
-    const updateSlider = () => {
-        document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-            slide.dataset.index = index;
-            slide.dataset.url = stations[index].url;
+            body: new URLSearchParams({
+                username: username,
+                email: email,
+                password: password
+            })
         });
-    };
 
-    updateSlider();
+        const data = await response.text();
+        alert(data);
 
-// Tema claro/escuro
-const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
-
-themeToggle.addEventListener('change', () => {
-    if (themeToggle.checked) {
-        body.classList.add('light-theme');
+        if (response.ok) {
+            registerModal.style.display = 'none';
+        } else {
+            alert('Erro ao registrar usuário. Tente novamente.');
+        }
     } else {
-        body.classList.remove('light-theme');
+        alert('Por favor, preencha todos os campos.');
     }
 });
+
+// Inicializa o Swiper
+const swiper = new Swiper('.swiper-container', {
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+    on: {
+        slideChange: function () {
+            const activeSlide = swiper.slides[swiper.activeIndex];
+            const stationIndex = activeSlide.dataset.index;
+            const station = stations[stationIndex];
+            playStation(station, document.querySelectorAll('#station-list li')[stationIndex]);
+        },
+    },
+});
+
+// Atualiza as capas do slider
+const updateSlider = () => {
+    document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
+        slide.dataset.index = index;
+        slide.dataset.url = stations[index].url;
+    });
+};
+
+updateSlider();
+
+// Modo Claro/Escuro
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('change', () => {
+    document.body.classList.toggle('light-theme', themeToggle.checked);
+});
+
+// Verificar o estado inicial do tema
+if (themeToggle.checked) {
+    document.body.classList.add('light-theme');
+} else {
+    document.body.classList.remove('light-theme');
+}
+});
+
