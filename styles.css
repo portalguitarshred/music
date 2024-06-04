@@ -810,84 +810,73 @@ body.dark-theme {
     --button-text: #e0e0e0;
 }
 
-/* Estilos para o tema claro/escuro */
-body {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-body.light-theme {
-    background-color: #f5f5f5;
-    color: #333333;
-}
-
-header, footer, .menu {
-    background-color: #1e1e1e;
-}
-
-body.light-theme header, 
-body.light-theme footer, 
-body.light-theme .menu {
-    background-color: #ffffff;
-}
-
-.menu a {
-    color: #ffffff;
-}
-
-body.light-theme .menu a {
-    color: #333333;
-}
-
 /* Estilo para o botão de alternância */
-.theme-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+.theme-toggle-container {
     display: flex;
     align-items: center;
-    cursor: pointer;
+    padding: 10px;
+}
+
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
 }
 
 .theme-toggle input {
-    display: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-.theme-toggle .slider {
-    width: 50px;
-    height: 24px;
-    background-color: #ccc;
-    border-radius: 34px;
-    position: relative;
-    transition: background-color 0.2s;
-}
-
-.theme-toggle .slider::before {
-    content: '';
+.slider {
     position: absolute;
-    width: 22px;
-    height: 22px;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
     background-color: white;
+    transition: .4s;
     border-radius: 50%;
-    top: 1px;
-    left: 1px;
-    transition: transform 0.2s;
 }
 
-.theme-toggle input:checked + .slider {
-    background-color: #2196f3;
+input:checked + .slider {
+    background-color: #2196F3;
 }
 
-.theme-toggle input:checked + .slider::before {
+input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-.theme-toggle span {
-    margin-left: 10px;
-    font-size: 14px;
-    color: #ffffff;
+/* Estilo para o tema claro */
+.light-theme {
+    background-color: #f0f0f0;
+    color: #000;
 }
 
-body.light-theme .theme-toggle span {
-    color: #333333;
+/* Outros ajustes para o tema claro */
+.light-theme .station-list li {
+    background-color: #fff;
+    color: #000;
 }
+
+.light-theme .menu {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Adicione outros ajustes necessários para o tema claro */
