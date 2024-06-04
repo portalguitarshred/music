@@ -846,14 +846,14 @@ body.dark-theme {
   position: relative;
   display: inline-block;
   width: 40px;  /* Ajuste a largura conforme necessário */
-  height: 16px; /* Ajuste a altura conforme necessário */
+  height: 22px; /* Ajuste a altura conforme necessário */
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 16px;
-    width: 16px;
+    height: 22px;
+    width: 22px;
     left: 4px;
     bottom: 4px;
     background-color: white;
