@@ -907,4 +907,20 @@ body.light-theme .logo {
     content: url('logo2.png');
 }
 
+/* ícones de sol e lua para tema claro e escuro */
+
+.theme-toggle .fa-moon,
+.theme-toggle .fa-sun {
+    font-size: 18px;
+    color: #000;
+}
+
+.theme-toggle .fa-moon {
+    margin-right: 10px;
+}
+
+.theme-toggle .fa-sun {
+    margin-left: 10px;
+}
+
 /* Adicione outros ajustes necessários para o tema claro */
