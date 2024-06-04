@@ -893,4 +893,8 @@ body.light-theme main {
     background-color: #c2c2c2;
 }
 
+body.light-theme .play-pause-icon {
+    color: #121212;
+}
+
 /* Adicione outros ajustes necessários para o tema claro */
