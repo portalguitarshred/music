@@ -814,7 +814,7 @@ body.dark-theme {
 .theme-toggle-container {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0 10px 10px;
     margin: 10px 0;
 }
 
