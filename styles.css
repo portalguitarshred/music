@@ -815,6 +815,7 @@ body.dark-theme {
     display: flex;
     align-items: center;
     padding: 10px;
+    margin: 10px 0;
 }
 
 .theme-toggle {
