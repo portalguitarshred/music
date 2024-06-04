@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(statusMessage);
     let currentPlaying = null;
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const themeToggle = document.getElementById('theme-toggle');
 
     const stations = [
         { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
@@ -298,25 +299,19 @@ const updateSlider = () => {
 
 updateSlider();
 
-// Tema claro/escuro
-const toggleThemeButton = document.createElement('button');
-toggleThemeButton.id = 'toggle-theme';
-toggleThemeButton.textContent = 'Toggle Theme';
-document.querySelector('.menu').appendChild(toggleThemeButton);
+// Função para alternar o tema
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
 
-const applyTheme = (theme) => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-};
-
-toggleThemeButton.addEventListener('click', () => {
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    applyTheme(newTheme);
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('light-theme');
+    localStorage.setItem('theme', body.classList.contains('light-theme') ? 'light' : 'dark');
 });
 
-// Aplica o tema salvo no carregamento
-const savedTheme = localStorage.getItem('theme') || 'dark';
-applyTheme(savedTheme);
+// Verifica o tema salvo no localStorage
+if (localStorage.getItem('theme') === 'light') {
+    body.classList.add('light-theme');
+} else {
+    body.classList.add('dark-theme');
+}
 });
-
