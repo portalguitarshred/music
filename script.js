@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Código existente
     const stationList = document.getElementById('station-list');
     const audioPlayer = document.getElementById('audio-player');
     const volumeControl = document.getElementById('volume-control');
@@ -173,26 +172,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const loginLink = document.getElementById('login-link');
-    const loginModal = document.getElementById('loginModal');
-    const closeLoginModal = document.getElementById('closeLoginModal');
-    const loginButton = document.getElementById('loginButton');
+const loginModal = document.getElementById('loginModal');
+const closeLoginModal = document.getElementById('closeLoginModal');
+const loginButton = document.getElementById('loginButton');
 
-    loginLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginModal.style.display = 'block';
-    });
+loginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginModal.style.display = 'block';
+});
 
-    closeLoginModal.addEventListener('click', () => {
+closeLoginModal.addEventListener('click', () => {
+    loginModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === loginModal) {
         loginModal.style.display = 'none';
-    });
+    }
+});
 
-    window.addEventListener('click', (event) => {
-        if (event.target === loginModal) {
-            loginModal.style.display = 'none';
-        }
-    });
-
-    loginButton.addEventListener('click', async () => {
+loginButton.addEventListener('click', async () => {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
@@ -299,21 +298,16 @@ const updateSlider = () => {
 
 updateSlider();
 
-// Adiciona o botão de alternância de tema
+// Alternância de tema
 const themeToggle = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme') || 'dark';
+
+if (currentTheme === 'light') {
+    document.body.classList.add('light-theme');
+}
+
 themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light-theme');
-    if (document.body.classList.contains('light-theme')) {
-        localStorage.setItem('theme', 'light');
-    } else {
-        localStorage.setItem('theme', 'dark');
-    }
+    const theme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+    localStorage.setItem('theme', theme);
 });
-
-// Aplica o tema salvo anteriormente
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'light') {
-    document.body.classList.add('light-theme');
-} else {
-    document.body.classList.add('dark-theme');
-}
