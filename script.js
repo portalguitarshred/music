@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Código existente
     const stationList = document.getElementById('station-list');
     const audioPlayer = document.getElementById('audio-player');
     const volumeControl = document.getElementById('volume-control');
@@ -192,56 +193,56 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loginButton.addEventListener('click', async () => {
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
 
-        if (email && password) {
-            const response = await fetch('http://musica.guitarshred.com.br/login.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    email: email,
-                    password: password
-                })
-            });
+    if (email && password) {
+        const response = await fetch('http://musica.guitarshred.com.br/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                email: email,
+                password: password
+            })
+        });
 
-            const data = await response.text();
-            alert(data);
+        const data = await response.text();
+        alert(data);
 
-            if (response.ok) {
-                loginModal.style.display = 'none';
-                // Aqui você pode salvar o token JWT ou outra informação de autenticação
-            } else {
-                alert('Erro ao realizar login. Verifique suas credenciais.');
-            }
+        if (response.ok) {
+            loginModal.style.display = 'none';
+            // Aqui você pode salvar o token JWT ou outra informação de autenticação
         } else {
-            alert('Por favor, preencha todos os campos.');
+            alert('Erro ao realizar login. Verifique suas credenciais.');
         }
-    });
+    } else {
+        alert('Por favor, preencha todos os campos.');
+    }
+});
 
-    const registerLink = document.getElementById('register-link');
-    const registerModal = document.getElementById('registerModal');
-    const closeRegisterModal = document.getElementById('closeRegisterModal');
-    const registerButton = document.getElementById('registerButton');
+const registerLink = document.getElementById('register-link');
+const registerModal = document.getElementById('registerModal');
+const closeRegisterModal = document.getElementById('closeRegisterModal');
+const registerButton = document.getElementById('registerButton');
 
-    registerLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        registerModal.style.display = 'block';
-    });
+registerLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    registerModal.style.display = 'block';
+});
 
-    closeRegisterModal.addEventListener('click', () => {
+closeRegisterModal.addEventListener('click', () => {
+    registerModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === registerModal) {
         registerModal.style.display = 'none';
-    });
+    }
+});
 
-    window.addEventListener('click', (event) => {
-        if (event.target === registerModal) {
-            registerModal.style.display = 'none';
-        }
-    });
-
-    registerButton.addEventListener('click', async () => {
+registerButton.addEventListener('click', async () => {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -298,23 +299,21 @@ const updateSlider = () => {
 
 updateSlider();
 
-// Alternância de Tema Claro/Escuro
-const themeToggleButton = document.createElement('button');
-themeToggleButton.id = 'theme-toggle';
-themeToggleButton.textContent = 'Alternar Tema';
-menu.appendChild(themeToggleButton);
-
-themeToggleButton.addEventListener('click', () => {
+// Adiciona o botão de alternância de tema
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light-theme');
-    // Salvar preferências do usuário no localStorage
-    const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
-    localStorage.setItem('theme', currentTheme);
+    if (document.body.classList.contains('light-theme')) {
+        localStorage.setItem('theme', 'light');
+    } else {
+        localStorage.setItem('theme', 'dark');
+    }
 });
 
-// Carregar tema salvo
+// Aplica o tema salvo anteriormente
 const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-    document.body.classList.add(savedTheme === 'light' ? 'light-theme' : 'dark-theme');
+if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
 } else {
     document.body.classList.add('dark-theme');
 }
