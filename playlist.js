@@ -1,6 +1,5 @@
 import JellyfinClient from 'jellyfin-apiclient';
 
-// Configurações do servidor Jellyfin
 const serverAddress = 'http://localhost:8096/web/#/music.html?topParentId=ed2c98504ffb20dbfea3f6f71961952a'; // URL do seu servidor Jellyfin
 const username = 'wagnerribeiro'; // Seu nome de usuário Jellyfin
 const password = '1607wcr77'; // Sua senha Jellyfin
@@ -67,3 +66,4 @@ function updateRadioApp(musicItems) {
 }
 
 initializeClient();
+
