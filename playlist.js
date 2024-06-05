@@ -8,8 +8,16 @@ function searchMusic() {
     console.log('Searching for:', url); // Adicionado para depuração
 
     fetch(url)
-        .then(response => response.json())
-        .then(data => displayResults(data.data))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao buscar músicas: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data received:', data); // Adicionado para depuração
+            displayResults(data.data);
+        })
         .catch(error => console.error('Erro ao buscar músicas:', error));
 }
 
