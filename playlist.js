@@ -10,18 +10,19 @@ async function getAuthToken(username, password, apiKey) {
                 'X-Jellyfin-Authorization': `MediaBrowser Client="SeuAppName", Device="SeuDeviceName", DeviceId="SeuDeviceId", Version="13.6.4", Token="${972a939ef38b43d384eb0a190f68fe67}"` // Substitua pelos seus dados reais
             },
             body: JSON.stringify({
-                Username: wagnerribeiro, // Substitua pelo seu nome de usuário
-                Pw: 1607wcr77 // Substitua pela sua senha
+                Username: username, // Substitua pelo seu nome de usuário
+                Pw: password // Substitua pela sua senha
             })
         });
         if (!response.ok) {
-            throw new Error('Erro na autenticação');
+            throw new Error('Erro na autenticação: ' + response.statusText);
         }
         const data = await response.json();
         console.log('Token obtido:', data);
         return data.AccessToken;
     } catch (error) {
         console.error('Erro ao obter o token:', error);
+        throw error; // Lançar erro para que possa ser capturado na função initialize
     }
 }
 
@@ -36,7 +37,7 @@ async function fetchMusicAndArtists(token, apiKey) {
             }
         });
         if (!response.ok) {
-            throw new Error('Erro ao buscar músicas');
+            throw new Error('Erro ao buscar músicas: ' + response.statusText);
         }
         const data = await response.json();
         console.log('Resposta da API:', data);
@@ -49,13 +50,14 @@ async function fetchMusicAndArtists(token, apiKey) {
         }
     } catch (error) {
         console.error('Erro ao buscar músicas e artistas:', error);
+        throw error; // Lançar erro para que possa ser capturado na função initialize
     }
 }
 
 function updateRadioApp(musicItems) {
     console.log('Atualizando a interface com as músicas obtidas...');
     const musicListContainer = document.getElementById('music-list');
-    musicListContainer.innerHTML = ''; // Clear existing content
+    musicListContainer.innerHTML = ''; // Limpar conteúdo existente
     if (!musicItems || musicItems.length === 0) {
         musicListContainer.innerHTML = '<p>Nenhuma música encontrada.</p>';
         return;
@@ -95,5 +97,4 @@ async function initialize() {
 }
 
 initialize();
-
 
