@@ -8,8 +8,10 @@ const apiKey = '972a939ef38b43d384eb0a190f68fe67'; // Sua chave de API Jellyfin
 const client = new JellyfinClient();
 
 async function initializeClient() {
+    console.log('Inicializando cliente Jellyfin...');
     try {
         await client.connectToServer(serverAddress);
+        console.log('Conectado ao servidor Jellyfin.');
         const authResult = await client.authenticateUserByName(username, password);
         if (authResult.AccessToken) {
             console.log('Token de autenticação obtido:', authResult.AccessToken);
@@ -32,6 +34,7 @@ async function fetchMusicAndArtists(token) {
             Limit: 100,
             Fields: ['PrimaryImageAspectRatio']
         });
+        console.log('Resposta da API:', response);
         if (response.Items) {
             console.log('Músicas obtidas:', response.Items);
             updateRadioApp(response.Items);
@@ -66,4 +69,5 @@ function updateRadioApp(musicItems) {
 }
 
 initializeClient();
+
 
