@@ -2,11 +2,11 @@ function searchMusic() {
     const query = document.getElementById('searchQuery').value;
     if (!query) return;
 
-    // Simulando resultados de busca
+    // Simulando resultados de busca com links válidos de áudio
     const simulatedResults = [
-        { title: "Música 1", link: "https://www.example.com/audio1.mp3" },
-        { title: "Música 2", link: "https://www.example.com/audio2.mp3" },
-        { title: "Música 3", link: "https://www.example.com/audio3.mp3" }
+        { title: "Música 1", link: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+        { title: "Música 2", link: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+        { title: "Música 3", link: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
     ];
 
     displayResults(simulatedResults);
