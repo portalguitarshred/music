@@ -1,4 +1,4 @@
-const jellyfinServerUrl = 'http://localhost:8096'; // Atualize com a URL do seu servidor Jellyfin
+const jellyfinServerUrl = 'http://localhost:8096/web/#/home.html'; // Atualize com a URL do seu servidor Jellyfin
 
 async function getAuthToken(username, password, apiKey) {
     console.log('Obtendo token de autenticação...');
@@ -7,11 +7,11 @@ async function getAuthToken(username, password, apiKey) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Emby-Authorization': `MediaBrowser Client="SeuAppName", Device="SeuDeviceName", DeviceId="SeuDeviceId", Version="1.0.0", Token="${apiKey}"`
+                'X-Emby-Authorization': `MediaBrowser Client="guitarshred", Device="MacWagner", DeviceId="12345-ABCDE-67890-FGHIJ", Version="1.0.0", Token="${apiKey}"` // Substitua SeuAppName, SeuDeviceName, SeuDeviceId pelos seus dados reais
             },
             body: JSON.stringify({
-                Username: wagnerribeiro,
-                Pw: 16wcr77
+                Username: wagnerribeiro, // Substitua pelo seu nome de usuário
+                Pw: 16wcr77 // Substitua pela sua senha
             })
         });
         if (!response.ok) {
@@ -32,7 +32,7 @@ async function fetchMusicAndArtists(token, apiKey) {
             method: 'GET',
             headers: {
                 'X-Emby-Token': token,
-                'X-Emby-Authorization': `MediaBrowser Client="SeuAppName", Device="SeuDeviceName", DeviceId="SeuDeviceId", Version="1.0.0", Token="${apiKey}"`
+                'X-Emby-Authorization': `MediaBrowser Client="SeuAppName", Device="SeuDeviceName", DeviceId="SeuDeviceId", Version="13.6.4", Token="${972a939ef38b43d384eb0a190f68fe67}"` // Substitua SeuAppName, SeuDeviceName, SeuDeviceId pelos seus dados reais
             }
         });
         if (!response.ok) {
@@ -95,3 +95,4 @@ async function initialize() {
 }
 
 initialize();
+
