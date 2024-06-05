@@ -8,7 +8,7 @@ function searchMusic() {
     if (!query) return;
 
     // Formatar a URL de busca com os parâmetros corretos
-    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}`;
+    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&output=json`;
     console.log('Searching for:', url); // Log para depuração
 
     // Fazer a requisição GET para a API do Deezer
