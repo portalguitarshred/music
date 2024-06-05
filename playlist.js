@@ -4,7 +4,10 @@ function searchMusic() {
     const query = document.getElementById('searchQuery').value;
     if (!query) return;
 
-    fetch(`${DEEZER_API_URL}${encodeURIComponent(query)}`)
+    const url = `${DEEZER_API_URL}${encodeURIComponent(query)}`;
+    console.log('Searching for:', url); // Adicionado para depuração
+
+    fetch(url)
         .then(response => response.json())
         .then(data => displayResults(data.data))
         .catch(error => console.error('Erro ao buscar músicas:', error));
