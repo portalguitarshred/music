@@ -1,3 +1,11 @@
+function searchMusic() {
+    const query = document.getElementById('searchQuery').value;
+    if (!query) return;
+
+    const url = `https://www.google.com/search?q=${encodeURIComponent(query)}+music`;
+    window.open(url, '_blank');
+}
+
 function addMusic() {
     const musicUrl = document.getElementById('musicUrl').value;
     if (!musicUrl) return;
