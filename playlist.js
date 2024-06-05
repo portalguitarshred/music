@@ -67,7 +67,3 @@ function updateRadioApp(musicItems) {
 }
 
 initializeClient();
-
-
-
-
