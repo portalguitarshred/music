@@ -14,6 +14,9 @@ async function getAuthToken(username, password, apiKey) {
                 Pw: password
             })
         });
+        if (!response.ok) {
+            throw new Error('Erro na autenticação');
+        }
         const data = await response.json();
         console.log('Token obtido:', data.AccessToken);
         return data.AccessToken;
@@ -32,7 +35,11 @@ async function fetchMusicAndArtists(token, apiKey) {
                 'X-Emby-Authorization': `MediaBrowser Client="YourAppName", Device="YourDeviceName", DeviceId="YourDeviceId", Version="1.0.0", Token="${apiKey}"`
             }
         });
+        if (!response.ok) {
+            throw new Error('Erro ao buscar músicas');
+        }
         const data = await response.json();
+        console.log('Resposta da API:', data);
         console.log('Músicas obtidas:', data.Items);
         return data.Items;
     } catch (error) {
@@ -83,3 +90,4 @@ async function initialize() {
 }
 
 initialize();
+
