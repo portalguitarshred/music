@@ -1,4 +1,4 @@
-const jellyfinServerUrl = 'http://seu-servidor-jellyfin'; // Atualize com a URL do seu servidor Jellyfin
+const jellyfinServerUrl = 'http://localhost:8096'; // Atualize com a URL do seu servidor Jellyfin
 
 async function getAuthToken(username, password, apiKey) {
     console.log('Obtendo token de autenticação...');
@@ -70,8 +70,12 @@ async function initialize() {
         const password = 'sua-senha'; // Insira sua senha aqui
         const token = await getAuthToken(username, password, apiKey);
         if (token) {
+            console.log('Token de autenticação obtido:', token);
             const musicItems = await fetchMusicAndArtists(token, apiKey);
+            console.log('Itens de música obtidos:', musicItems);
             updateRadioApp(musicItems);
+        } else {
+            console.error('Falha ao obter token de autenticação.');
         }
     } catch (error) {
         console.error('Erro durante a inicialização:', error);
