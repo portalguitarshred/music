@@ -1,56 +1,46 @@
-const jellyfinServerUrl = 'http://localhost:8096/web/#/home.html'; // Atualize com a URL do seu servidor Jellyfin
+import JellyfinClient from 'jellyfin-apiclient';
 
-async function getAuthToken(username, password, apiKey) {
-    console.log('Obtendo token de autenticação...');
+// Configurações do servidor Jellyfin
+const serverAddress = 'http://localhost:8096/web/#/home.html'; // URL do seu servidor Jellyfin
+const username = 'wagnerribeiro'; // Seu nome de usuário Jellyfin
+const password = '1607wcr77'; // Sua senha Jellyfin
+const apiKey = '972a939ef38b43d384eb0a190f68fe67'; // Sua chave de API Jellyfin
+
+const client = new JellyfinClient();
+
+async function initializeClient() {
     try {
-        const response = await fetch(`${jellyfinServerUrl}/Users/AuthenticateByName`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Jellyfin-Authorization': `MediaBrowser Client="guitarshred", Device="Mac de Wagner", DeviceId="12345-ABCDE-67890-FGHIJ", Version="13.6.4", Token="${972a939ef38b43d384eb0a190f68fe67}"` // Substitua pelos seus dados reais
-            },
-            body: JSON.stringify({
-                Username: wagnerribeiro, // Substitua pelo seu nome de usuário
-                Pw: 1607wcr77 // Substitua pela sua senha
-            })
-        });
-        if (!response.ok) {
-            throw new Error(`Erro na autenticação: ${response.status} ${response.statusText}`);
+        await client.connectToServer(serverAddress);
+        const authResult = await client.authenticateUserByName(username, password);
+        if (authResult.AccessToken) {
+            console.log('Token de autenticação obtido:', authResult.AccessToken);
+            fetchMusicAndArtists(authResult.AccessToken);
+        } else {
+            console.error('Falha ao obter token de autenticação.');
         }
-        const data = await response.json();
-        console.log('Token obtido:', data);
-        return data.AccessToken;
     } catch (error) {
-        console.error('Erro ao obter o token:', error);
-        throw error; // Lançar erro para que possa ser capturado na função initialize
+        console.error('Erro durante a autenticação:', error);
     }
 }
 
-async function fetchMusicAndArtists(token, apiKey) {
+async function fetchMusicAndArtists(token) {
     console.log('Buscando músicas e artistas...');
     try {
-        const response = await fetch(`${jellyfinServerUrl}/Items?IncludeItemTypes=Audio`, {
-            method: 'GET',
-            headers: {
-                'X-Jellyfin-Token': token,
-                'X-Jellyfin-Authorization': `MediaBrowser Client="guitarshred", Device="Mac de Wagner", DeviceId="12345-ABCDE-67890-FGHIJ", Version="13.6.4", Token="${972a939ef38b43d384eb0a190f68fe67}"` // Substitua pelos seus dados reais
-            }
+        const response = await client.getItems({
+            IncludeItemTypes: 'Audio',
+            Recursive: true,
+            StartIndex: 0,
+            Limit: 100,
+            Fields: ['PrimaryImageAspectRatio']
         });
-        if (!response.ok) {
-            throw new Error(`Erro ao buscar músicas: ${response.status} ${response.statusText}`);
-        }
-        const data = await response.json();
-        console.log('Resposta da API:', data);
-        if (data.Items) {
-            console.log('Músicas obtidas:', data.Items);
-            return data.Items;
+        if (response.Items) {
+            console.log('Músicas obtidas:', response.Items);
+            updateRadioApp(response.Items);
         } else {
-            console.log('Nenhum item encontrado na resposta:', data);
-            return [];
+            console.log('Nenhum item encontrado na resposta:', response);
         }
     } catch (error) {
         console.error('Erro ao buscar músicas e artistas:', error);
-        throw error; // Lançar erro para que possa ser capturado na função initialize
     }
 }
 
@@ -66,7 +56,7 @@ function updateRadioApp(musicItems) {
         const musicElement = document.createElement('div');
         musicElement.className = 'music-item';
         musicElement.innerHTML = `
-            <img src="${jellyfinServerUrl}/Items/${item.Id}/Images/Primary" alt="${item.Name}">
+            <img src="${serverAddress}/Items/${item.Id}/Images/Primary" alt="${item.Name}">
             <div class="music-info">
                 <h4>${item.Name}</h4>
                 <p>${item.ArtistItems.map(artist => artist.Name).join(', ')}</p>
@@ -76,27 +66,8 @@ function updateRadioApp(musicItems) {
     });
 }
 
-async function initialize() {
-    console.log('Inicializando aplicação...');
-    try {
-        const apiKey = '972a939ef38b43d384eb0a190f68fe67'; // Substitua pela sua chave de API
-        const username = 'wagnerribeiro'; // Substitua pelo seu nome de usuário
-        const password = '1607wcr77'; // Substitua pela sua senha
-        const token = await getAuthToken(username, password, apiKey);
-        if (token) {
-            console.log('Token de autenticação obtido:', token);
-            const musicItems = await fetchMusicAndArtists(token, apiKey);
-            console.log('Itens de música obtidos:', musicItems);
-            updateRadioApp(musicItems);
-        } else {
-            console.error('Falha ao obter token de autenticação.');
-        }
-    } catch (error) {
-        console.error('Erro durante a inicialização:', error);
-    }
-}
+initializeClient();
 
-initialize();
 
 
 
