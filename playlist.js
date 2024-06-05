@@ -7,15 +7,15 @@ async function getAuthToken(username, password, apiKey) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Jellyfin-Authorization': `MediaBrowser Client="SeuAppName", Device="SeuDeviceName", DeviceId="SeuDeviceId", Version="13.6.4", Token="${972a939ef38b43d384eb0a190f68fe67}"` // Substitua pelos seus dados reais
+                'X-Jellyfin-Authorization': `MediaBrowser Client="guitarshred", Device="Mac de Wagner", DeviceId="12345-ABCDE-67890-FGHIJ", Version="13.6.4", Token="${972a939ef38b43d384eb0a190f68fe67}"` // Substitua pelos seus dados reais
             },
             body: JSON.stringify({
-                Username: username, // Substitua pelo seu nome de usuário
-                Pw: password // Substitua pela sua senha
+                Username: wagnerribeiro, // Substitua pelo seu nome de usuário
+                Pw: 1607wcr77 // Substitua pela sua senha
             })
         });
         if (!response.ok) {
-            throw new Error('Erro na autenticação: ' + response.statusText);
+            throw new Error(`Erro na autenticação: ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
         console.log('Token obtido:', data);
@@ -33,11 +33,11 @@ async function fetchMusicAndArtists(token, apiKey) {
             method: 'GET',
             headers: {
                 'X-Jellyfin-Token': token,
-                'X-Jellyfin-Authorization': `MediaBrowser Client="SeuAppName", Device="SeuDeviceName", DeviceId="SeuDeviceId", Version="13.6.4", Token="${972a939ef38b43d384eb0a190f68fe67}"` // Substitua pelos seus dados reais
+                'X-Jellyfin-Authorization': `MediaBrowser Client="guitarshred", Device="Mac de Wagner", DeviceId="12345-ABCDE-67890-FGHIJ", Version="13.6.4", Token="${972a939ef38b43d384eb0a190f68fe67}"` // Substitua pelos seus dados reais
             }
         });
         if (!response.ok) {
-            throw new Error('Erro ao buscar músicas: ' + response.statusText);
+            throw new Error(`Erro ao buscar músicas: ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
         console.log('Resposta da API:', data);
@@ -97,4 +97,5 @@ async function initialize() {
 }
 
 initialize();
+
 
