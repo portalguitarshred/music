@@ -1,11 +1,3 @@
-function searchMusic() {
-    const query = document.getElementById('searchQuery').value;
-    if (!query) return;
-
-    const url = `https://www.google.com/search?q=${encodeURIComponent(query)}+music`;
-    window.open(url, '_blank');
-}
-
 function addMusic() {
     const musicUrl = document.getElementById('musicUrl').value;
     if (!musicUrl) return;
@@ -29,11 +21,20 @@ function displayPlaylist() {
         const li = document.createElement('li');
         const a = document.createElement('a');
         a.href = link;
-        a.textContent = link;
+        a.textContent = getFriendlyName(link);
         a.target = '_blank';
         li.appendChild(a);
         playlistEl.appendChild(li);
     });
+}
+
+function getFriendlyName(url) {
+    try {
+        const urlObj = new URL(url);
+        return urlObj.hostname + ' - ' + urlObj.pathname.split('/').pop();
+    } catch (error) {
+        return url;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', displayPlaylist);
