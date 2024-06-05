@@ -1,15 +1,13 @@
+const DEEZER_API_URL = 'https://api.deezer.com/search?q=';
+
 function searchMusic() {
     const query = document.getElementById('searchQuery').value;
     if (!query) return;
 
-    // Simulando resultados de busca com links válidos de áudio
-    const simulatedResults = [
-        { title: "Música 1", link: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-        { title: "Música 2", link: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-        { title: "Música 3", link: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
-    ];
-
-    displayResults(simulatedResults);
+    fetch(`${DEEZER_API_URL}${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => displayResults(data.data))
+        .catch(error => console.error('Erro ao buscar músicas:', error));
 }
 
 function displayResults(results) {
@@ -23,10 +21,10 @@ function displayResults(results) {
 
     results.forEach(result => {
         const resultDiv = document.createElement('div');
-        resultDiv.textContent = result.title;
+        resultDiv.textContent = `${result.artist.name} - ${result.title}`;
         const addButton = document.createElement('button');
         addButton.textContent = 'Adicionar à Playlist';
-        addButton.onclick = () => addToPlaylist(result.title, result.link);
+        addButton.onclick = () => addToPlaylist(result.title, result.preview);
         resultDiv.appendChild(addButton);
         resultsContainer.appendChild(resultDiv);
     });
@@ -69,7 +67,9 @@ function displayPlaylist() {
 function playAudio(link) {
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.src = link;
-    audioPlayer.play();
+    audioPlayer.play().catch(error => {
+        console.error('Erro ao reproduzir áudio:', error);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', displayPlaylist);
