@@ -26,23 +26,29 @@ function displayResults(results) {
         resultDiv.textContent = result.title;
         const addButton = document.createElement('button');
         addButton.textContent = 'Adicionar à Playlist';
-        addButton.onclick = () => addToPlaylist(result.link);
+        addButton.onclick = () => addToPlaylist(result.title, convertToAudioLink(result.link));
         resultDiv.appendChild(addButton);
         resultsContainer.appendChild(resultDiv);
     });
+}
+
+function convertToAudioLink(youtubeLink) {
+    // Simulando a conversão de um link de YouTube para um link de áudio
+    // Em uma aplicação real, você precisaria de um serviço que converta o vídeo do YouTube para um formato de áudio.
+    return youtubeLink.replace("youtube.com/watch?v=", "example.com/audio/"); 
 }
 
 function addMusic() {
     const musicUrl = document.getElementById('musicUrl').value;
     if (!musicUrl) return;
 
-    addToPlaylist(musicUrl);
+    addToPlaylist("User Added", musicUrl);
     document.getElementById('musicUrl').value = ''; // Limpar o campo após adicionar
 }
 
-function addToPlaylist(link) {
+function addToPlaylist(title, link) {
     let playlist = JSON.parse(localStorage.getItem('playlist')) || [];
-    playlist.push(link);
+    playlist.push({ title, link });
     localStorage.setItem('playlist', JSON.stringify(playlist));
     displayPlaylist();
 }
@@ -51,24 +57,15 @@ function displayPlaylist() {
     const playlist = JSON.parse(localStorage.getItem('playlist')) || [];
     const playlistEl = document.getElementById('playlist');
     playlistEl.innerHTML = '';
-    playlist.forEach((link, index) => {
+    playlist.forEach((item, index) => {
         const li = document.createElement('li');
         const a = document.createElement('a');
-        a.href = link;
-        a.textContent = getFriendlyName(link);
+        a.href = item.link;
+        a.textContent = `${item.title} (Áudio)`;
         a.target = '_blank';
         li.appendChild(a);
         playlistEl.appendChild(li);
     });
-}
-
-function getFriendlyName(url) {
-    try {
-        const urlObj = new URL(url);
-        return urlObj.hostname + ' - ' + urlObj.pathname.split('/').pop();
-    } catch (error) {
-        return url;
-    }
 }
 
 document.addEventListener('DOMContentLoaded', displayPlaylist);
