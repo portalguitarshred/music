@@ -42,7 +42,8 @@ function addMusic() {
     const musicUrl = document.getElementById('musicUrl').value;
     if (!musicUrl) return;
 
-    addToPlaylist("User Added", musicUrl);
+    const musicTitle = "User Added"; // Título padrão para músicas adicionadas manualmente
+    addToPlaylist(musicTitle, musicUrl);
     document.getElementById('musicUrl').value = ''; // Limpar o campo após adicionar
 }
 
