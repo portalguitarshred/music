@@ -25,7 +25,7 @@ function displayResults(results) {
         resultDiv.textContent = result.title;
         const addButton = document.createElement('button');
         addButton.textContent = 'Adicionar à Playlist';
-        addButton.onclick = () => addToPlaylist(result.title, result.permalink_url);
+        addButton.onclick = () => addToPlaylist(result.title, result.id);
         resultDiv.appendChild(addButton);
         resultsContainer.appendChild(resultDiv);
     });
@@ -40,9 +40,9 @@ function addMusic() {
     document.getElementById('musicUrl').value = ''; // Limpar o campo após adicionar
 }
 
-function addToPlaylist(title, link) {
+function addToPlaylist(title, trackId) {
     let playlist = JSON.parse(localStorage.getItem('playlist')) || [];
-    playlist.push({ title, link });
+    playlist.push({ title, trackId });
     localStorage.setItem('playlist', JSON.stringify(playlist));
     displayPlaylist();
 }
@@ -54,22 +54,29 @@ function displayPlaylist() {
     playlist.forEach((item, index) => {
         const li = document.createElement('li');
         const a = document.createElement('a');
-        a.href = item.link;
+        a.href = '#';
         a.textContent = `${item.title} (Áudio)`;
-        a.target = '_blank';
         a.onclick = (event) => {
             event.preventDefault();
-            playAudio(item.link);
+            playAudio(item.trackId);
         };
         li.appendChild(a);
         playlistEl.appendChild(li);
     });
 }
 
-function playAudio(link) {
-    const audioPlayer = document.getElementById('audioPlayer');
-    audioPlayer.src = link;
-    audioPlayer.play();
+function playAudio(trackId) {
+    fetch(`https://api.soundcloud.com/tracks/${trackId}/stream?client_id=${SOUNDCLOUD_CLIENT_ID}`)
+        .then(response => {
+            if (response.ok) {
+                const audioPlayer = document.getElementById('audioPlayer');
+                audioPlayer.src = response.url;
+                audioPlayer.play();
+            } else {
+                console.error('Erro ao obter link de áudio:', response.statusText);
+            }
+        })
+        .catch(error => console.error('Erro ao obter link de áudio:', error));
 }
 
 document.addEventListener('DOMContentLoaded', displayPlaylist);
