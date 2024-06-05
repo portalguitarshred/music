@@ -1,13 +1,15 @@
-const SOUNDCLOUD_CLIENT_ID = 'YOUR_SOUNDCLOUD_CLIENT_ID';
-
 function searchMusic() {
     const query = document.getElementById('searchQuery').value;
     if (!query) return;
 
-    fetch(`https://api.soundcloud.com/tracks?q=${query}&client_id=${SOUNDCLOUD_CLIENT_ID}`)
-        .then(response => response.json())
-        .then(data => displayResults(data))
-        .catch(error => console.error('Erro ao buscar músicas:', error));
+    // Simulando resultados de busca
+    const simulatedResults = [
+        { title: "Música 1", link: "https://www.example.com/audio1.mp3" },
+        { title: "Música 2", link: "https://www.example.com/audio2.mp3" },
+        { title: "Música 3", link: "https://www.example.com/audio3.mp3" }
+    ];
+
+    displayResults(simulatedResults);
 }
 
 function displayResults(results) {
@@ -24,7 +26,7 @@ function displayResults(results) {
         resultDiv.textContent = result.title;
         const addButton = document.createElement('button');
         addButton.textContent = 'Adicionar à Playlist';
-        addButton.onclick = () => addToPlaylist(result.title, result.stream_url + `?client_id=${SOUNDCLOUD_CLIENT_ID}`);
+        addButton.onclick = () => addToPlaylist(result.title, result.link);
         resultDiv.appendChild(addButton);
         resultsContainer.appendChild(resultDiv);
     });
