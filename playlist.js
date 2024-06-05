@@ -1,6 +1,9 @@
+const jellyfinServerUrl = 'http://seu-servidor-jellyfin'; // Atualize com a URL do seu servidor Jellyfin
+
 async function getAuthToken(username, password, apiKey) {
+    console.log('Obtendo token de autenticação...');
     try {
-        const response = await fetch('http://localhost:8096/Users/AuthenticateByName', {
+        const response = await fetch(`${jellyfinServerUrl}/Users/AuthenticateByName`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,8 +23,9 @@ async function getAuthToken(username, password, apiKey) {
 }
 
 async function fetchMusicAndArtists(token, apiKey) {
+    console.log('Buscando músicas e artistas...');
     try {
-        const response = await fetch('http://localhost:8096/Items?IncludeItemTypes=Audio', {
+        const response = await fetch(`${jellyfinServerUrl}/Items?IncludeItemTypes=Audio`, {
             method: 'GET',
             headers: {
                 'X-Emby-Token': token,
@@ -37,6 +41,7 @@ async function fetchMusicAndArtists(token, apiKey) {
 }
 
 function updateRadioApp(musicItems) {
+    console.log('Atualizando a interface com as músicas obtidas...');
     const musicListContainer = document.getElementById('music-list');
     musicListContainer.innerHTML = ''; // Clear existing content
     if (!musicItems || musicItems.length === 0) {
@@ -47,7 +52,7 @@ function updateRadioApp(musicItems) {
         const musicElement = document.createElement('div');
         musicElement.className = 'music-item';
         musicElement.innerHTML = `
-            <img src="http://localhost:8096/Items/${item.Id}/Images/Primary" alt="${item.Name}">
+            <img src="${jellyfinServerUrl}/Items/${item.Id}/Images/Primary" alt="${item.Name}">
             <div class="music-info">
                 <h4>${item.Name}</h4>
                 <p>${item.ArtistItems.map(artist => artist.Name).join(', ')}</p>
@@ -58,6 +63,7 @@ function updateRadioApp(musicItems) {
 }
 
 async function initialize() {
+    console.log('Inicializando aplicação...');
     try {
         const apiKey = 'sua-chave-de-api'; // Insira sua chave de API aqui
         const username = 'seu-usuario'; // Insira seu nome de usuário aqui
