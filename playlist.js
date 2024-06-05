@@ -18,7 +18,7 @@ async function getAuthToken(username, password, apiKey) {
             throw new Error('Erro na autenticação');
         }
         const data = await response.json();
-        console.log('Token obtido:', data.AccessToken);
+        console.log('Token obtido:', data);
         return data.AccessToken;
     } catch (error) {
         console.error('Erro ao obter o token:', error);
@@ -40,8 +40,13 @@ async function fetchMusicAndArtists(token, apiKey) {
         }
         const data = await response.json();
         console.log('Resposta da API:', data);
-        console.log('Músicas obtidas:', data.Items);
-        return data.Items;
+        if (data.Items) {
+            console.log('Músicas obtidas:', data.Items);
+            return data.Items;
+        } else {
+            console.log('Nenhum item encontrado na resposta:', data);
+            return [];
+        }
     } catch (error) {
         console.error('Erro ao buscar músicas e artistas:', error);
     }
