@@ -2,8 +2,34 @@ function searchMusic() {
     const query = document.getElementById('searchQuery').value;
     if (!query) return;
 
-    const url = `https://www.google.com/search?q=${encodeURIComponent(query)}+music`;
-    window.open(url, '_blank');
+    // Simulando resultados de busca
+    const simulatedResults = [
+        { title: "Música 1", link: "https://www.youtube.com/watch?v=xxxxxx1" },
+        { title: "Música 2", link: "https://www.youtube.com/watch?v=xxxxxx2" },
+        { title: "Música 3", link: "https://www.youtube.com/watch?v=xxxxxx3" }
+    ];
+
+    displayResults(simulatedResults);
+}
+
+function displayResults(results) {
+    const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.innerHTML = '';
+
+    if (!results || results.length === 0) {
+        resultsContainer.innerHTML = '<p>Nenhuma música encontrada.</p>';
+        return;
+    }
+
+    results.forEach(result => {
+        const resultDiv = document.createElement('div');
+        resultDiv.textContent = result.title;
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Adicionar à Playlist';
+        addButton.onclick = () => addToPlaylist(result.link);
+        resultDiv.appendChild(addButton);
+        resultsContainer.appendChild(resultDiv);
+    });
 }
 
 function addMusic() {
