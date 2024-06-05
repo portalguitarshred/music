@@ -1,63 +1,55 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const searchButton = document.getElementById('search-button');
-    const searchInput = document.getElementById('search-input');
-    const playlistNameElement = document.getElementById('playlist-name');
-    const playlistTracks = document.getElementById('playlist-tracks');
-
-    searchButton.addEventListener('click', async () => {
-        const query = searchInput.value;
-        await searchTracks(query);
+async function getAuthToken(username, password, apiKey) {
+    const response = await fetch('http://localhost:8096/Users/AuthenticateByName', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Emby-Authorization': `MediaBrowser Client="YourAppName", Device="YourDeviceName", DeviceId="YourDeviceId", Version="1.0.0", Token="${apiKey}"`
+        },
+        body: JSON.stringify({
+            Username: username,
+            Pw: password
+        })
     });
+    const data = await response.json();
+    return data.AccessToken;
+}
 
-    async function searchTracks(query) {
-        const url = `https://itunes.apple.com/search?term=${query}&media=music&limit=20`;
-
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            console.log('Dados da busca:', data); // Log para depuração
-            if (data && data.results) {
-                const tracks = data.results;
-                showSearchResultsAsPlaylist(tracks);
-            } else {
-                alert('Nenhum resultado encontrado.');
-            }
-        } catch (error) {
-            console.error('Erro ao buscar músicas:', error);
-            alert('Erro ao buscar músicas. Verifique o console para mais detalhes.');
+async function fetchMusicAndArtists(token, apiKey) {
+    const response = await fetch('http://localhost:8096/Items?IncludeItemTypes=Audio', {
+        method: 'GET',
+        headers: {
+            'X-Emby-Token': token,
+            'X-Emby-Authorization': `MediaBrowser Client="YourAppName", Device="YourDeviceName", DeviceId="YourDeviceId", Version="1.0.0", Token="${apiKey}"`
         }
-    }
+    });
+    const data = await response.json();
+    return data.Items;
+}
 
-    function showSearchResultsAsPlaylist(tracks) {
-        const playlistName = `Resultados de pesquisa para "${searchInput.value}"`;
-        playlistNameElement.textContent = playlistName;
-        playlistTracks.innerHTML = ''; // Limpar a lista de músicas
+function updateRadioApp(musicItems) {
+    const musicListContainer = document.getElementById('music-list');
+    musicListContainer.innerHTML = ''; // Clear existing content
+    musicItems.forEach(item => {
+        const musicElement = document.createElement('div');
+        musicElement.className = 'music-item';
+        musicElement.innerHTML = `
+            <img src="http://localhost:8096/Items/${item.Id}/Images/Primary" alt="${item.Name}">
+            <div class="music-info">
+                <h4>${item.Name}</h4>
+                <p>${item.ArtistItems.map(artist => artist.Name).join(', ')}</p>
+            </div>
+        `;
+        musicListContainer.appendChild(musicElement);
+    });
+}
 
-        tracks.forEach(track => {
-            const trackElement = document.createElement('li');
+async function initialize() {
+    const apiKey = 'sua-chave-de-api'; // Insira sua chave de API aqui
+    const username = 'seu-usuario'; // Insira seu nome de usuário aqui
+    const password = 'sua-senha'; // Insira sua senha aqui
+    const token = await getAuthToken(username, password, apiKey);
+    const musicItems = await fetchMusicAndArtists(token, apiKey);
+    updateRadioApp(musicItems);
+}
 
-            const coverImage = document.createElement('div');
-            coverImage.classList.add('track-cover');
-            const trackCoverImg = document.createElement('img');
-            trackCoverImg.src = track.artworkUrl100;
-            coverImage.appendChild(trackCoverImg);
-
-            const trackName = document.createElement('div');
-            trackName.classList.add('track-name');
-            trackName.textContent = `${track.trackName} - ${track.artistName}`;
-
-            trackElement.appendChild(coverImage);
-            trackElement.appendChild(trackName);
-            trackElement.dataset.url = track.previewUrl;
-            trackElement.addEventListener('click', () => {
-                playTrack(track.previewUrl);
-            });
-            playlistTracks.appendChild(trackElement);
-        });
-    }
-
-    function playTrack(url) {
-        const audioPlayer = new Audio(url);
-        audioPlayer.play();
-    }
-});
+initialize();
