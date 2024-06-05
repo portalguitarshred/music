@@ -6,6 +6,14 @@ function searchMusic() {
     window.open(url, '_blank');
 }
 
+function addMusic() {
+    const musicUrl = document.getElementById('musicUrl').value;
+    if (!musicUrl) return;
+
+    addToPlaylist(musicUrl);
+    document.getElementById('musicUrl').value = ''; // Limpar o campo após adicionar
+}
+
 function addToPlaylist(link) {
     let playlist = JSON.parse(localStorage.getItem('playlist')) || [];
     playlist.push(link);
