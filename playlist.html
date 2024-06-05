@@ -3,51 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlists - Guitar Shred Radio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Playlist</title>
     <link rel="stylesheet" href="playlist.css">
 </head>
 <body>
-    <header>
-        <i class="fas fa-bars menu-toggle"></i>
-        <img src="logo.png" alt="Guitar Radio Logo" class="logo">
-        <span class="clock-icon-exclusive" id="clock-icon-exclusive">&#128339;</span>
-    </header>
-
-    <main>
-        <section id="search-section">
-            <input type="text" id="search-input" placeholder="Digite o nome da música ou artista">
-            <button id="search-button">Buscar</button>
-        </section>
-
-        <section id="results-section">
-            <ul id="results-list">
-                <!-- Resultados da busca aparecerão aqui -->
-            </ul>
-        </section>
-
-        <section id="playlists-section">
-            <h2>Minhas Playlists</h2>
-            <button id="create-playlist-button" class="btn">Criar Nova Playlist</button>
-            <ul id="playlists-list">
-                <!-- Playlists criadas aparecerão aqui -->
-            </ul>
-        </section>
-
-        <!-- Popup para criar playlists -->
-        <div id="playlist-popup" class="hidden">
-            <div class="popup-content">
-                <span id="close-popup" class="close">&times;</span>
-                <h2>Criar Nova Playlist</h2>
-                <input type="text" id="new-playlist-name" placeholder="Nome da Playlist">
-                <ul id="new-playlist-tracks">
-                    <!-- Músicas adicionadas à nova playlist aparecerão aqui -->
-                </ul>
-                <button id="save-playlist-button" class="btn">Salvar Playlist</button>
-            </div>
-        </div>
-    </main>
-
+    <div id="music-list"></div>
     <script src="playlist.js"></script>
 </body>
 </html>
