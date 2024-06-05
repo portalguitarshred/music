@@ -7,11 +7,11 @@ async function getAuthToken(username, password, apiKey) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Emby-Authorization': `MediaBrowser Client="YourAppName", Device="YourDeviceName", DeviceId="YourDeviceId", Version="1.0.0", Token="${apiKey}"`
+                'X-Emby-Authorization': `MediaBrowser Client="SeuAppName", Device="SeuDeviceName", DeviceId="SeuDeviceId", Version="1.0.0", Token="${apiKey}"`
             },
             body: JSON.stringify({
-                Username: username,
-                Pw: password
+                Username: wagnerribeiro,
+                Pw: 16wcr77
             })
         });
         if (!response.ok) {
@@ -32,7 +32,7 @@ async function fetchMusicAndArtists(token, apiKey) {
             method: 'GET',
             headers: {
                 'X-Emby-Token': token,
-                'X-Emby-Authorization': `MediaBrowser Client="YourAppName", Device="YourDeviceName", DeviceId="YourDeviceId", Version="1.0.0", Token="${apiKey}"`
+                'X-Emby-Authorization': `MediaBrowser Client="SeuAppName", Device="SeuDeviceName", DeviceId="SeuDeviceId", Version="1.0.0", Token="${apiKey}"`
             }
         });
         if (!response.ok) {
@@ -77,9 +77,9 @@ function updateRadioApp(musicItems) {
 async function initialize() {
     console.log('Inicializando aplicação...');
     try {
-        const apiKey = '972a939ef38b43d384eb0a190f68fe67'; // Insira sua chave de API aqui
-        const username = 'wagnerribeiro'; // Insira seu nome de usuário aqui
-        const password = '1607wcr77'; // Insira sua senha aqui
+        const apiKey = '972a939ef38b43d384eb0a190f68fe67'; // Substitua pela sua chave de API
+        const username = 'wagnerribeiro'; // Substitua pelo seu nome de usuário
+        const password = '1607wcr77'; // Substitua pela sua senha
         const token = await getAuthToken(username, password, apiKey);
         if (token) {
             console.log('Token de autenticação obtido:', token);
@@ -95,4 +95,3 @@ async function initialize() {
 }
 
 initialize();
-
