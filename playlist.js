@@ -65,9 +65,9 @@ function updateRadioApp(musicItems) {
 async function initialize() {
     console.log('Inicializando aplicação...');
     try {
-        const apiKey = 'sua-chave-de-api'; // Insira sua chave de API aqui
-        const username = 'seu-usuario'; // Insira seu nome de usuário aqui
-        const password = 'sua-senha'; // Insira sua senha aqui
+        const apiKey = '972a939ef38b43d384eb0a190f68fe67'; // Insira sua chave de API aqui
+        const username = 'wagnerribeiro'; // Insira seu nome de usuário aqui
+        const password = '1607wcr77'; // Insira sua senha aqui
         const token = await getAuthToken(username, password, apiKey);
         if (token) {
             console.log('Token de autenticação obtido:', token);
