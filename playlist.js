@@ -1,3 +1,4 @@
+// URL base da API do Deezer para busca
 const DEEZER_API_URL = 'https://api.deezer.com/search';
 
 // Função para buscar músicas
@@ -7,7 +8,7 @@ function searchMusic() {
     if (!query) return;
 
     // Formatar a URL de busca com os parâmetros corretos
-    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&limit=10&output=json`;
+    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}`;
     console.log('Searching for:', url); // Log para depuração
 
     // Fazer a requisição GET para a API do Deezer
