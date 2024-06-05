@@ -7,7 +7,14 @@
     <link rel="stylesheet" href="playlist.css">
 </head>
 <body>
-    <div id="music-list">Carregando...</div>
-    <script src="bundle.js"></script> <!-- bundle.js será o arquivo de saída após o bundling -->
+    <h1>Minha Playlist</h1>
+    <div class="search-container">
+        <input type="text" id="searchQuery" placeholder="Buscar músicas...">
+        <button onclick="searchMusic()">Buscar</button>
+    </div>
+    <div class="results-container" id="resultsContainer"></div>
+    <h2>Playlist</h2>
+    <ul id="playlist"></ul>
+    <script src="playlist.js"></script>
 </body>
 </html>
