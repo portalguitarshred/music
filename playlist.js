@@ -42,14 +42,14 @@ function displayResults(results) {
     // Para cada resultado, criar um elemento de exibição
     results.forEach(result => {
         const resultDiv = document.createElement('div');
-        
+
         const img = document.createElement('img');
         img.src = result.album.cover_small;
         img.alt = `${result.title} cover`;
 
         const textDiv = document.createElement('div');
         textDiv.textContent = `${result.artist.name} - ${result.title}`;
-        
+
         const addButton = document.createElement('button');
         addButton.textContent = 'Adicionar à Playlist';
         // Adicionar funcionalidade ao botão para adicionar à playlist
@@ -77,7 +77,7 @@ function displayPlaylist() {
     playlistEl.innerHTML = '';
     playlist.forEach((item, index) => {
         const li = document.createElement('li');
-        
+
         const img = document.createElement('img');
         img.src = item.album.cover_small;
         img.alt = `${item.title} cover`;
