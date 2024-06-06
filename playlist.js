@@ -1,26 +1,51 @@
-// URL base da API do Deezer para busca
-const DEEZER_API_URL = 'https://api.deezer.com/search';
+// URL base da API do Deezer para buscar rádios e tracklists
+const DEEZER_RADIO_URL = 'https://api.deezer.com/radio';
+const DEEZER_TRACKLIST_URL = 'https://api.deezer.com/radio/{radio_id}/tracks';
 
-// Função para buscar músicas
-function searchMusic() {
+// Função para buscar rádios
+function searchRadio() {
     const query = document.getElementById('searchQuery').value;
     if (!query) return;
 
-    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&limit=10`;
-    console.log('Searching for:', url); // Log para depuração
+    const url = `${DEEZER_RADIO_URL}`;
+    console.log('Searching for radios:', url); // Log para depuração
 
     fetch(url)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Erro ao buscar músicas: ' + response.statusText);
+                throw new Error('Erro ao buscar rádios: ' + response.statusText);
             }
             return response.json();
         })
         .then(data => {
-            console.log('Data received:', data); // Log para depuração
-            displayResults(data.data); // Mostrar os resultados
+            console.log('Radios data received:', data); // Log para depuração
+            const radio = data.data.find(r => r.title.toLowerCase().includes(query.toLowerCase()));
+            if (radio) {
+                fetchRadioTracks(radio.id);
+            } else {
+                document.getElementById('resultsContainer').innerHTML = '<p>Nenhuma rádio encontrada.</p>';
+            }
         })
-        .catch(error => console.error('Erro ao buscar músicas:', error)); // Log de erro
+        .catch(error => console.error('Erro ao buscar rádios:', error)); // Log de erro
+}
+
+// Função para buscar as músicas de uma rádio específica
+function fetchRadioTracks(radioId) {
+    const url = DEEZER_TRACKLIST_URL.replace('{radio_id}', radioId);
+    console.log('Fetching radio tracks:', url); // Log para depuração
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao buscar músicas da rádio: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Tracks data received:', data); // Log para depuração
+            displayResults(data.data);
+        })
+        .catch(error => console.error('Erro ao buscar músicas da rádio:', error)); // Log de erro
 }
 
 // Função para exibir os resultados da busca
