@@ -3,18 +3,14 @@ const DEEZER_API_URL = 'https://api.deezer.com/search';
 
 // Função para buscar músicas
 function searchMusic() {
-    // Obter a consulta de busca do campo de entrada
     const query = document.getElementById('searchQuery').value;
     if (!query) return;
 
-    // Formatar a URL de busca com os parâmetros corretos
-    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&limit=10`;
+    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&limit=10&output=json`;
     console.log('Searching for:', url); // Log para depuração
 
-    // Fazer a requisição GET para a API do Deezer
     fetch(url)
         .then(response => {
-            // Verificar se a resposta é bem-sucedida
             if (!response.ok) {
                 throw new Error('Erro ao buscar músicas: ' + response.statusText);
             }
@@ -29,20 +25,16 @@ function searchMusic() {
 
 // Função para exibir os resultados da busca
 function displayResults(results) {
-    // Obter o contêiner de resultados
     const resultsContainer = document.getElementById('resultsContainer');
     resultsContainer.innerHTML = '';
 
-    // Verificar se há resultados
     if (!results || results.length === 0) {
         resultsContainer.innerHTML = '<p>Nenhuma música encontrada.</p>';
         return;
     }
 
-    // Para cada resultado, criar um elemento de exibição
     results.forEach(result => {
         const resultDiv = document.createElement('div');
-
         const img = document.createElement('img');
         img.src = result.album.cover_small;
         img.alt = `${result.title} cover`;
@@ -52,7 +44,6 @@ function displayResults(results) {
 
         const addButton = document.createElement('button');
         addButton.textContent = 'Adicionar à Playlist';
-        // Adicionar funcionalidade ao botão para adicionar à playlist
         addButton.onclick = () => addToPlaylist(result);
 
         resultDiv.appendChild(img);
