@@ -25,11 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
+                console.log("Capa da playlist URL:", coverUrl); // Log para verificar a URL
                 localStorage.setItem('playlistCover', coverUrl);
                 window.location.href = 'user-playlist.html';
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
+            console.log("Nenhuma capa selecionada. Redirecionando sem capa.");
             window.location.href = 'user-playlist.html';
         }
     });
@@ -38,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistCoverImg = document.getElementById('playlist-cover');
     if (playlistCoverImg) {
         const coverUrl = localStorage.getItem('playlistCover');
+        console.log("Capa da playlist carregada:", coverUrl); // Log para verificar o carregamento da URL
         if (coverUrl) {
             playlistCoverImg.src = coverUrl;
         } else {
