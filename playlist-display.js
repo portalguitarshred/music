@@ -1,17 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const playlistCoverImg = document.getElementById('playlist-cover');
     const playlistTitleElement = document.getElementById('playlist-title'); // Novo elemento para o título da playlist
-
-    if (playlistCoverImg) {
-        const coverUrl = sessionStorage.getItem('playlistCover');
-        console.log("Tentando carregar a capa da playlist:", coverUrl); // Verificar a URL da capa
-        if (coverUrl) {
-            console.log("Capa encontrada. Atualizando o src da imagem.");
-            playlistCoverImg.src = coverUrl;
-        } else {
-            console.log("Nenhuma capa de playlist encontrada no sessionStorage.");
-        }
-    }
 
     if (playlistTitleElement) {
         const playlistTitle = sessionStorage.getItem('playlistTitle');
