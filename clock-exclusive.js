@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = document.getElementById('close-modal-exclusive');
     const setTimerButton = document.getElementById('set-timer-button-exclusive');
     const timerInput = document.getElementById('timer-input-exclusive');
+    const timerLink = document.getElementById('timer-link');
 
     // Verificação dos elementos
     console.log('clockIcon:', clockIcon);
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('closeModal:', closeModal);
     console.log('setTimerButton:', setTimerButton);
     console.log('timerInput:', timerInput);
+    console.log('timerLink:', timerLink);
 
     // Função para abrir o modal do temporizador
     function openTimerModal() {
@@ -29,6 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adiciona eventos de clique ao ícone do relógio
     clockIcon.addEventListener('click', () => {
         console.log('Ícone do relógio clicado');
+        openTimerModal();
+    });
+
+    // Adiciona eventos de clique ao link do temporizador no menu sanduíche
+    timerLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log('Link do temporizador clicado');
         openTimerModal();
     });
 
