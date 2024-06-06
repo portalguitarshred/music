@@ -976,3 +976,80 @@ body.light-theme .logo {
 }
 
 /* Adicione outros ajustes necessários para o tema claro */
+
+/* Estilos para o botão "Criar Playlist" */
+.create-playlist-button {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 1.2em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.create-playlist-button:hover {
+    background-color: #04b65c;
+}
+
+/* Estilos para o modal de criação de playlist */
+.modal-exclusive {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1000; /* Garante que o modal fique acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content-exclusive {
+    background-color: #1f1f1f;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    color: #ffffff;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.close-modal-exclusive {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-modal-exclusive:hover,
+.close-modal-exclusive:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content-exclusive label {
+    display: block;
+    margin-top: 10px;
+}
+
+.modal-content-exclusive input[type="text"],
+.modal-content-exclusive input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
