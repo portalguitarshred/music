@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistCoverImg = document.getElementById('playlist-cover');
-    const playlistTitleElement = document.getElementById('playlist-title'); // Novo elemento para o título da playlist
+    const playlistTitleElement = document.getElementById('playlist-title');
 
     if (playlistCoverImg) {
         const coverUrl = sessionStorage.getItem('playlistCover');
