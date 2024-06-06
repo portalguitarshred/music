@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const savePlaylistButton = document.getElementById('save-playlist-button');
     const playlistCoverInput = document.getElementById('playlist-cover-input');
-    const playlistTitleInput = document.getElementById('playlist-title-input'); // Novo campo para o título da playlist
+    const playlistTitleInput = document.getElementById('playlist-title-input');
 
     savePlaylistButton.addEventListener('click', () => {
         const playlistCoverFile = playlistCoverInput.files[0];
-        const playlistTitle = playlistTitleInput.value; // Obter o título da playlist
+        const playlistTitle = playlistTitleInput.value;
 
         if (playlistTitle) {
-            sessionStorage.setItem('playlistTitle', playlistTitle); // Salvar o título da playlist
+            sessionStorage.setItem('playlistTitle', playlistTitle);
         } else {
             console.log("Nenhum título de playlist inserido.");
         }
@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
                 console.log("Capa da playlist URL:", coverUrl);
-                sessionStorage.setItem('playlistCover', coverUrl); // Usar sessionStorage para garantir que o dado não se perca
+                sessionStorage.setItem('playlistCover', coverUrl);
                 window.location.href = 'user-playlist.html';
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
             console.log("Nenhuma capa selecionada.");
-            sessionStorage.removeItem('playlistCover'); // Remover qualquer capa anterior
+            sessionStorage.removeItem('playlistCover');
             window.location.href = 'user-playlist.html';
         }
     });
