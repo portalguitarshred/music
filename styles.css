@@ -979,7 +979,7 @@ body.light-theme .logo {
 
 /* Estilos para o botão "Criar Playlist" */
 .create-playlist-button {
-    background-image: linear-gradient(to left, #4caf50, #05d26d);
+    background: linear-gradient(to left, #09a858, #05d26d);
     color: #ffffff;
     border: none;
     padding: 10px 30px;
@@ -994,10 +994,10 @@ body.light-theme .logo {
 }
 
 @keyframes .create-playlist-button {
-    0%{
+    from{
         background-position-x: 0%;
     }
-     100%{
+     to{
         background-position-x: 100%;
     }
 }
