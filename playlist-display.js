@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (playlistCoverImg) {
         const coverUrl = sessionStorage.getItem('playlistCover');
-        console.log("Tentando carregar a capa da playlist:", coverUrl);
+        console.log("Tentando carregar a capa da playlist:", coverUrl); // Verificar a URL da capa
         if (coverUrl) {
             console.log("Capa encontrada. Atualizando o src da imagem.");
             playlistCoverImg.src = coverUrl;
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (playlistTitleElement) {
         const playlistTitle = sessionStorage.getItem('playlistTitle');
-        console.log("Tentando carregar o título da playlist:", playlistTitle);
+        console.log("Tentando carregar o título da playlist:", playlistTitle); // Verificar o título da playlist
         if (playlistTitle) {
             console.log("Título encontrado. Atualizando o texto do elemento.");
             playlistTitleElement.textContent = playlistTitle;
