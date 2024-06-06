@@ -1,0 +1,185 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #121212;
+    color: #ffffff;
+    overflow-x: hidden;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden; /* Impede o scroll horizontal */
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    padding: 1em;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.menu-toggle {
+    font-size: 1.5em;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.menu-toggle:hover {
+    color: #d3d3d3;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30%; /* Ajustado para 30% */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    z-index: 1000;
+    transition: transform 0.5s ease-in-out; /* Animação mais lenta */
+    transform: translateX(-100%); /* Inicialmente fora da tela */
+}
+
+.menu.open {
+    transform: translateX(0); /* Menu dentro no mobile */
+}
+
+.menu-divider {
+    border: none; /* Remove a borda padrão */
+    border-top: 1px solid #CCCCCC; /* Adiciona uma borda superior cinza */
+    margin: 10px 0; /* Espaçamento acima e abaixo da linha */
+    z-index: 1000;
+    width: 100%;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: #000000;
+    width: 100%;
+}
+
+.menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.menu i {
+    margin-right: 10px;
+}
+
+.clock-icon-exclusive {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #ffffff;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.clock-icon-exclusive:hover {
+    color: #d3d3d3;
+}
+
+.logo {
+    max-width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+.logo2 {
+    max-width: 150px;
+    margin-left: 10px;
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.playlist-cover-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.playlist-cover-container img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+main {
+    padding: 1em;
+    max-width: 800px;
+    width: 100%;
+    background-color: #1f1f1f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+#playlist-songs {
+    width: 100%;
+}
+
+.playlist-song {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+
+.playlist-song img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.playlist-song-info {
+    flex-grow: 1;
+}
+
+.playlist-song-info h4 {
+    margin: 0;
+    font-size: 1em;
+    color: #ffffff;
+}
+
+.playlist-song-info p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #999999;
+}
+
+@media (max-width: 768px) {
+    .menu {
+        width: 60%;
+    }
+
+    .playlist-cover-container img {
+        max-width: 100%;
+    }
+}
