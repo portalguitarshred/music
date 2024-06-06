@@ -8,7 +8,7 @@ function searchMusic() {
     if (!query) return;
 
     // Formatar a URL de busca com os parâmetros corretos
-    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&limit=10&output=json`;
+    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&limit=10`;
     console.log('Searching for:', url); // Log para depuração
 
     // Fazer a requisição GET para a API do Deezer
@@ -42,30 +42,30 @@ function displayResults(results) {
     // Para cada resultado, criar um elemento de exibição
     results.forEach(result => {
         const resultDiv = document.createElement('div');
-        resultDiv.textContent = `${result.artist.name} - ${result.title}`;
+        
+        const img = document.createElement('img');
+        img.src = result.album.cover_small;
+        img.alt = `${result.title} cover`;
+
+        const textDiv = document.createElement('div');
+        textDiv.textContent = `${result.artist.name} - ${result.title}`;
+        
         const addButton = document.createElement('button');
         addButton.textContent = 'Adicionar à Playlist';
         // Adicionar funcionalidade ao botão para adicionar à playlist
-        addButton.onclick = () => addToPlaylist(result.title, result.preview);
+        addButton.onclick = () => addToPlaylist(result);
+
+        resultDiv.appendChild(img);
+        resultDiv.appendChild(textDiv);
         resultDiv.appendChild(addButton);
         resultsContainer.appendChild(resultDiv);
     });
 }
 
-// Função para adicionar uma música manualmente
-function addMusic() {
-    const musicUrl = document.getElementById('musicUrl').value;
-    if (!musicUrl) return;
-
-    const musicTitle = "User Added"; // Título padrão para músicas adicionadas manualmente
-    addToPlaylist(musicTitle, musicUrl);
-    document.getElementById('musicUrl').value = ''; // Limpar o campo após adicionar
-}
-
 // Função para adicionar música à playlist
-function addToPlaylist(title, link) {
+function addToPlaylist(result) {
     let playlist = JSON.parse(localStorage.getItem('playlist')) || [];
-    playlist.push({ title, link });
+    playlist.push(result);
     localStorage.setItem('playlist', JSON.stringify(playlist));
     displayPlaylist();
 }
@@ -77,13 +77,24 @@ function displayPlaylist() {
     playlistEl.innerHTML = '';
     playlist.forEach((item, index) => {
         const li = document.createElement('li');
+        
+        const img = document.createElement('img');
+        img.src = item.album.cover_small;
+        img.alt = `${item.title} cover`;
+
+        const textDiv = document.createElement('div');
+        textDiv.textContent = `${item.artist.name} - ${item.title}`;
+
         const a = document.createElement('a');
         a.href = '#';
-        a.textContent = `${item.title} (Áudio)`;
+        a.textContent = 'Tocar';
         a.onclick = (event) => {
             event.preventDefault();
-            playAudio(item.link);
+            playAudio(item.preview);
         };
+
+        li.appendChild(img);
+        li.appendChild(textDiv);
         li.appendChild(a);
         playlistEl.appendChild(li);
     });
