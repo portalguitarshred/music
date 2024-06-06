@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.readAsDataURL(playlistCoverFile);
         } else {
             console.log("Nenhuma capa selecionada. Redirecionando sem capa.");
+            localStorage.removeItem('playlistCover'); // Remover qualquer capa anterior
             window.location.href = 'user-playlist.html';
         }
     });
