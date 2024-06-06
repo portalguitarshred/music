@@ -990,7 +990,7 @@ body.light-theme .logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    animation: degrade-animado 5s infinite alternate;
+    box-shadow: 0 0 15px #05d26d;
 }
 
 @keyframes .create-playlist-button {
