@@ -6,7 +6,7 @@ function searchMusic() {
     const query = document.getElementById('searchQuery').value;
     if (!query) return;
 
-    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&limit=10&output=json`;
+    const url = `${DEEZER_API_URL}?q=${encodeURIComponent(query)}&limit=10`;
     console.log('Searching for:', url); // Log para depuração
 
     fetch(url)
@@ -35,6 +35,8 @@ function displayResults(results) {
 
     results.forEach(result => {
         const resultDiv = document.createElement('div');
+        resultDiv.classList.add('result-item');
+
         const img = document.createElement('img');
         img.src = result.album.cover_small;
         img.alt = `${result.title} cover`;
@@ -68,6 +70,7 @@ function displayPlaylist() {
     playlistEl.innerHTML = '';
     playlist.forEach((item, index) => {
         const li = document.createElement('li');
+        li.classList.add('playlist-item');
 
         const img = document.createElement('img');
         img.src = item.album.cover_small;
