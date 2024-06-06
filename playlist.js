@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const coverUrl = localStorage.getItem('playlistCover');
         if (coverUrl) {
             playlistCoverImg.src = coverUrl;
+        } else {
+            console.log("Nenhuma capa de playlist encontrada no localStorage.");
         }
     }
 });
