@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistCoverImg = document.getElementById('playlist-cover');
-    const playlistTitleElem = document.getElementById('playlist-title'); // Novo elemento para o título
+    const playlistTitleElem = document.getElementById('playlist-title');
+    const playlistSongsContainer = document.getElementById('playlist-songs');
 
     // Exibir a capa da playlist
     if (playlistCoverImg) {
@@ -24,5 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.log("Nenhum nome de playlist encontrado no sessionStorage.");
         }
+    }
+
+    // Exibir as músicas da playlist
+    const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
+    const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames')) || [];
+
+    if (playlistSongsContainer) {
+        playlistSongsContainer.innerHTML = ''; // Limpa o contêiner antes de adicionar músicas
+        songURLs.forEach((url, index) => {
+            const songElem = document.createElement('div');
+            songElem.classList.add('playlist-song');
+            songElem.innerHTML = `
+                <audio controls src="${url}"></audio>
+                <div class="playlist-song-info">
+                    <h4>${songNames[index]}</h4>
+                </div>
+            `;
+            playlistSongsContainer.appendChild(songElem);
+        });
     }
 });
