@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const savePlaylistButton = document.getElementById('save-playlist-button');
     const playlistCoverInput = document.getElementById('playlist-cover-input');
-    const playlistNameInput = document.getElementById('playlist-name'); // Corrigido para 'playlist-name'
-    const playlistFilesInput = document.getElementById('playlist-files'); // Novo campo para arquivos de música
+    const playlistNameInput = document.getElementById('playlist-name');
+    const playlistFilesInput = document.getElementById('playlist-files');
 
     savePlaylistButton.addEventListener('click', () => {
         const playlistCoverFile = playlistCoverInput.files[0];
@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const songURLs = [];
         const songNames = [];
 
+        // Verificação e salvamento do nome da playlist
         if (playlistName) {
             console.log("Nome da playlist salvo:", playlistName);
             sessionStorage.setItem('playlistName', playlistName);
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.removeItem('playlistName');
         }
 
+        // Verificação e salvamento da capa da playlist
         if (playlistCoverFile) {
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -31,9 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.log("Nenhuma capa selecionada.");
             sessionStorage.removeItem('playlistCover');
-            saveSongs(); // Chama saveSongs diretamente se não houver capa
+            saveSongs();
         }
 
+        // Função para salvar as músicas da playlist
         function saveSongs() {
             if (files.length > 0) {
                 let filesProcessed = 0;
