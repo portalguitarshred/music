@@ -1,3 +1,4 @@
+/* Estilos básicos */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -140,48 +141,12 @@ main {
     box-sizing: border-box;
 }
 
-#playlist-songs {
-    width: 100%;
-}
-
-.playlist-song {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #333;
-}
-
-.playlist-song img {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    margin-right: 15px;
-}
-
-.playlist-song-info {
-    flex-grow: 1;
-}
-
-.playlist-song-info h4 {
-    margin: 0;
-    font-size: 1em;
+h3#playlist-title {
+    margin: 0.5em 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #ffffff;
-}
-
-.playlist-song-info p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #999999;
-}
-
-@media (max-width: 768px) {
-    .menu {
-        width: 60%;
-    }
-
-    .playlist-cover-container img {
-        max-width: 100%;
-    }
+    text-align: center;
+    font-size: 1.5em;
 }
 
 #add-song {
@@ -221,36 +186,55 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
-#playlist-songs div.song {
-    background-color: #333;
-    margin: 10px 0;
-    padding: 10px;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 5px;
+.playlist-song {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    width: 100%;
+    max-width: 800px;
 }
 
-#playlist-songs div.song p {
+.playlist-song img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.playlist-song-info {
+    flex-grow: 1;
+}
+
+.playlist-song-info h4 {
     margin: 0;
-    color: #fff;
     font-size: 1em;
+    color: #ffffff;
 }
 
-#playlist-songs div.song button {
-    background-color: #ff4757;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 3px;
+.playlist-song-info p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #999999;
 }
 
-#playlist-songs div.song button:hover {
-    background-color: #ff6b81;
-}
+@media (max-width: 768px) {
+    .menu {
+        width: 60%;
+    }
 
+    .playlist-cover-container img {
+        max-width: 100%;
+    }
+
+    .playlist-song {
+        width: 90%;
+    }
+
+    #add-song input {
+        width: 90%;
+    }
+}
