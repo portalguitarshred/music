@@ -24,19 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
                 sessionStorage.setItem('playlistCover', coverUrl);
-                saveSongs();
+                processSongs();
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
             sessionStorage.removeItem('playlistCover');
-            saveSongs();
+            processSongs();
         }
 
-        // Função para salvar músicas
-        function saveSongs() {
+        // Função para processar e salvar as músicas
+        function processSongs() {
             if (files.length > 0) {
                 let filesProcessed = 0;
-                Array.from(files).forEach((file, index) => {
+                Array.from(files).forEach((file) => {
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         songURLs.push(event.target.result);
