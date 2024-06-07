@@ -1,48 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistCoverImg = document.getElementById('playlist-cover');
-    const playlistTitleElement = document.getElementById('playlist-title');
-    const playlistSongsContainer = document.getElementById('playlist-songs');
+    const playlistTitleElem = document.getElementById('playlist-title'); // Novo elemento para o título
 
-    // Exibir capa da playlist
+    // Exibir a capa da playlist
     if (playlistCoverImg) {
         const coverUrl = sessionStorage.getItem('playlistCover');
+        console.log("Tentando carregar a capa da playlist:", coverUrl);
         if (coverUrl) {
+            console.log("Capa encontrada. Atualizando o src da imagem.");
             playlistCoverImg.src = coverUrl;
+        } else {
+            console.log("Nenhuma capa de playlist encontrada no sessionStorage.");
         }
     }
 
-    // Exibir nome da playlist
-    if (playlistTitleElement) {
+    // Exibir o título da playlist
+    if (playlistTitleElem) {
         const playlistName = sessionStorage.getItem('playlistName');
+        console.log("Tentando carregar o nome da playlist:", playlistName);
         if (playlistName) {
-            playlistTitleElement.textContent = playlistName;
-        }
-    }
-
-    // Exibir músicas da playlist
-    if (playlistSongsContainer) {
-        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs'));
-        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames'));
-        if (songURLs && songNames) {
-            songURLs.forEach((url, index) => {
-                const songDiv = document.createElement('div');
-                songDiv.className = 'playlist-song';
-
-                const audio = document.createElement('audio');
-                audio.controls = true;
-                audio.src = url;
-
-                const songInfo = document.createElement('div');
-                songInfo.className = 'playlist-song-info';
-
-                const songTitle = document.createElement('h4');
-                songTitle.textContent = songNames[index];
-
-                songInfo.appendChild(songTitle);
-                songDiv.appendChild(audio);
-                songDiv.appendChild(songInfo);
-                playlistSongsContainer.appendChild(songDiv);
-            });
+            console.log("Nome da playlist encontrado. Atualizando o título.");
+            playlistTitleElem.textContent = playlistName;
+        } else {
+            console.log("Nenhum nome de playlist encontrado no sessionStorage.");
         }
     }
 });
