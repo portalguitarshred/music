@@ -8,16 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const playlistCoverFile = playlistCoverInput.files[0];
         const playlistName = playlistNameInput.value.trim();
         const files = playlistFilesInput.files;
-
-        console.log('Processando dados da playlist.');
+        const songURLs = [];
+        const songNames = [];
 
         // Salvar o nome da playlist
         if (playlistName) {
-            localStorage.setItem('playlistName', playlistName);
-            console.log('Nome da playlist salvo:', playlistName);
+            sessionStorage.setItem('playlistName', playlistName);
         } else {
             console.log('Nenhum nome de playlist inserido.');
-            localStorage.removeItem('playlistName');
+            sessionStorage.removeItem('playlistName');
         }
 
         // Salvar a capa da playlist
@@ -25,34 +24,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
-                localStorage.setItem('playlistCover', coverUrl);
-                console.log('Capa da playlist salva:', coverUrl);
+                sessionStorage.setItem('playlistCover', coverUrl);
                 saveSongs();  // Chama saveSongs após salvar a capa
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
             console.log('Nenhuma capa selecionada.');
-            localStorage.removeItem('playlistCover');
+            sessionStorage.removeItem('playlistCover');
             saveSongs();  // Chama saveSongs se não houver capa
         }
 
         // Função para salvar músicas
         function saveSongs() {
-            const songURLs = [];
-            const songNames = [];
             if (files.length > 0) {
-                let filesProcessed = 0;
+                let filesProcessed = 0; // Contador para verificar quando todos os arquivos foram processados
                 Array.from(files).forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         songURLs.push(event.target.result);
                         songNames.push(file.name);
                         filesProcessed++;
-                        console.log('Música processada:', file.name);
                         if (filesProcessed === files.length) {
-                            localStorage.setItem('playlistSongs', JSON.stringify(songURLs));
-                            localStorage.setItem('playlistSongNames', JSON.stringify(songNames));
-                            console.log('Todas as músicas foram salvas.');
+                            sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
+                            sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
                             window.location.href = 'user-playlist.html';
                         }
                     };
@@ -60,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             } else {
                 console.log('Nenhuma música selecionada.');
-                localStorage.removeItem('playlistSongs');
-                localStorage.removeItem('playlistSongNames');
+                sessionStorage.removeItem('playlistSongs');
+                sessionStorage.removeItem('playlistSongNames');
                 window.location.href = 'user-playlist.html';
             }
         }
