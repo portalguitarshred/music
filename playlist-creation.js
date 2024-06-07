@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const savePlaylistButton = document.getElementById('save-playlist-button');
     const playlistCoverInput = document.getElementById('playlist-cover-input');
-    const playlistNameInput = document.getElementById('playlist-name-input'); // Novo campo para o nome da playlist
+    const playlistNameInput = document.getElementById('playlist-name'); // Corrigido para 'playlist-name'
 
     savePlaylistButton.addEventListener('click', () => {
         const playlistCoverFile = playlistCoverInput.files[0];
-        const playlistName = playlistNameInput.value; // Obtendo o valor do nome da playlist
-        
+        const playlistName = playlistNameInput.value.trim(); // Garantir que o nome não tenha espaços em branco
+
         if (playlistName) {
             console.log("Nome da playlist salvo:", playlistName); // Verificar se o nome está sendo salvo
             sessionStorage.setItem('playlistName', playlistName); // Salvar o nome da playlist
