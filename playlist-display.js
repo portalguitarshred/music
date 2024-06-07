@@ -30,12 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const songElem = document.createElement('div');
             songElem.classList.add('playlist-song');
             songElem.innerHTML = `
-                <audio controls>
-                    <source src="${url}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-                <div class="playlist-song-info">
-                    <h4>${songNames[index]}</h4>
+                <div class="song-details">
+                    <audio controls>
+                        <source src="${url}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="playlist-song-info">
+                        <h4>${songNames[index]}</h4>
+                    </div>
                 </div>
             `;
             playlistSongsContainer.appendChild(songElem);
