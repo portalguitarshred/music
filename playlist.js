@@ -1,12 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistSongsContainer = document.getElementById('playlist-songs');
+    const playlistTitleElement = document.getElementById('playlist-title');
 
     // Função para adicionar uma música à lista de exibição
     function addSongToPlaylist(songName, songUrl) {
         const songElement = document.createElement('div');
-        songElement.className = 'song';
+        songElement.className = 'playlist-song';
 
-        const songInfo = document.createElement('p');
+        const songInfoContainer = document.createElement('div');
+        songInfoContainer.className = 'playlist-song-info';
+
+        const songInfo = document.createElement('h4');
         songInfo.textContent = songName;
 
         const playButton = document.createElement('button');
@@ -16,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
             audio.play();
         });
 
-        songElement.appendChild(songInfo);
+        songInfoContainer.appendChild(songInfo);
+        songElement.appendChild(songInfoContainer);
         songElement.appendChild(playButton);
 
         playlistSongsContainer.appendChild(songElement);
@@ -24,11 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para carregar músicas do sessionStorage
     function loadPlaylistSongs() {
-        const songs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
+        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
         const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames')) || [];
+        const playlistName = sessionStorage.getItem('playlistName');
+
+        if (playlistName) {
+            playlistTitleElement.textContent = playlistName;
+        }
 
         // Adicionar cada música à exibição
-        songs.forEach((songUrl, index) => {
+        songURLs.forEach((songUrl, index) => {
             addSongToPlaylist(songNames[index], songUrl);
         });
     }
