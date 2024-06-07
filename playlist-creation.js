@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const songURLs = [];
         const songNames = [];
 
-        // Verificação e salvamento do nome da playlist
+        // Salvando o nome da playlist
         if (playlistName) {
             console.log("Nome da playlist salvo:", playlistName);
             sessionStorage.setItem('playlistName', playlistName);
@@ -20,14 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.removeItem('playlistName');
         }
 
-        // Verificação e salvamento da capa da playlist
+        // Salvando a capa da playlist
         if (playlistCoverFile) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
                 console.log("Capa da playlist URL:", coverUrl);
                 sessionStorage.setItem('playlistCover', coverUrl);
-                saveSongs(); // Chama saveSongs apenas após carregar a capa
+                saveSongs(); // Chama saveSongs após carregar a capa
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             saveSongs(); // Chama saveSongs diretamente se não houver capa
         }
 
-        // Função para salvar as músicas da playlist
+        // Função para salvar músicas
         function saveSongs() {
             if (files.length > 0) {
                 let filesProcessed = 0; // Contador para verificar quando todos os arquivos foram processados
