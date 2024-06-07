@@ -6,42 +6,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exibir a capa da playlist
     if (playlistCoverImg) {
         const coverUrl = sessionStorage.getItem('playlistCover');
+        console.log("Tentando carregar a capa da playlist:", coverUrl);
         if (coverUrl) {
+            console.log("Capa encontrada. Atualizando o src da imagem.");
             playlistCoverImg.src = coverUrl;
+        } else {
+            console.log("Nenhuma capa de playlist encontrada no sessionStorage.");
         }
     }
 
     // Exibir o título da playlist
     if (playlistTitleElem) {
         const playlistName = sessionStorage.getItem('playlistName');
+        console.log("Tentando carregar o nome da playlist:", playlistName);
         if (playlistName) {
+            console.log("Nome da playlist encontrado. Atualizando o título.");
             playlistTitleElem.textContent = playlistName;
+        } else {
+            console.log("Nenhum nome de playlist encontrado no sessionStorage.");
         }
     }
 
     // Exibir as músicas da playlist
     if (playlistSongsContainer) {
-        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs'));
-        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames'));
+        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
+        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames')) || [];
 
-        if (songURLs && songNames) {
-            songURLs.forEach((url, index) => {
-                const songName = songNames[index];
-                const songElem = document.createElement('div');
-                songElem.classList.add('playlist-song');
+        playlistSongsContainer.innerHTML = '';
 
-                songElem.innerHTML = `
-                    <div class="playlist-song-info">
-                        <h4>${songName}</h4>
-                    </div>
-                    <audio controls>
-                        <source src="${url}" type="audio/mp3">
-                        Your browser does not support the audio element.
-                    </audio>
-                `;
-
-                playlistSongsContainer.appendChild(songElem);
-            });
-        }
-    }
-});
+        songURLs.forEach((url, index) => {
+            const songElem = document.createElement('div');
+            songElem.classList.add('playlist-song');
+            songElem.innerHTML = `
+                <audio controls>
+                    <source src="${url}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="playlist-song-info">
+                    <h4>${songNames[index]}</h4>
+                </div>
+            `;
+            playlistSongsContainer.appendChild(songE
