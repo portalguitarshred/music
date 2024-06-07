@@ -21,28 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Exibir as músicas da playlist
     if (playlistSongsContainer) {
-        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
-        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames') || '[]');
+        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs'));
+        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames'));
 
-        songURLs.forEach((url, index) => {
-            const songElement = document.createElement('div');
-            songElement.classList.add('playlist-song');
-            
-            const songAudio = document.createElement('audio');
-            songAudio.src = url;
-            songAudio.controls = true;
+        if (songURLs && songNames) {
+            songURLs.forEach((url, index) => {
+                const songName = songNames[index];
+                const songElem = document.createElement('div');
+                songElem.classList.add('playlist-song');
 
-            const songInfo = document.createElement('div');
-            songInfo.classList.add('playlist-song-info');
+                songElem.innerHTML = `
+                    <p>${songName}</p>
+                    <audio controls>
+                        <source src="${url}" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+                `;
 
-            const songName = document.createElement('h4');
-            songName.textContent = songNames[index];
-
-            songInfo.appendChild(songName);
-            songElement.appendChild(songInfo);
-            songElement.appendChild(songAudio);
-
-            playlistSongsContainer.appendChild(songElement);
-        });
+                playlistSongsContainer.appendChild(songElem);
+            });
+        }
     }
 });
