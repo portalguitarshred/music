@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Exibir o título da playlist
     if (playlistTitleElem) {
-        const playlistTitle = sessionStorage.getItem('playlistTitle');
-        console.log("Tentando carregar o título da playlist:", playlistTitle);
-        if (playlistTitle) {
-            console.log("Título encontrado. Atualizando o texto do elemento.");
-            playlistTitleElem.textContent = playlistTitle;
+        const playlistName = sessionStorage.getItem('playlistName');
+        console.log("Tentando carregar o nome da playlist:", playlistName);
+        if (playlistName) {
+            console.log("Nome da playlist encontrado. Atualizando o título.");
+            playlistTitleElem.textContent = playlistName;
         } else {
-            console.log("Nenhum título de playlist encontrado no sessionStorage.");
+            console.log("Nenhum nome de playlist encontrado no sessionStorage.");
         }
     }
 });
