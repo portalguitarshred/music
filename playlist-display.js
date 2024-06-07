@@ -21,23 +21,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Exibir as músicas da playlist
     if (playlistSongsContainer) {
-        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs'));
-        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames'));
-        if (songURLs && songNames) {
-            songURLs.forEach((url, index) => {
-                const songDiv = document.createElement('div');
-                songDiv.className = 'playlist-song';
+        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
+        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames') || '[]');
 
-                const songInfo = document.createElement('div');
-                songInfo.className = 'playlist-song-info';
+        songURLs.forEach((url, index) => {
+            const songElement = document.createElement('div');
+            songElement.classList.add('playlist-song');
+            
+            const songAudio = document.createElement('audio');
+            songAudio.src = url;
+            songAudio.controls = true;
 
-                const songTitle = document.createElement('h4');
-                songTitle.textContent = songNames[index];
+            const songInfo = document.createElement('div');
+            songInfo.classList.add('playlist-song-info');
 
-                songInfo.appendChild(songTitle);
-                songDiv.appendChild(songInfo);
-                playlistSongsContainer.appendChild(songDiv);
-            });
-        }
+            const songName = document.createElement('h4');
+            songName.textContent = songNames[index];
+
+            songInfo.appendChild(songName);
+            songElement.appendChild(songInfo);
+            songElement.appendChild(songAudio);
+
+            playlistSongsContainer.appendChild(songElement);
+        });
     }
 });
