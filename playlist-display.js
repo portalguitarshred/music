@@ -46,4 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h4>${songNames[index]}</h4>
                 </div>
             `;
-            playlistSongsContainer.appendChild(songE
+            playlistSongsContainer.appendChild(songElem);
+        });
+    }
+});
