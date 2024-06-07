@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistCoverImg = document.getElementById('playlist-cover');
-    const playlistNameTitle = document.getElementById('playlist-name'); // Novo elemento para o título da playlist
+    const playlistTitleElem = document.getElementById('playlist-title'); // Novo elemento para o título
 
+    // Exibir a capa da playlist
     if (playlistCoverImg) {
         const coverUrl = sessionStorage.getItem('playlistCover');
         console.log("Tentando carregar a capa da playlist:", coverUrl);
@@ -13,14 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (playlistNameTitle) {
-        const playlistName = sessionStorage.getItem('playlistName');
-        console.log("Tentando carregar o nome da playlist:", playlistName);
-        if (playlistName) {
-            console.log("Nome da playlist encontrado. Atualizando o título.");
-            playlistNameTitle.textContent = playlistName;
+    // Exibir o título da playlist
+    if (playlistTitleElem) {
+        const playlistTitle = sessionStorage.getItem('playlistTitle');
+        console.log("Tentando carregar o título da playlist:", playlistTitle);
+        if (playlistTitle) {
+            console.log("Título encontrado. Atualizando o texto do elemento.");
+            playlistTitleElem.textContent = playlistTitle;
         } else {
-            console.log("Nenhum nome de playlist encontrado no sessionStorage.");
+            console.log("Nenhum título de playlist encontrado no sessionStorage.");
         }
     }
 });
