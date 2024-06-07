@@ -11,10 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const songURLs = [];
         const songNames = [];
 
+        console.log('Iniciando o processo de salvar a playlist');
+
         // Salvar o nome da playlist
         if (playlistName) {
+            console.log('Nome da playlist salvo:', playlistName);
             sessionStorage.setItem('playlistName', playlistName);
         } else {
+            console.log('Nenhum nome de playlist inserido.');
             sessionStorage.removeItem('playlistName');
         }
 
@@ -23,17 +27,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
+                console.log('Capa da playlist URL:', coverUrl);
                 sessionStorage.setItem('playlistCover', coverUrl);
                 processSongs();
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
+            console.log('Nenhuma capa selecionada.');
             sessionStorage.removeItem('playlistCover');
-            processSongs();
+            processSongs(); // Chama processSongs diretamente se não houver capa
         }
 
         // Função para processar e salvar as músicas
         function processSongs() {
+            console.log('Iniciando o processamento das músicas');
             if (files.length > 0) {
                 let filesProcessed = 0;
                 Array.from(files).forEach((file) => {
@@ -42,7 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         songURLs.push(event.target.result);
                         songNames.push(file.name);
                         filesProcessed++;
+                        console.log('Música processada:', file.name);
                         if (filesProcessed === files.length) {
+                            console.log('Todas as músicas foram processadas');
                             sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
                             sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
                             window.location.href = 'user-playlist.html';
@@ -51,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     reader.readAsDataURL(file);
                 });
             } else {
+                console.log('Nenhuma música selecionada.');
                 sessionStorage.removeItem('playlistSongs');
                 sessionStorage.removeItem('playlistSongNames');
                 window.location.href = 'user-playlist.html';
