@@ -1,50 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const savePlaylistButton = document.getElementById('save-playlist-button');
-    const playlistCoverInput = document.getElementById('playlist-cover-input');
-    const playlistNameInput = document.getElementById('playlist-name-input');
-    const playlistFilesInput = document.getElementById('playlist-files'); // Campo para arquivos de música
+    const playlistCoverImg = document.getElementById('playlist-cover');
+    const playlistTitleElem = document.getElementById('playlist-title'); // Novo elemento para o título
+    const playlistSongsContainer = document.getElementById('playlist-songs'); // Container para as músicas
 
-    savePlaylistButton.addEventListener('click', () => {
-        const playlistName = playlistNameInput.value;
+    // Exibir a capa da playlist
+    if (playlistCoverImg) {
+        const coverUrl = sessionStorage.getItem('playlistCover');
+        if (coverUrl) {
+            playlistCoverImg.src = coverUrl;
+        }
+    }
+
+    // Exibir o título da playlist
+    if (playlistTitleElem) {
+        const playlistName = sessionStorage.getItem('playlistName');
         if (playlistName) {
-            sessionStorage.setItem('playlistName', playlistName);
-        } else {
-            sessionStorage.removeItem('playlistName');
+            playlistTitleElem.textContent = playlistName;
         }
+    }
 
-        const playlistCoverFile = playlistCoverInput.files[0];
-        if (playlistCoverFile) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const coverUrl = event.target.result;
-                sessionStorage.setItem('playlistCover', coverUrl);
-                savePlaylistSongs();
-            };
-            reader.readAsDataURL(playlistCoverFile);
-        } else {
-            sessionStorage.removeItem('playlistCover');
-            savePlaylistSongs();
-        }
-    });
+    // Exibir músicas da playlist
+    if (playlistSongsContainer) {
+        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
+        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames') || '[]');
 
-    function savePlaylistSongs() {
-        const files = playlistFilesInput.files;
-        const songURLs = [];
-        const songNames = [];
+        playlistSongsContainer.innerHTML = ''; // Limpar o container antes de adicionar as músicas
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                songURLs.push(event.target.result);
-                songNames.push(file.name);
-                if (songURLs.length === files.length) {
-                    sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
-                    sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
-                    window.location.href = 'user-playlist.html';
-                }
-            };
-            reader.readAsDataURL(file);
-        }
+        songNames.forEach((songName, index) => {
+            const songUrl = songURLs[index];
+            const songElement = document.createElement('div');
+            songElement.className = 'song';
+            songElement.innerHTML = `
+                <audio controls>
+                    <source src="${songUrl}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+                <p>${songName}</p>
+            `;
+            playlistSongsContainer.appendChild(songElement);
+        });
     }
 });
