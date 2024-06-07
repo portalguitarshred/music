@@ -1,40 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const addSongButton = document.getElementById('add-song-button');
-    const songNameInput = document.getElementById('song-name');
-    const songUrlInput = document.getElementById('song-url');
     const playlistSongsContainer = document.getElementById('playlist-songs');
 
-    addSongButton.addEventListener('click', () => {
-        const songName = songNameInput.value;
-        const songUrl = songUrlInput.value;
-
-        if (songName && songUrl) {
-            const song = {
-                name: songName,
-                url: songUrl
-            };
-
-            let songs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
-            songs.push(song);
-            sessionStorage.setItem('playlistSongs', JSON.stringify(songs));
-
-            addSongToPlaylist(song);
-            songNameInput.value = '';
-            songUrlInput.value = '';
-        }
-    });
-
-    function addSongToPlaylist(song) {
+    // Função para adicionar uma música à lista de exibição
+    function addSongToPlaylist(songName, songUrl) {
         const songElement = document.createElement('div');
         songElement.className = 'song';
 
         const songInfo = document.createElement('p');
-        songInfo.textContent = song.name;
+        songInfo.textContent = songName;
 
         const playButton = document.createElement('button');
         playButton.textContent = 'Tocar';
         playButton.addEventListener('click', () => {
-            const audio = new Audio(song.url);
+            const audio = new Audio(songUrl);
             audio.play();
         });
 
@@ -44,10 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
         playlistSongsContainer.appendChild(songElement);
     }
 
+    // Função para carregar músicas do sessionStorage
     function loadPlaylistSongs() {
         const songs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
-        songs.forEach(song => addSongToPlaylist(song));
+        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames')) || [];
+
+        // Adicionar cada música à exibição
+        songs.forEach((songUrl, index) => {
+            addSongToPlaylist(songNames[index], songUrl);
+        });
     }
 
+    // Carregar músicas ao carregar a página
     loadPlaylistSongs();
 });
