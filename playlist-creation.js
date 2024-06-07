@@ -1,43 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const playlistCoverImg = document.getElementById('playlist-cover');
-    const playlistTitleElem = document.getElementById('playlist-title'); // Novo elemento para o título
-    const playlistSongsContainer = document.getElementById('playlist-songs'); // Container para as músicas
+    const savePlaylistButton = document.getElementById('save-playlist-button');
+    const playlistCoverInput = document.getElementById('playlist-cover-input');
+    const playlistNameInput = document.getElementById('playlist-name');
+    const playlistFilesInput = document.getElementById('playlist-files');
 
-    // Exibir a capa da playlist
-    if (playlistCoverImg) {
-        const coverUrl = sessionStorage.getItem('playlistCover');
-        if (coverUrl) {
-            playlistCoverImg.src = coverUrl;
+    savePlaylistButton.addEventListener('click', () => {
+        const playlistName = playlistNameInput.value.trim();
+        const playlistCoverFile = playlistCoverInput.files[0];
+        const playlistFiles = playlistFilesInput.files;
+
+        console.log("Tentativa de salvar a playlist:");
+        console.log("Nome da playlist:", playlistName);
+        console.log("Arquivo da capa:", playlistCoverFile);
+        console.log("Arquivos de música:", playlistFiles);
+
+        // Verificar se o nome da playlist foi inserido
+        if (!playlistName) {
+            alert("Por favor, insira um nome para a playlist.");
+            return;
         }
-    }
 
-    // Exibir o título da playlist
-    if (playlistTitleElem) {
-        const playlistName = sessionStorage.getItem('playlistName');
-        if (playlistName) {
-            playlistTitleElem.textContent = playlistName;
+        // Salvar o nome da playlist
+        sessionStorage.setItem('playlistName', playlistName);
+
+        // Salvar a capa da playlist, se houver
+        if (playlistCoverFile) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const coverUrl = event.target.result;
+                sessionStorage.setItem('playlistCover', coverUrl);
+                savePlaylistSongs();
+            };
+            reader.readAsDataURL(playlistCoverFile);
+        } else {
+            sessionStorage.removeItem('playlistCover'); // Remover capa anterior
+            savePlaylistSongs();
         }
-    }
+    });
 
-    // Exibir músicas da playlist
-    if (playlistSongsContainer) {
-        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
-        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames') || '[]');
+    function savePlaylistSongs() {
+        const playlistFilesInput = document.getElementById('playlist-files');
+        const files = playlistFilesInput.files;
+        const songURLs = [];
+        const songNames = [];
 
-        playlistSongsContainer.innerHTML = ''; // Limpar o container antes de adicionar as músicas
+        if (files.length === 0) {
+            alert("Nenhum arquivo de música selecionado.");
+            return;
+        }
 
-        songNames.forEach((songName, index) => {
-            const songUrl = songURLs[index];
-            const songElement = document.createElement('div');
-            songElement.className = 'song';
-            songElement.innerHTML = `
-                <audio controls>
-                    <source src="${songUrl}" type="audio/mp3">
-                    Your browser does not support the audio element.
-                </audio>
-                <p>${songName}</p>
-            `;
-            playlistSongsContainer.appendChild(songElement);
-        });
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                songURLs.push(event.target.result);
+                songNames.push(file.name);
+                if (songURLs.length === files.length) {
+                    sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
+                    sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
+                    console.log("Músicas da playlist salvas:", songNames);
+                    window.location.href = 'user-playlist.html';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
     }
 });
