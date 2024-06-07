@@ -1,20 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     const savePlaylistButton = document.getElementById('save-playlist-button');
     const playlistCoverInput = document.getElementById('playlist-cover-input');
-    const playlistNameInput = document.getElementById('playlist-name'); // Certifique-se de que este ID está correto
-    const playlistFilesInput = document.getElementById('playlist-files'); // Campo para arquivos de música
+    const playlistNameInput = document.getElementById('playlist-name-input'); // Novo campo para o nome da playlist
 
     savePlaylistButton.addEventListener('click', () => {
-        const playlistName = playlistNameInput.value;
         const playlistCoverFile = playlistCoverInput.files[0];
-        const files = playlistFilesInput.files; // Pegando os arquivos de música
-
+        const playlistName = playlistNameInput.value; // Obtendo o valor do nome da playlist
+        
         if (playlistName) {
-            console.log("Nome da playlist salvo:", playlistName);
-            sessionStorage.setItem('playlistName', playlistName);
+            console.log("Nome da playlist salvo:", playlistName); // Verificar se o nome está sendo salvo
+            sessionStorage.setItem('playlistName', playlistName); // Salvar o nome da playlist
         } else {
             console.log("Nenhum nome de playlist inserido.");
-            sessionStorage.removeItem('playlistName');
+            sessionStorage.removeItem('playlistName'); // Remover qualquer nome anterior
         }
 
         if (playlistCoverFile) {
@@ -22,34 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
                 console.log("Capa da playlist URL:", coverUrl);
-                sessionStorage.setItem('playlistCover', coverUrl);
-                savePlaylistSongs(files); // Salvar músicas depois de salvar a capa
+                sessionStorage.setItem('playlistCover', coverUrl); // Usar sessionStorage para garantir que o dado não se perca
+                window.location.href = 'user-playlist.html';
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
             console.log("Nenhuma capa selecionada.");
-            sessionStorage.removeItem('playlistCover');
-            savePlaylistSongs(files); // Salvar músicas mesmo sem a capa
+            sessionStorage.removeItem('playlistCover'); // Remover qualquer capa anterior
+            window.location.href = 'user-playlist.html';
         }
     });
-
-    function savePlaylistSongs(files) {
-        const songURLs = [];
-        const songNames = [];
-
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                songURLs.push(event.target.result);
-                songNames.push(file.name);
-                if (songURLs.length === files.length) {
-                    sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
-                    sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
-                    window.location.href = 'user-playlist.html';
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    }
 });
