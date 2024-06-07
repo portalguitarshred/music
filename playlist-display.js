@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 songElem.classList.add('playlist-song');
 
                 songElem.innerHTML = `
-                    <p>${songName}</p>
+                    <div class="playlist-song-info">
+                        <h4>${songName}</h4>
+                    </div>
                     <audio controls>
                         <source src="${url}" type="audio/mp3">
                         Your browser does not support the audio element.
