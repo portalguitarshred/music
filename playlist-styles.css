@@ -183,3 +183,74 @@ main {
         max-width: 100%;
     }
 }
+
+#add-song {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#add-song input {
+    margin: 5px 0;
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#add-song button {
+    background: linear-gradient(to top, #09a858, #05d26d);
+    color: #ffffff;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    box-shadow: 0 0 15px #05d26d;
+    margin-top: 10px;
+}
+
+#add-song button:hover {
+    background: linear-gradient(to top, #07b450, #04c45c);
+}
+
+#playlist-songs {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#playlist-songs div.song {
+    background-color: #333;
+    margin: 10px 0;
+    padding: 10px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#playlist-songs div.song p {
+    margin: 0;
+    color: #fff;
+    font-size: 1em;
+}
+
+#playlist-songs div.song button {
+    background-color: #ff4757;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#playlist-songs div.song button:hover {
+    background-color: #ff6b81;
+}
+
