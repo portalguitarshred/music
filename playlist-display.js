@@ -1,23 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const playlistCoverImg = document.getElementById('playlist-cover');
-    const playlistTitleElem = document.getElementById('playlist-title');
     const playlistSongsContainer = document.getElementById('playlist-songs');
-
-    // Exibir a capa da playlist
-    if (playlistCoverImg) {
-        const coverUrl = localStorage.getItem('playlistCover');
-        if (coverUrl) {
-            playlistCoverImg.src = coverUrl;
-        }
-    }
-
-    // Exibir o título da playlist
-    if (playlistTitleElem) {
-        const playlistName = localStorage.getItem('playlistName');
-        if (playlistName) {
-            playlistTitleElem.textContent = playlistName;
-        }
-    }
 
     // Exibir as músicas da playlist
     if (playlistSongsContainer) {
