@@ -1,48 +1,77 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const playlistSongsContainer = document.getElementById('playlist-songs');
-    const playlistTitleElement = document.getElementById('playlist-title');
+    const createPlaylistButton = document.getElementById('create-playlist-button');
+    const createPlaylistModal = document.getElementById('create-playlist-modal');
+    const closeCreatePlaylistModal = document.getElementById('close-create-playlist-modal');
+    const savePlaylistButton = document.getElementById('save-playlist-button');
 
-    // Função para adicionar uma música à lista de exibição
-    function addSongToPlaylist(songName, songUrl) {
-        const songElement = document.createElement('div');
-        songElement.className = 'playlist-song';
-
-        const songInfoContainer = document.createElement('div');
-        songInfoContainer.className = 'playlist-song-info';
-
-        const songInfo = document.createElement('h4');
-        songInfo.textContent = songName;
-
-        const playButton = document.createElement('button');
-        playButton.textContent = 'Tocar';
-        playButton.addEventListener('click', () => {
-            const audio = new Audio(songUrl);
-            audio.play();
-        });
-
-        songInfoContainer.appendChild(songInfo);
-        songElement.appendChild(songInfoContainer);
-        songElement.appendChild(playButton);
-
-        playlistSongsContainer.appendChild(songElement);
+    // Função para abrir o modal de criação de playlist
+    function openCreatePlaylistModal() {
+        createPlaylistModal.style.display = 'block';
     }
 
-    // Função para carregar músicas do sessionStorage
-    function loadPlaylistSongs() {
-        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
-        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames')) || [];
-        const playlistName = sessionStorage.getItem('playlistName');
+    // Função para fechar o modal de criação de playlist
+    function closeCreatePlaylistModalFunc() {
+        createPlaylistModal.style.display = 'none';
+    }
 
-        if (playlistName) {
-            playlistTitleElement.textContent = playlistName;
+    // Event listener para abrir o modal ao clicar no botão de criação de playlist
+    createPlaylistButton.addEventListener('click', openCreatePlaylistModal);
+
+    // Event listener para fechar o modal ao clicar no botão de fechar
+    closeCreatePlaylistModal.addEventListener('click', closeCreatePlaylistModalFunc);
+
+    // Event listener para fechar o modal ao clicar fora dele
+    window.addEventListener('click', (event) => {
+        if (event.target === createPlaylistModal) {
+            closeCreatePlaylistModalFunc();
         }
+    });
 
-        // Adicionar cada música à exibição
-        songURLs.forEach((songUrl, index) => {
-            addSongToPlaylist(songNames[index], songUrl);
-        });
+    // Função para salvar a playlist e redirecionar para a página de playlist
+    savePlaylistButton.addEventListener('click', () => {
+        const playlistNameInput = document.getElementById('playlist-name');
+        const playlistCoverInput = document.getElementById('playlist-cover-input');
+        const playlistFilesInput = document.getElementById('playlist-files');
+        
+        const playlistName = playlistNameInput.value;
+        sessionStorage.setItem('playlistName', playlistName);
+
+        // Salvar capa da playlist
+        const playlistCoverFile = playlistCoverInput.files[0];
+        if (playlistCoverFile) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const coverUrl = event.target.result;
+                sessionStorage.setItem('playlistCover', coverUrl);
+                savePlaylistSongs();
+            };
+            reader.readAsDataURL(playlistCoverFile);
+        } else {
+            sessionStorage.removeItem('playlistCover');
+            savePlaylistSongs();
+        }
+    });
+
+    // Função para salvar as músicas da playlist
+    function savePlaylistSongs() {
+        const playlistFilesInput = document.getElementById('playlist-files');
+        const files = playlistFilesInput.files;
+        const songURLs = [];
+        const songNames = [];
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                songURLs.push(event.target.result);
+                songNames.push(file.name);
+                if (songURLs.length === files.length) {
+                    sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
+                    sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
+                    window.location.href = 'user-playlist.html';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
     }
-
-    // Carregar músicas ao carregar a página
-    loadPlaylistSongs();
 });
