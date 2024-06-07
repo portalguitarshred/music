@@ -315,3 +315,93 @@ input[type="number"] {
     background-color: #ff6b81;
 }
 
+/* Estilo do input de música no formulário */
+#playlist-files {
+    margin: 5px 0;
+    padding: 8px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+input[type="file"]::before {
+    content: 'Selecionar Músicas';
+    display: inline-block;
+    background: linear-gradient(to top, #09a858, #05d26d);
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #ffffff;
+    margin-right: 10px;
+    box-shadow: 0 0 15px #05d26d;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+input[type="file"]:hover::before {
+    background: linear-gradient(to top, #07b450, #04c45c);
+}
+
+input[type="file"]:focus::before {
+    outline: none;
+    background: linear-gradient(to top, #07b450, #04c45c);
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+input[type="file"]::file-selector-button {
+    visibility: hidden;
+}
+
+/* Estilos para o botão "Criar Playlist" */
+.create-playlist-button {
+    background: linear-gradient(to top, #09a858, #05d26d);
+    color: #ffffff;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 1.2em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 15px #05d26d;
+    transition: background 0.3s;
+}
+
+.create-playlist-button:hover {
+    background: linear-gradient(to top, #07b450, #04c45c);
+}
+
+.create-playlist-button:focus {
+    outline: none;
+    background: linear-gradient(to top, #07b450, #04c45c);
+}
+
+/* Adicionando responsividade */
+@media (max-width: 768px) {
+    .modal-content-exclusive {
+        width: 90%;
+        max-width: none;
+    }
+
+    .playlist-cover-container img {
+        max-width: 100%;
+    }
+
+    .create-playlist-button {
+        font-size: 1em;
+        padding: 10px;
+    }
+}
