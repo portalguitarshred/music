@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.readAsDataURL(playlistCoverFile);
         } else {
             sessionStorage.removeItem('playlistCover');
-            saveSongs(); // Chama saveSongs diretamente se não houver capa
+            saveSongs();
         }
 
         // Função para salvar músicas
