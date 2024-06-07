@@ -1,56 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const createPlaylistButton = document.getElementById('create-playlist-button');
-    const createPlaylistModal = document.getElementById('create-playlist-modal');
-    const closeCreatePlaylistModal = document.getElementById('close-create-playlist-modal');
-    const savePlaylistButton = document.getElementById('save-playlist-button');
-    const playlistCoverInput = document.getElementById('playlist-cover-input');
+    const addSongButton = document.getElementById('add-song-button');
+    const songNameInput = document.getElementById('song-name');
+    const songUrlInput = document.getElementById('song-url');
+    const playlistSongsContainer = document.getElementById('playlist-songs');
 
-    createPlaylistButton.addEventListener('click', () => {
-        console.log("Abrindo modal de criação de playlist.");
-        createPlaylistModal.style.display = 'block';
-    });
+    addSongButton.addEventListener('click', () => {
+        const songName = songNameInput.value;
+        const songUrl = songUrlInput.value;
 
-    closeCreatePlaylistModal.addEventListener('click', () => {
-        console.log("Fechando modal de criação de playlist.");
-        createPlaylistModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === createPlaylistModal) {
-            console.log("Fechando modal ao clicar fora dele.");
-            createPlaylistModal.style.display = 'none';
-        }
-    });
-
-    savePlaylistButton.addEventListener('click', () => {
-        const playlistCoverFile = playlistCoverInput.files[0];
-        if (playlistCoverFile) {
-            console.log("Capa da playlist selecionada:", playlistCoverFile.name);
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const coverUrl = event.target.result;
-                console.log("Capa da playlist URL:", coverUrl);
-                localStorage.setItem('playlistCover', coverUrl);
-                window.location.href = 'user-playlist.html';
+        if (songName && songUrl) {
+            const song = {
+                name: songName,
+                url: songUrl
             };
-            reader.readAsDataURL(playlistCoverFile);
-        } else {
-            console.log("Nenhuma capa selecionada. Redirecionando sem capa.");
-            localStorage.removeItem('playlistCover');
-            window.location.href = 'user-playlist.html';
+
+            let songs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
+            songs.push(song);
+            sessionStorage.setItem('playlistSongs', JSON.stringify(songs));
+
+            addSongToPlaylist(song);
+            songNameInput.value = '';
+            songUrlInput.value = '';
         }
     });
 
-    // Carregar a capa da playlist na página user-playlist.html
-    const playlistCoverImg = document.getElementById('playlist-cover');
-    if (playlistCoverImg) {
-        const coverUrl = localStorage.getItem('playlistCover');
-        console.log("Tentando carregar a capa da playlist:", coverUrl);
-        if (coverUrl) {
-            console.log("Capa encontrada. Atualizando o src da imagem.");
-            playlistCoverImg.src = coverUrl;
-        } else {
-            console.log("Nenhuma capa de playlist encontrada no localStorage.");
-        }
+    function addSongToPlaylist(song) {
+        const songElement = document.createElement('div');
+        songElement.className = 'song';
+
+        const songInfo = document.createElement('p');
+        songInfo.textContent = song.name;
+
+        const playButton = document.createElement('button');
+        playButton.textContent = 'Tocar';
+        playButton.addEventListener('click', () => {
+            const audio = new Audio(song.url);
+            audio.play();
+        });
+
+        songElement.appendChild(songInfo);
+        songElement.appendChild(playButton);
+
+        playlistSongsContainer.appendChild(songElement);
     }
+
+    function loadPlaylistSongs() {
+        const songs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
+        songs.forEach(song => addSongToPlaylist(song));
+    }
+
+    loadPlaylistSongs();
 });
