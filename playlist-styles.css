@@ -538,3 +538,24 @@ input[type="number"] {
         padding: 10px;
     }
 }
+
+/* Adicionando estilos para a lista de músicas com controles de áudio */
+#playlist-songs .playlist-song {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    background-color: #2a2a2a; /* Cor de fundo para diferenciar as músicas */
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+#playlist-songs .playlist-song audio {
+    margin-left: auto;
+    width: 300px; /* Ajusta o tamanho do player de áudio */
+}
+
+#playlist-songs .playlist-song-info {
+    flex-grow: 1;
+    padding-right: 15px;
+}
