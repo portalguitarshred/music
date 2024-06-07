@@ -29,21 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
                 sessionStorage.setItem('playlistCover', coverUrl);
-                savePlaylistSongs();
+                savePlaylistSongs(); // Salvar as músicas depois da capa
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
             sessionStorage.removeItem('playlistCover'); // Remover capa anterior
-            savePlaylistSongs();
+            savePlaylistSongs(); // Salvar as músicas diretamente
         }
     });
 
     function savePlaylistSongs() {
-        const playlistFilesInput = document.getElementById('playlist-files');
         const files = playlistFilesInput.files;
         const songURLs = [];
         const songNames = [];
 
+        // Verificar se há arquivos de música selecionados
         if (files.length === 0) {
             alert("Nenhum arquivo de música selecionado.");
             return;
