@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const userPlaylistCoverImg = document.getElementById('user-playlist-cover');
+    const playlistCoverImg = document.getElementById('playlist-cover');
     const playlistTitleElem = document.getElementById('playlist-title');
     const playlistSongsElem = document.getElementById('playlist-songs');
 
-    // Exibir a capa da playlist escolhida pelo usuário
-    if (userPlaylistCoverImg) {
-        const userCoverUrl = sessionStorage.getItem('playlistCover');
-        if (userCoverUrl) {
-            userPlaylistCoverImg.src = userCoverUrl;
+    // Exibir a capa da playlist
+    if (playlistCoverImg) {
+        const coverUrl = sessionStorage.getItem('playlistCover');
+        if (coverUrl) {
+            playlistCoverImg.src = coverUrl;
         }
     }
 
