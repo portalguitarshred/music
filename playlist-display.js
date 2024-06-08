@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistCoverImg = document.getElementById('playlist-cover');
     const playlistTitleElem = document.getElementById('playlist-title');
-    const playlistSongsElem = document.getElementById('playlist-songs');
+    const playlistSongsContainer = document.getElementById('playlist-songs');
 
+    // Exibir a capa da playlist
     if (playlistCoverImg) {
         const coverUrl = sessionStorage.getItem('playlistCover');
         if (coverUrl) {
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Exibir o título da playlist
     if (playlistTitleElem) {
         const playlistName = sessionStorage.getItem('playlistName');
         if (playlistName) {
@@ -17,28 +19,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (playlistSongsElem) {
-        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
-        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames') || '[]');
+    // Exibir as músicas da playlist
+    const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
+    const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames')) || [];
 
+    if (playlistSongsContainer && songURLs.length) {
         songURLs.forEach((url, index) => {
             const songItem = document.createElement('div');
-            songItem.className = 'song';
+            songItem.className = 'playlist-song';
             songItem.innerHTML = `
-                <p>${songNames[index]}</p>
-                <button class="play-button" data-url="${url}">Play</button>
+                <div class="playlist-song-info">
+                    <h4>${songNames[index]}</h4>
+                </div>
+                <audio controls src="${url}" onerror="console.log('Erro ao carregar áudio:', this.src)"></audio>
             `;
-            playlistSongsElem.appendChild(songItem);
-        });
+            playlistSongsContainer.appendChild(songItem);
 
-        // Adiciona evento de clique para os botões de play
-        document.querySelectorAll('.play-button').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const url = event.target.getAttribute('data-url');
-                const sound = new Howl({
-                    src: [url],
-                    format: ['mp3']
-                });
+            // Usar Howler.js para fallback se necessário
+            const sound = new Howl({
+                src: [url],
+                format: ['mp3', 'ogg', 'wav'],
+                html5: true
+            });
+
+            songItem.querySelector('audio').addEventListener('play', () => {
                 sound.play();
             });
         });
