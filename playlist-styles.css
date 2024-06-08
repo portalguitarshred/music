@@ -394,6 +394,11 @@ input[type="file"]::file-selector-button {
     color: #aaaaaa;
 }
 
+.music-player-info {
+    margin-left: 10px; /* Adiciona a margem à esquerda */
+    text-align: left; /* Garante que o texto fique alinhado à esquerda */
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .menu {
