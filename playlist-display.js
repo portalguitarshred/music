@@ -26,9 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
             songItem.className = 'song';
             songItem.innerHTML = `
                 <p>${songNames[index]}</p>
-                <audio controls src="${url}" onerror="console.log('Erro ao carregar áudio:', this.src)"></audio>
+                <button class="play-button" data-url="${url}">Play</button>
             `;
             playlistSongsElem.appendChild(songItem);
+        });
+
+        // Adiciona evento de clique para os botões de play
+        document.querySelectorAll('.play-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const url = event.target.getAttribute('data-url');
+                const sound = new Howl({
+                    src: [url],
+                    format: ['mp3']
+                });
+                sound.play();
+            });
         });
     }
 });
