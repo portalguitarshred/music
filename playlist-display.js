@@ -1,28 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const playlistSongsContainer = document.getElementById('playlist-songs');
+    const playlistCoverImg = document.getElementById('playlist-cover');
+    const playlistTitleElem = document.getElementById('playlist-title');
+    const playlistSongsElem = document.getElementById('playlist-songs');
 
-    // Exibir as músicas da playlist
-    if (playlistSongsContainer) {
-        const songURLs = JSON.parse(localStorage.getItem('playlistSongs')) || [];
-        const songNames = JSON.parse(localStorage.getItem('playlistSongNames')) || [];
+    // Exibir a capa da playlist
+    if (playlistCoverImg) {
+        const coverUrl = sessionStorage.getItem('playlistCover');
+        if (coverUrl) {
+            playlistCoverImg.src = coverUrl;
+        }
+    }
 
-        playlistSongsContainer.innerHTML = '';
+    // Exibir o título da playlist
+    if (playlistTitleElem) {
+        const playlistName = sessionStorage.getItem('playlistName');
+        if (playlistName) {
+            playlistTitleElem.textContent = playlistName;
+        }
+    }
+
+    // Exibir músicas da playlist
+    if (playlistSongsElem) {
+        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
+        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames') || '[]');
 
         songURLs.forEach((url, index) => {
-            const songElem = document.createElement('div');
-            songElem.classList.add('playlist-song');
-            songElem.innerHTML = `
-                <div class="song-details">
-                    <audio controls>
-                        <source src="${url}" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <div class="playlist-song-info">
-                        <h4>${songNames[index]}</h4>
-                    </div>
-                </div>
+            const songItem = document.createElement('div');
+            songItem.className = 'song';
+            songItem.innerHTML = `
+                <p>${songNames[index]}</p>
+                <audio controls src="${url}"></audio>
             `;
-            playlistSongsContainer.appendChild(songElem);
+            playlistSongsElem.appendChild(songItem);
         });
     }
 });
