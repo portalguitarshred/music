@@ -468,7 +468,7 @@ input[type="file"]::file-selector-button {
 }
 
     .playlist-song-info h4, .playlist-song-info p {
-        text-align: center;
+        text-align: left;
         width: 100%;
     }
 
