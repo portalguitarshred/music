@@ -438,7 +438,7 @@ input[type="file"]::file-selector-button {
 
     @media (max-width: 768px) {
     .playlist-song {
-        align-items: flex-start; /* Alinha os itens no início do contêiner, o que é o lado esquerdo em layout de linha */
+        align-items: left; /* Alinha os itens no início do contêiner, o que é o lado esquerdo em layout de linha */
         flex-direction: row; /* Mantém a direção da flexbox como linha */
     }
 
