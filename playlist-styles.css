@@ -428,35 +428,41 @@ input[type="file"]::file-selector-button {
     }
 }
 
-/* Estilos para cada faixa de música */
-.song-item {
+
+/* Estilos para a lista de músicas no estilo Spotify */
+#playlist-songs {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.playlist-song {
     display: flex;
     align-items: center;
     padding: 5px;
-    margin: 10px 0;
-    border-bottom: 1px solid #cccccc; /* Linha cinza claro */
-    width: 100%;
-    box-sizing: border-box;
+    border-bottom: 1px solid #555;
+    width: calc(100% - 10px); /* Ajuste para a margem */
+    margin: 0 5px;
 }
 
-.song-cover {
-    width: 60px;
-    height: 60px;
+.playlist-song img {
+    width: 50px;
+    height: 50px;
     border-radius: 5px;
     margin-right: 15px;
-    flex-shrink: 0;
 }
 
-.song-info {
+.playlist-song-info {
     flex-grow: 1;
-    padding: 5px; /* Pequena margem nas laterais e no topo */
 }
 
-.song-title {
+.playlist-song-info h4 {
     margin: 0;
     font-size: 1em;
     color: #ffffff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+}
+
+.playlist-song-info p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #aaaaaa;
 }
