@@ -438,9 +438,8 @@ input[type="file"]::file-selector-button {
 .playlist-song {
     display: flex;
     align-items: center;
-    padding: 5px;
+    padding: 10px;
     border-bottom: 1px solid #555;
-    width: calc(100% - 10px); /* Ajuste para a margem */
     margin: 0 5px;
 }
 
@@ -453,6 +452,7 @@ input[type="file"]::file-selector-button {
 
 .playlist-song-info {
     flex-grow: 1;
+    color: #ffffff;
 }
 
 .playlist-song-info h4 {
