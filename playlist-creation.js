@@ -3,15 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistFilesInput = document.getElementById('playlist-files');
 
     savePlaylistButton.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevenir comportamento padrão
+        event.preventDefault();
 
         const files = playlistFilesInput.files;
         const songURLs = [];
         const songNames = [];
 
         if (files.length > 0) {
-            let filesProcessed = 0; // Contador para verificar quando todos os arquivos foram processados
-            Array.from(files).forEach((file, index) => {
+            let filesProcessed = 0;
+            Array.from(files).forEach((file) => {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     songURLs.push(event.target.result);
