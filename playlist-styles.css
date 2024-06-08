@@ -317,18 +317,21 @@ input[type="file"]::file-selector-button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: calc(100% - 20px); /* Ajusta a largura com margem */
+    margin-left: 10px; /* Margem à esquerda */
+    margin-right: 10px; /* Margem à direita */
 }
 
 #playlist-songs div.song {
     background-color: #333;
     margin: 10px 0;
     padding: 10px;
-    width: 80%;
-    max-width: 600px;
+    width: 100%;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-sizing: border-box;
 }
 
 #playlist-songs div.song p {
@@ -361,7 +364,9 @@ input[type="file"]::file-selector-button {
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #555;
-    margin: 0 5px;
+    margin: 0;
+    width: 100%; /* Garante que ocupe toda a largura */
+    box-sizing: border-box;
 }
 
 .playlist-song img {
