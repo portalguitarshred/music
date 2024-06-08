@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistCoverImg = document.getElementById('playlist-cover');
     const playlistTitleElem = document.getElementById('playlist-title');
-    const playlistSongsContainer = document.getElementById('playlist-songs');
+    const playlistSongsElem = document.getElementById('playlist-songs');
 
     // Exibir a capa da playlist
     if (playlistCoverImg) {
@@ -20,30 +20,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Exibir as músicas da playlist
-    if (playlistSongsContainer) {
-        const songURLs = JSON.parse(sessionStorage.getItem('playlistSongs')) || [];
-        const songNames = JSON.parse(sessionStorage.getItem('playlistSongNames')) || [];
+    if (playlistSongsElem) {
+        const playlistSongs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
+        const playlistSongNames = JSON.parse(sessionStorage.getItem('playlistSongNames') || '[]');
 
-        if (songURLs.length > 0) {
-            songURLs.forEach((url, index) => {
-                const songItem = document.createElement('div');
-                songItem.className = 'playlist-song';
-                songItem.innerHTML = `
-                    <div class="playlist-song-info">
-                        <h4>${songNames[index]}</h4>
-                    </div>
-                    <audio class="playlist-audio-player" controls>
-                        <source src="${url}" type="audio/mpeg">
-                        <source src="${url}" type="audio/ogg">
-                        Seu navegador não suporta o elemento de áudio.
-                    </audio>
-                `;
-                playlistSongsContainer.appendChild(songItem);
+        playlistSongs.forEach((songUrl, index) => {
+            const songElem = document.createElement('div');
+            songElem.classList.add('playlist-song');
+
+            const songImg = document.createElement('img');
+            songImg.src = 'default-song-cover.jpg'; // Utilize uma imagem padrão ou mapeie para uma capa correta
+            songElem.appendChild(songImg);
+
+            const songInfo = document.createElement('div');
+            songInfo.classList.add('playlist-song-info');
+            
+            const songTitle = document.createElement('h4');
+            songTitle.textContent = playlistSongNames[index];
+            songInfo.appendChild(songTitle);
+
+            songElem.appendChild(songInfo);
+
+            // Adicione evento de clique para tocar a música
+            songElem.addEventListener('click', () => {
+                const audio = new Audio(songUrl);
+                audio.play();
             });
 
-            const players = Plyr.setup('.playlist-audio-player', {
-                controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume']
-            });
-        }
+            playlistSongsElem.appendChild(songElem);
+        });
     }
 });
