@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const songURLs = [];
         const songNames = [];
 
-        // Salvar o nome da playlist
         if (playlistName) {
             sessionStorage.setItem('playlistName', playlistName);
         } else {
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.removeItem('playlistName');
         }
 
-        // Salvar a capa da playlist
         if (playlistCoverFile) {
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -30,18 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.readAsDataURL(playlistCoverFile);
         } else {
             sessionStorage.removeItem('playlistCover');
-            saveSongs(); // Chama saveSongs diretamente se não houver capa
+            saveSongs();
         }
 
-        // Função para salvar músicas
         function saveSongs() {
             if (files.length > 0) {
                 let filesProcessed = 0;
                 Array.from(files).forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        if (file.type === 'audio/mp3' || file.type === 'audio/mpeg') {
-                            const blob = new Blob([event.target.result], { type: file.type });
+                        const fileType = file.type || 'audio/mpeg'; // Certifique-se de que o tipo de arquivo é definido
+                        if (fileType.includes('mp3') || fileType.includes('mpeg')) {
+                            // Usar Blob URL para melhor compatibilidade
+                            const blob = new Blob([event.target.result], { type: fileType });
                             const url = URL.createObjectURL(blob);
                             songURLs.push(url);
                         } else {
@@ -55,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             window.location.href = 'user-playlist.html';
                         }
                     };
-                    reader.readAsArrayBuffer(file); // Usar ArrayBuffer para ler MP3 e outros formatos
+                    reader.readAsArrayBuffer(file);
                 });
             } else {
                 console.log("Nenhuma música selecionada.");
