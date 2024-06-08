@@ -40,7 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 Array.from(files).forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        songURLs.push(event.target.result);
+                        if (file.type === 'audio/mp3' || file.type === 'audio/mpeg') {
+                            const blob = new Blob([event.target.result], { type: file.type });
+                            const url = URL.createObjectURL(blob);
+                            songURLs.push(url);
+                        } else {
+                            songURLs.push(event.target.result);
+                        }
                         songNames.push(file.name);
                         filesProcessed++;
                         if (filesProcessed === files.length) {
@@ -49,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             window.location.href = 'user-playlist.html';
                         }
                     };
-                    reader.readAsDataURL(file);
+                    reader.readAsArrayBuffer(file); // Usar ArrayBuffer para ler MP3 e outros formatos
                 });
             } else {
                 console.log("Nenhuma música selecionada.");
