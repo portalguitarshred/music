@@ -436,9 +436,8 @@ input[type="file"]::file-selector-button {
         border-radius: 5px;
     }
 
-    @media (max-width: 768px) {
     .playlist-song {
-        align-items: left; /* Alinha os itens no início do contêiner, o que é o lado esquerdo em layout de linha */
+        align-items: flex-start; /* Alinha os itens no início do contêiner, o que é o lado esquerdo em layout de linha */
         flex-direction: row; /* Mantém a direção da flexbox como linha */
     }
 
@@ -452,20 +451,6 @@ input[type="file"]::file-selector-button {
         flex-grow: 1;
         text-align: left; /* Garante que o texto esteja alinhado à esquerda */
     }
-}
-
-@media (max-width: 480px) {
-    .playlist-song img {
-        width: 30px; /* Ajusta o tamanho da imagem para telas muito pequenas */
-        height: 30px;
-        margin-right: 5px; /* Ajusta o espaço entre a imagem e o texto */
-    }
-
-    .playlist-song-info h4, .playlist-song-info p {
-        font-size: 0.85em; /* Ajusta o tamanho do texto para se adequar a telas muito pequenas */
-        text-align: left; /* Garante que o texto esteja alinhado à esquerda */
-    }
-}
 
     .playlist-song-info h4, .playlist-song-info p {
         text-align: left;
