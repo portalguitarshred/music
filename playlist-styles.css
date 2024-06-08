@@ -395,7 +395,7 @@ input[type="file"]::file-selector-button {
 }
 
 .music-player-info {
-    margin-left: 10px; /* Adiciona a margem à esquerda */
+    margin-left: 15px; /* Adiciona a margem à esquerda */
     text-align: left; /* Garante que o texto fique alinhado à esquerda */
 }
 
