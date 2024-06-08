@@ -457,7 +457,7 @@ input[type="file"]::file-selector-button {
 
     @media (max-width: 768px) {
     .playlist-song {
-        align-items: center; /* Mantém o alinhamento central dos itens */
+        align-items: flex-start; /* Mantém o alinhamento a esquerda para os itens */
         flex-direction: row; /* Mantém a direção da flexbox como linha */
     }
 
