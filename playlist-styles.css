@@ -533,36 +533,3 @@ input[type="file"]::file-selector-button {
         padding: 8px;
     }
 }
-
-//* Capa da Playlist do Usuário */
-#user-playlist-cover-container {
-    width: 100%;
-    text-align: center;
-    margin: 10px 0; /* Ajusta o espaço ao redor */
-    position: relative; /* Permite controle do posicionamento */
-    z-index: 10; /* Certifica-se de que a capa está acima de outros elementos */
-}
-
-#user-playlist-cover {
-    width: auto;
-    max-width: 300px;
-    height: auto;
-    max-height: 200px;
-    border-radius: 8px;
-    display: inline-block;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    #user-playlist-cover {
-        max-width: 80%; /* Ajusta o tamanho para se adequar a telas menores */
-        max-height: 150px; /* Ajusta a altura para telas menores */
-    }
-}
-
-@media (max-width: 480px) {
-    #user-playlist-cover {
-        max-width: 70%; /* Ajusta o tamanho para telas muito pequenas */
-        max-height: 120px; /* Ajusta a altura para telas muito pequenas */
-    }
-}
