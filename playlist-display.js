@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             songElem.classList.add('playlist-song');
 
             const songImg = document.createElement('img');
-            songImg.src = 'default-song-cover.jpg'; // Utilize uma imagem padrão ou mapeie para uma capa correta
+            songImg.src = 'default-cover.png'; // Utilize uma imagem padrão ou mapeie para uma capa correta
             songElem.appendChild(songImg);
 
             const songInfo = document.createElement('div');
