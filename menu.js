@@ -37,10 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const shareLink = document.getElementById('share-link');
 
     createPlaylistLink.addEventListener('click', () => {
+        // Abrir o modal de criar playlist
         document.getElementById('create-playlist-modal').style.display = 'block';
     });
 
     equalizerLink.addEventListener('click', () => {
+        // Abrir o modal do equalizador
         document.getElementById('equalizerModal').style.display = 'block';
     });
 
@@ -62,6 +64,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             alert('O compartilhamento não é suportado no seu navegador.');
+        }
+    });
+
+    // Fechar modal de criar playlist
+    const closeCreatePlaylistModal = document.getElementById('close-create-playlist-modal');
+    closeCreatePlaylistModal.addEventListener('click', () => {
+        document.getElementById('create-playlist-modal').style.display = 'none';
+    });
+
+    // Fechar modal de equalizador
+    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+    closeEqualizerModal.addEventListener('click', () => {
+        document.getElementById('equalizerModal').style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        const createPlaylistModal = document.getElementById('create-playlist-modal');
+        const equalizerModal = document.getElementById('equalizerModal');
+        if (event.target === createPlaylistModal) {
+            createPlaylistModal.style.display = 'none';
+        } else if (event.target === equalizerModal) {
+            equalizerModal.style.display = 'none';
         }
     });
 });
