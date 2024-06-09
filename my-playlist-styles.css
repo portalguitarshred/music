@@ -1,0 +1,258 @@
+/* Estilos gerais para a página de playlists */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #121212;
+    color: #ffffff;
+    overflow-x: hidden;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    padding: 1em;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.menu-toggle {
+    font-size: 1.5em;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.menu-toggle:hover {
+    color: #d3d3d3;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30%;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    z-index: 1000;
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(-100%);
+}
+
+.menu.open {
+    transform: translateX(0);
+}
+
+.menu-divider {
+    border: none;
+    border-top: 1px solid #CCCCCC;
+    margin: 10px 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: #000000;
+    width: 100%;
+}
+
+.menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.menu i {
+    margin-right: 10px;
+}
+
+.logo {
+    max-width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+.logo2 {
+    max-width: 150px;
+    margin-left: 10px;
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Estilos para o grid das capas das playlists */
+.playlist-grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: calc(100% - 2em); /* Considera o padding */
+    margin: 1em auto;
+    padding: 1em;
+    max-width: 1200px;
+    gap: 2px; /* Espaçamento de 2px entre os itens */
+    box-sizing: border-box;
+}
+
+.playlist-grid-item {
+    width: calc(33.33% - 2px); /* Três itens por linha */
+    padding-top: calc(33.33% - 2px); /* Mantém a proporção quadrada */
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #333; /* Bordas escuras ao redor dos itens */
+    box-sizing: border-box;
+}
+
+.playlist-grid-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir completamente o espaço */
+    border-radius: 8px; /* Bordas arredondadas */
+    transition: transform 0.3s ease;
+}
+
+.playlist-grid-item img:hover {
+    transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .playlist-grid-item {
+        width: calc(50% - 2px); /* Dois itens por linha em telas menores */
+        padding-top: calc(50% - 2px);
+    }
+}
+
+@media (max-width: 480px) {
+    .playlist-grid-item {
+        width: calc(100% - 2px); /* Um item por linha em telas muito pequenas */
+        padding-top: calc(100% - 2px);
+    }
+}
+
+/* Estilo adicional para modal e player */
+.modal-exclusive {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content-exclusive {
+    background-color: #1f1f1f;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    color: #ffffff;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.close-modal-exclusive {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-modal-exclusive:hover,
+.close-modal-exclusive:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+audio {
+    width: 100%;
+    max-width: 600px;
+    margin: 1em 0;
+}
+
+#volume-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#volume-control {
+    width: 80%;
+    margin-left: 10px;
+}
+
+/* Responsividade adicional */
+@media (max-width: 768px) {
+    .modal-content-exclusive {
+        width: 90%;
+        max-width: none;
+    }
+
+    audio {
+        width: 100%;
+    }
+
+    #volume-control {
+        width: 100%;
+    }
+
+    header {
+        padding: 0.5em;
+    }
+
+    .menu-toggle {
+        font-size: 1.2em;
+        padding: 0.3em;
+    }
+
+    .logo, .logo2 {
+        max-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content-exclusive {
+        width: 95%;
+    }
+
+    header {
+        padding: 0.3em;
+    }
+
+    .menu-toggle {
+        font-size: 1em;
+        padding: 0.2em;
+    }
+
+    .logo, .logo2 {
+        max-width: 80px;
+    }
+}
