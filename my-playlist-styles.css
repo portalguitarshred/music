@@ -965,8 +965,9 @@ body.light-theme .close-modal-exclusive {
     }
 }
 
+/* Adicionando responsividade para 3 capas por linha em telas menores */
 @media (max-width: 480px) {
     .playlist-grid-item {
-        width: calc(100% - 4px); /* 1 capa por linha em telas muito pequenas */
+        width: calc(33.3333% - 4px); /* 3 capas por linha em telas muito pequenas */
     }
 }
