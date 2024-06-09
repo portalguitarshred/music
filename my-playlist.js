@@ -1,42 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const playlistGridItems = document.querySelectorAll('.playlist-grid-item');
+    const stationList = document.getElementById('station-list');
+    const audioPlayer = document.getElementById('audio-player');
+    const volumeControl = document.getElementById('volume-control');
+    const statusMessage = document.createElement('div');
+    statusMessage.id = 'status-message';
+    document.body.appendChild(statusMessage);
+    let currentPlaying = null;
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    playlistGridItems.forEach((item, index) => {
-        item.addEventListener('click', () => {
-            // Lógica para carregar a playlist correspondente
-            const playlistId = index; // Use o índice ou outra identificação para a playlist
-            console.log(`Playlist ${playlistId} clicada`);
-            // Redirecionar ou carregar a playlist
-            window.location.href = `playlist-detail.html?playlistId=${playlistId}`;
-        });
-    });
-
-    // Exemplo de estações - você deve substituir isso pelos dados reais das estações
     const stations = [
-        { name: 'Rock', url: 'https://example.com/rock', img: 'station-rock.jpg' },
-        { name: 'Jazz', url: 'https://example.com/jazz', img: 'station-jazz.jpg' },
-        { name: 'Classical', url: 'https://example.com/classical', img: 'station-classical.jpg' }
+        { name: 'Rock Station', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+        { name: 'Classic Rock', url: 'https://stream.zeno.fm/amepggt3jxptv' },
+        { name: 'Instrumental', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
     ];
 
-    const stationList = document.getElementById('station-list');
+    function playStation(station, li) {
+        audioPlayer.src = station.url;
+        audioPlayer.play();
+        if (currentPlaying) {
+            currentPlaying.classList.remove('playing');
+            currentPlaying.style.backgroundColor = '';
+            currentPlaying.querySelector('.play-pause-icon').classList.remove('fa-pause');
+            currentPlaying.querySelector('.play-pause-icon').classList.add('fa-play');
+            currentPlaying.querySelector('.spectrum').style.display = 'none';
+        }
+        li.classList.add('playing');
+        li.style.backgroundColor = '#05d26d'; // Cor verde padrão
+        li.querySelector('.play-pause-icon').classList.remove('fa-play');
+        li.querySelector('.play-pause-icon').classList.add('fa-pause');
+        li.querySelector('.spectrum').style.display = 'flex';
+        currentPlaying = li;
+    }
 
-    stations.forEach(station => {
-        const stationItem = document.createElement('li');
-        stationItem.innerHTML = `<img src="${station.img}" alt="${station.name}">`;
-        stationItem.addEventListener('click', () => {
-            // Lógica para tocar a estação
-            console.log(`Estação ${station.name} selecionada`);
-            const audioPlayer = document.getElementById('audio-player');
-            audioPlayer.src = station.url;
-            audioPlayer.play();
-        });
-        stationList.appendChild(stationItem);
-    });
+    function pauseStation(li) {
+        audioPlayer.pause();
+        li.classList.remove('playing');
+        li.style.backgroundColor = '';
+        li.querySelector('.play-pause-icon').classList.remove('fa-pause');
+        li.querySelector('.play-pause-icon').classList.add('fa-play');
+        li.querySelector('.spectrum').style.display = 'none';
+        currentPlaying = null;
+    }
 
-    // Ajustar volume
-    const volumeControl = document.getElementById('volume-control');
-    volumeControl.addEventListener('input', (event) => {
-        const audioPlayer = document.getElementById('audio-player');
-        audioPlayer.volume = event.target.value;
-    });
-});
+    stations.forEach((station, index) => {
+        const li = document.createElement('li');
+        li.textContent = station.name;
+
+        const heartIcon = document.createElement('i');
+       
