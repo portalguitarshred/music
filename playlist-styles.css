@@ -593,7 +593,7 @@ input[type="file"]::file-selector-button {
     align-items: center;
     justify-content: flex-start;
     margin-top: 5px;
-    margin-left: 15px;
+    margin-left: 25px;
 }
 
 .like-button {
