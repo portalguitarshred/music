@@ -606,7 +606,7 @@ input[type="file"]::file-selector-button {
 }
 
 .like-button.liked {
-    color: #ff4757;
+    color: #05d26d;
 }
 
 .like-button:focus {
