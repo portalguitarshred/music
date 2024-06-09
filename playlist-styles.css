@@ -586,3 +586,35 @@ input[type="file"]::file-selector-button {
 .menu-content button i {
     margin-right: 10px; /* Espaço entre o ícone e o texto */
 }
+
+/* Estilos para o botão de curtidas */
+.like-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.like-button.liked {
+    color: #ff4757;
+}
+
+.like-button:focus {
+    outline: none;
+}
+
+#like-count {
+    margin-left: 10px;
+    color: #ffffff;
+    font-size: 1em;
+}
+
