@@ -599,7 +599,7 @@ input[type="file"]::file-selector-button {
 .like-button {
     background: none;
     border: none;
-    font-size: 2em;
+    font-size: 26px; /* Ajusta o tamanho do ícone */
     color: #888;
     cursor: pointer;
     transition: color 0.3s;
