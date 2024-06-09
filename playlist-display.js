@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const userPlaylistCoverImg = document.getElementById('user-playlist-cover');
     const playlistTitleElem = document.getElementById('playlist-title');
     const playlistSongsElem = document.getElementById('playlist-songs');
+    const likeButton = document.getElementById('like-button');
+    const likeCountElem = document.getElementById('like-count');
     let currentAudio = null; // Variável para controlar a reprodução da música
 
     // Exibir a capa da playlist escolhida pelo usuário
@@ -125,4 +127,28 @@ document.addEventListener('DOMContentLoaded', () => {
             playlistSongsElem.appendChild(songElem);
         });
     }
+
+    // Função para atualizar a contagem de curtidas
+    const updateLikeCount = () => {
+        const likeCount = parseInt(sessionStorage.getItem('likeCount')) || 0;
+        likeCountElem.textContent = `${likeCount} curtidas`;
+    };
+
+    // Inicializar a contagem de curtidas
+    updateLikeCount();
+
+    // Lógica para o botão de curtidas
+    likeButton.addEventListener('click', () => {
+        let likeCount = parseInt(sessionStorage.getItem('likeCount')) || 0;
+        const liked = likeButton.classList.toggle('liked');
+
+        if (liked) {
+            likeCount++;
+        } else {
+            likeCount--;
+        }
+
+        sessionStorage.setItem('likeCount', likeCount);
+        updateLikeCount();
+    });
 });
