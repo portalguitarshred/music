@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("equalizer.js carregado e DOMContentLoaded disparado");
+    console.log("equalizer.js e clock-exclusive.js carregados e DOMContentLoaded disparado");
 
+    // Lógica do equalizer.js
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const secondaryAudioPlayer = document.getElementById('secondary-audio-player');
 
-    // Configurar os filtros
     const bassFilter = audioContext.createBiquadFilter();
     bassFilter.type = 'lowshelf';
     bassFilter.frequency.value = 200;
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     trebleFilter.frequency.value = 3000;
     trebleFilter.gain.value = 0;
 
-    // Funções para ajustar os filtros
     function adjustEqualizer(type, value) {
         switch (type) {
             case 'bass':
@@ -37,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`${type} ajustado para ${value}`);
     }
 
-    // Adicionar event listeners aos controles de equalização
     document.getElementById('bass').addEventListener('input', (e) => adjustEqualizer('bass', e.target.value));
     document.getElementById('mid').addEventListener('input', (e) => adjustEqualizer('mid', e.target.value));
     document.getElementById('treble').addEventListener('input', (e) => adjustEqualizer('treble', e.target.value));
@@ -50,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('treble').value = 0;
     });
 
-    // Lógica para abrir e fechar o modal do equalizador
     const equalizerIcon = document.querySelector('.equalizer-icon');
     const equalizerModal = document.getElementById('equalizerModal');
     const closeEqualizerModal = document.getElementById('closeEqualizerModal');
@@ -71,13 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Adicionar listeners ao player de áudio local para verificar status e aplicar equalização
     secondaryAudioPlayer.addEventListener('play', function() {
         audioContext.resume().then(() => {
             console.log("Audio context resumed para música local");
             const source = audioContext.createMediaElementSource(secondaryAudioPlayer);
             source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
-            secondaryAudioPlayer.play(); // Garante que o player local toque
+            secondaryAudioPlayer.play();
         }).catch(error => {
             console.error("Erro ao retomar o contexto de áudio:", error);
         });
@@ -96,6 +92,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     secondaryAudioPlayer.addEventListener('ended', function() {
-        secondaryAudioPlayer.stop();
+        secondaryAudioPlayer.pause(); // Pause no final da reprodução
+    });
+
+    // Lógica do clock-exclusive.js
+    const clockIcon = document.getElementById('clock-icon-exclusive');
+    const timerModal = document.getElementById('timer-modal-exclusive');
+    const closeModal = document.getElementById('close-modal-exclusive');
+    const setTimerButton = document.getElementById('set-timer-button-exclusive');
+    const timerInput = document.getElementById('timer-input-exclusive');
+    const timerLink = document.getElementById('timer-link');
+
+    function openTimerModal() {
+        console.log('Abrindo modal do temporizador');
+        timerModal.style.display = 'block';
+    }
+
+    function closeTimerModal() {
+        console.log('Fechando modal do temporizador');
+        timerModal.style.display = 'none';
+    }
+
+    clockIcon.addEventListener('click', () => {
+        console.log('Ícone do relógio clicado');
+        openTimerModal();
+    });
+
+    timerLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log('Link do temporizador clicado');
+        openTimerModal();
+    });
+
+    closeModal.addEventListener('click', closeTimerModal);
+
+    window.addEventListener('click', (event) => {
+        if (event.target === timerModal) {
+            closeTimerModal();
+        }
+    });
+
+    setTimerButton.addEventListener('click', () => {
+        const minutes = parseInt(timerInput.value, 10);
+        if (isNaN(minutes) || minutes <= 0) {
+            alert('Por favor, insira um valor válido de minutos.');
+            return;
+        }
+
+        const milliseconds = minutes * 60 * 1000;
+        setTimeout(() => {
+            const audioPlayer = document.getElementById('audio-player');
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            alert('O temporizador desligou a rádio.');
+        }, milliseconds);
+
+        closeTimerModal();
+        alert(`Temporizador definido para ${minutes} minutos.`);
     });
 });
