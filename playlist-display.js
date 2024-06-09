@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const userPlaylistCoverImg = document.getElementById('user-playlist-cover');
     const playlistTitleElem = document.getElementById('playlist-title');
     const playlistSongsElem = document.getElementById('playlist-songs');
+    let currentAudio = null; // Variável para controlar a reprodução da música
 
     // Exibir a capa da playlist escolhida pelo usuário
     if (userPlaylistCoverImg) {
@@ -45,8 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicione evento de clique para tocar a música
             songElem.addEventListener('click', () => {
-                const audio = new Audio(songUrl);
-                audio.play();
+                // Se uma música já estiver tocando, pause-a antes de tocar a nova música
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0; // Reinicia a música anterior
+                }
+
+                // Criar um novo objeto Audio para a música selecionada
+                currentAudio = new Audio(songUrl);
+                currentAudio.play();
             });
 
             playlistSongsElem.appendChild(songElem);
