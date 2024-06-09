@@ -38,63 +38,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Adicionar event listeners aos controles de equalização
-document.getElementById('bass').addEventListener('input', (e) => adjustEqualizer('bass', e.target.value));
-document.getElementById('mid').addEventListener('input', (e) => adjustEqualizer('mid', e.target.value));
-document.getElementById('treble').addEventListener('input', (e) => adjustEqualizer('treble', e.target.value));
-document.getElementById('resetEqualizer').addEventListener('click', () => {
-    adjustEqualizer('bass', 0);
-    adjustEqualizer('mid', 0);
-    adjustEqualizer('treble', 0);
-    document.getElementById('bass').value = 0;
-    document.getElementById('mid').value = 0;
-    document.getElementById('treble').value = 0;
-});
-
-// Lógica para abrir e fechar o modal do equalizador
-const equalizerIcon = document.querySelector('.equalizer-icon');
-const equalizerModal = document.getElementById('equalizerModal');
-const closeEqualizerModal = document.getElementById('closeEqualizerModal');
-
-equalizerIcon.addEventListener('click', () => {
-    console.log("Ícone do equalizador clicado");
-    equalizerModal.style.display = 'block';
-});
-
-closeEqualizerModal.addEventListener('click', () => {
-    console.log("Fechar modal do equalizador clicado");
-    equalizerModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === equalizerModal) {
-        equalizerModal.style.display = 'none';
-    }
-});
-
-// Adicionar listeners ao player de áudio local para verificar status e aplicar equalização
-secondaryAudioPlayer.addEventListener('play', function() {
-    audioContext.resume().then(() => {
-        console.log("Audio context resumed para música local");
-        const source = audioContext.createMediaElementSource(secondaryAudioPlayer);
-        source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
-        secondaryAudioPlayer.play(); // Garante que o player local toque
-    }).catch(error => {
-        console.error("Erro ao retomar o contexto de áudio:", error);
+    document.getElementById('bass').addEventListener('input', (e) => adjustEqualizer('bass', e.target.value));
+    document.getElementById('mid').addEventListener('input', (e) => adjustEqualizer('mid', e.target.value));
+    document.getElementById('treble').addEventListener('input', (e) => adjustEqualizer('treble', e.target.value));
+    document.getElementById('resetEqualizer').addEventListener('click', () => {
+        adjustEqualizer('bass', 0);
+        adjustEqualizer('mid', 0);
+        adjustEqualizer('treble', 0);
+        document.getElementById('bass').value = 0;
+        document.getElementById('mid').value = 0;
+        document.getElementById('treble').value = 0;
     });
-});
 
-secondaryAudioPlayer.addEventListener('canplaythrough', () => {
-    console.log(`O áudio ${secondaryAudioPlayer.id} pode ser reproduzido`);
-});
+    // Lógica para abrir e fechar o modal do equalizador
+    const equalizerIcon = document.querySelector('.equalizer-icon');
+    const equalizerModal = document.getElementById('equalizerModal');
+    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
 
-secondaryAudioPlayer.addEventListener('error', (e) => {
-    console.error(`Erro no player ${secondaryAudioPlayer.id}:`, e);
-});
+    equalizerIcon.addEventListener('click', () => {
+        console.log("Ícone do equalizador clicado");
+        equalizerModal.style.display = 'block';
+    });
 
-secondaryAudioPlayer.addEventListener('pause', function() {
-    secondaryAudioPlayer.pause();
-});
+    closeEqualizerModal.addEventListener('click', () => {
+        console.log("Fechar modal do equalizador clicado");
+        equalizerModal.style.display = 'none';
+    });
 
-secondaryAudioPlayer.addEventListener('ended', function() {
-    secondaryAudioPlayer.pause(); // Pause no final da reprodução
+    window.addEventListener('click', (event) => {
+        if (event.target === equalizerModal) {
+            equalizerModal.style.display = 'none';
+        }
+    });
+
+    // Adicionar listeners ao player de áudio local para verificar status e aplicar equalização
+    secondaryAudioPlayer.addEventListener('play', function() {
+        audioContext.resume().then(() => {
+            console.log("Audio context resumed para música local");
+            const source = audioContext.createMediaElementSource(secondaryAudioPlayer);
+            source.connect(bassFilter).connect(midFilter).connect(trebleFilter).connect(audioContext.destination);
+            secondaryAudioPlayer.play(); // Garante que o player local toque
+        }).catch(error => {
+            console.error("Erro ao retomar o contexto de áudio:", error);
+        });
+    });
+
+    secondaryAudioPlayer.addEventListener('canplaythrough', () => {
+        console.log(`O áudio ${secondaryAudioPlayer.id} pode ser reproduzido`);
+    });
+
+    secondaryAudioPlayer.addEventListener('error', (e) => {
+        console.error(`Erro no player ${secondaryAudioPlayer.id}:`, e);
+    });
+
+    secondaryAudioPlayer.addEventListener('pause', function() {
+        secondaryAudioPlayer.pause();
+    });
+
+    secondaryAudioPlayer.addEventListener('ended', function() {
+        secondaryAudioPlayer.stop();
+    });
 });
