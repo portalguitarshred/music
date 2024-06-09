@@ -1,259 +1,972 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #121212;
+    color: #ffffff;
+    overflow-x: hidden;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden; /* Impede o scroll horizontal */
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    padding: 1em;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.menu-toggle {
+    font-size: 1.5em;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.menu-toggle:hover {
+    color: #d3d3d3;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30%; /* Ajustado para 40% */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    z-index: 1000;
+    transition: transform 0.5s ease-in-out; /* Animação mais lenta */
+    transform: translateX(-100%); /* Inicialmente fora da tela */
+}
+
+/* Menu aberto */
+.menu.open {
+    transform: translateX(0);
+}
+
+.menu-divider {
+    border: none; /* Remove a borda padrão */
+    border-top: 1px solid #CCCCCC; /* Adiciona uma borda superior cinza */
+    margin: 10px 0; /* Espaçamento acima e abaixo da linha */
+    z-index: 1000;
+    width: 100%;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: #000000;
+    width: 100%;
+}
+
+.menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.menu i {
+    margin-right: 10px;
+}
+
+.clock-icon-exclusive {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #ffffff;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.clock-icon-exclusive:hover {
+    color: #d3d3d3;
+}
+
+.logo {
+    max-width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+.logo2 {
+    max-width: 150px;
+    margin-left: 10px;
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+main {
+    padding: 1em;
+    max-width: 800px;
+    width: 100%;
+    background-color: #1f1f1f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    margin: 0.5em 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    text-align: left;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+li {
+    background-color: #333333;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    border: 1px solid #444444;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+li:hover {
+    background-color: #05d26d;
+    box-shadow: 0 0 15px #05d26d;
+    border: #05d26d;
+}
+
+li.playing::before {
+    content: '▶';
+    color: #ffffff;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.heart-icon {
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 1.2em;
+    position: absolute;
+    right: 50px;
+    color: #121212; /* Preto quando não favoritado */
+    transition: color 0.3s;
+}
+
+.heart-icon.favorited {
+    color: #ffffff; /* Branco quando favoritado */
+}
+
+.share-icon {
+    cursor: pointer;
+    font-size: 1.2em;
+    position: absolute;
+    right: 10px;
+    color: #ffffff;
+    transition: color 0.3s;
+    margin-right: 10px;
+}
+
+.spectrum {
+    display: none;
+    gap: 2px;
+    position: absolute;
+    right: 90px;
+    margin-right: 95px;
+}
+
+.spectrum div {
+    width: 2px;
+    background: #ffffff;
+    animation: bar-animation 0.5s infinite;
+    animation-timing-function: linear;
+}
+
+.spectrum div:nth-child(1) {
+    height: 10px;
+    animation-delay: 0s;
+}
+
+.spectrum div:nth-child(2) {
+    height: 14px;
+    animation-delay: 0.1s;
+}
+
+.spectrum div:nth-child(3) {
+    height: 8px;
+    animation-delay: 0.2s;
+}
+
+.spectrum div:nth-child(4) {
+    height: 16px;
+    animation-delay: 0.3s;
+}
+
+.spectrum div:nth-child(5) {
+    height: 12px;
+    animation-delay: 0.4s;
+}
+
+@keyframes bar-animation {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.5);
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #1f1f1f;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.timer-button {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.timer-button:hover {
+    background-color: #04b65c;
+}
+
+.share-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.share-options button {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.share-options button:hover {
+    background-color: #04b65c;
+}
+
+#audio-player {
+    width: calc(100% - 40px);
+    margin: 0px 20px;
+    box-sizing: border-box;
+}
+
+#stations {
+    margin-bottom: 20px;
+    width: calc(100%);
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+#volume-container {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+}
+
+#volume-control {
+    width: 100%;
+    margin-left: 10px;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    height: 8px;
+    appearance: none;
+    cursor: pointer;
+}
+
+#volume-control::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+    background: #05d26d;
+    border-radius: 50%;
+    cursor: pointer;
+    appearance: none;
+}
+
+#volume-control::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #05d26d;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+li.playing .spectrum {
+    display: flex;
+    gap: 2px;
+    position: absolute;
+    right: 10px;
+}
+
+li.playing .spectrum div {
+    width: 2px;
+    background: #ffffff;
+    animation: bar-animation 0.5s infinite;
+    animation-timing-function: linear;
+}
+
+li.playing .spectrum div:nth-child(1) {
+    height: 10px;
+    animation-delay: 0s;
+}
+
+li.playing .spectrum div:nth-child(2) {
+    height: 14px;
+    animation-delay: 0.1s;
+}
+
+li.playing .spectrum div:nth-child(3) {
+    height: 8px;
+    animation-delay: 0.2s;
+}
+
+li.playing .spectrum div:nth-child(4) {
+    height: 16px;
+    animation-delay: 0.3s;
+}
+
+li.playing .spectrum div:nth-child(5) {
+    height: 12px;
+    animation-delay: 0.4s;
+}
+
+@keyframes bar-animation {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.5);
+    }
+}
+
+.song-info {
+    display: none;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border-top: 1px solid #444;
+    border-radius: 0 0 4px 4px;
+    box-sizing: border-box;
+    transition: max-height 0.3s ease-out;
+}
+
+.song-info p {
+    margin: 0;
+}
+
+.accordion-active + .song-info {
+    display: block;
+}
+
+/* Estilos para o modal de registro */
+.modal-register {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content-register {
+    background-color: #1f1f1f;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    color: #ffffff;
+    border-radius: 10px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.close-register {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-register:hover,
+.close-register:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.register-button, .login-button {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%; /* Garantir que o botão ocupe toda a largura do modal */
+    font-size: 1em;
+}
+
+.register-button:hover, .login-button:hover {
+    background-color: #04b65c;
+}
+
+.modal-content-register label {
+    display: block;
+    margin-top: 10px;
+}
+
+.modal-content-register input {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+/* Estilos responsivos para telas menores */
+@media (max-width: 600px) {
+    .modal-content-register {
+        width: 90%;
+        margin: 30% auto; /* Ajusta a margem para centralizar melhor em telas menores */
+    }
+}
+
+/* Estilos para o carrossel */
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.carousel-controls {
+    display: flex;
+    align-items: center;
+}
+
+.carousel {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel img {
+    width: calc((100% - 10px) / 3);
+    margin: 0 5px;
+    border-radius: 8px;
+}
+
+.carousel-button {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-size: 1em;
+}
+
+.slider__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+}
+
+.slider__button--left {
+    left: 10px;
+}
+
+.slider__button--right {
+    right: 10px;
+}
+
+.swiper-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden; /* Impede que o conteúdo ultrapasse os limites do contêiner */
+    margin: 0 auto; /* Centraliza o contêiner */
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-wrapper {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: #ffffff;
+}
+
+.swiper-slide img {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 8px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel-button-next,
+.carousel-button-prev {
+    color: #ffffff;
+}
+
+li.playing {
+    color: #ffffff;
+}
+
+li.playing .spectrum {
+    display: flex;
+}
+
+/* Nova classe para o relógio */
+.clock-icon-exclusive {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #ffffff;
+    padding: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.clock-icon-exclusive:hover {
+    color: #d3d3d3;
+}
+
+.modal-exclusive {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1000; /* Garante que o modal fique acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content-exclusive {
+    background-color: #1f1f1f;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    color: #ffffff;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.close-modal-exclusive {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-modal-exclusive:hover,
+.close-modal-exclusive:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.set-timer-button-exclusive {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%; /* Garantir que o botão ocupe toda a largura do modal em telas menores */
+    font-size: 1em; /* Ajustar o tamanho da fonte para dispositivos móveis */
+}
+
+.set-timer-button-exclusive:hover {
+    background-color: #04b65c;
+}
+
+.modal-content-exclusive input[type="text"],
+.modal-content-exclusive input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+/* Adicionando responsividade */
+@media (max-width: 768px) {
+    .modal-content-exclusive {
+        width: 90%;
+        max-width: none;
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+        display: none;
+    }
+
+    .set-timer-button-exclusive {
+        font-size: 1em;
+        padding: 10px;
+    }
+
+    .logo {
+        max-width: 120px;
+    }
+
+    .menu {
+        width: 60%;
+    }
+
+    .swiper-container {
+        max-width: 100%;
+    }
+
+    .swiper-slide img {
+        max-width: 100%;
+    }
+
+    .modal-content, .modal-content-register, .modal-content-exclusive {
+        width: 90%;
+        max-width: none;
+    }
+
+    #audio-player, #volume-container {
+        width: calc(100% - 40px);
+        margin: 10px 20px;
+    }
+}
+
+body.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.light-theme header {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+body.light-theme .menu {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.light-theme .menu a {
+    color: #000000;
+}
+
+body.light-theme .menu a:hover {
+    background-color: #e0e0e0;
+}
+
+body.light-theme .clock-icon-exclusive,
+body.light-theme .menu-toggle {
+    color: #000000;
+}
+
+body.light-theme li {
+    background-color: #f9f9f9;
+    color: #000000;
+    border: 1px solid #dddddd;
+}
+
+body.light-theme li.playing {
+    background-color: #d0f0c0;
+}
+
+body.light-theme .modal-content,
+body.light-theme .modal-content-register,
+body.light-theme .modal-content-exclusive {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.light-theme .close,
+body.light-theme .close-register,
+body.light-theme .close-modal-exclusive {
+    color: #000000;
+}
+
+.light-theme .station-list li {
+    background-color: #fff;
+    color: #000;
+}
+
+.light-theme main {
+    background-color: #e7e7e7;
+}
+
+.light-theme .play-pause-icon {
+    color: #121212;
+}
+
+/* Estilos para o botão "Criar Playlist" */
+.create-playlist-button {
+    background: linear-gradient(to top, #09a858, #05d26d);
+    color: #ffffff;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 1.2em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 15px #05d26d;
+}
+
+.create-playlist-button:hover {
+    background-color: #04b65c;
+}
+
+/* Estilos para o modal de criação de playlist */
+.modal-exclusive {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1000; /* Garante que o modal fique acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content-exclusive {
+    background-color: #1f1f1f;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    color: #ffffff;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.close-modal-exclusive {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-modal-exclusive:hover,
+.close-modal-exclusive:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content-exclusive label {
+    display: block;
+    margin-top: 10px;
+}
+
+.modal-content-exclusive input[type="text"],
+.modal-content-exclusive input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
 /* Estilos para o grid das capas das playlists */
 .playlist-grid-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: calc(100% - 2em);
+    width: calc(100% - 2em); /* Considera o padding */
     margin: 1em auto;
     padding: 1em;
-    max-width: 1200px;
-    gap: 2px; /* Espaçamento de 2px entre os itens */
-    box-sizing: border-box;
+    max-width: 1200px; /* Alinha com a largura máxima do main */
 }
 
 .playlist-grid-item {
-    width: calc(33.33% - 2px);
-    padding-top: calc(33.33% - 2px);
-    position: relative;
+    width: calc(33% - 4px); /* 6 capas em 2 linhas */
+    aspect-ratio: 1;
+    margin-bottom: 8px; /* Espaçamento entre as linhas */
+    border-radius: 8px;
     overflow: hidden;
-    border: 2px solid #333;
-    box-sizing: border-box;
+    position: relative;
 }
 
 .playlist-grid-item img {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
-    transition: transform 0.3s ease;
 }
 
-.playlist-grid-item img:hover {
-    transform: scale(1.05);
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .playlist-grid-item {
-        width: calc(50% - 2px);
-        padding-top: calc(50% - 2px);
-    }
-}
-
-@media (max-width: 480px) {
-    .playlist-grid-item {
-        width: calc(100% - 2px);
-        padding-top: calc(100% - 2px);
-    }
-}
-
-/* Estilos para a lista de estações */
-#stations {
-    margin: 20px 0;
-    width: 100%;
-    padding: 0 1em;
-    box-sizing: border-box;
-}
-
-#station-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-#station-list li {
-    width: calc(33.33% - 10px);
-    margin: 5px 0;
-    padding: 10px;
-    background-color: #2a2a2a;
-    border-radius: 5px;
+.like-icon-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #ffffff;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-}
-
-#station-list li:hover {
-    background-color: #3a3a3a;
-}
-
-#station-list img {
-    max-width: 100%;
-    height: auto;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px;
     border-radius: 5px;
 }
 
-/* Player de áudio */
-audio {
-    width: 100%;
-    max-width: 600px;
-    margin: 1em 0;
-}
-
-#volume-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-#volume-control {
-    width: 80%;
-    margin-left: 10px;
-}
-
-/* Responsividade adicional */
-@media (max-width: 768px) {
-    .modal-content-exclusive {
-        width: 90%;
-        max-width: none;
-    }
-
-    audio {
-        width: 100%;
-    }
-
-    #volume-control {
-        width: 100%;
-    }
-
-    header {
-        padding: 0.5em;
-    }
-
-    .menu-toggle {
-        font-size: 1.2em;
-        padding: 0.3em;
-    }
-
-        .logo, .logo2 {
-        max-width: 100px;
-    }
-}
-
-/* Estilos para a lista de estações */
-#station-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-#station-list li {
-    width: calc(33.33% - 10px); /* Ajuste para a largura das estações */
-    margin: 5px 0;
-    padding: 10px;
-    background-color: #2a2a2a;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: background-color 0.3s ease;
+.like-icon-container i {
+    font-size: 20px;
     cursor: pointer;
-    box-sizing: border-box;
+    transition: color 0.3s;
 }
 
-#station-list li.playing {
-    background-color: #05d26d; /* Cor ao tocar */
-}
-
-#station-list li:hover {
-    background-color: #3a3a3a;
-}
-
-#station-list i {
-    margin-left: 10px;
-}
-
-.play-pause-icon {
-    margin-left: 10px;
-}
-
-.heart-icon {
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.heart-icon.favorited {
+.like-icon-container i:hover {
     color: #ff4757;
 }
 
-.spectrum {
-    display: none;
-    margin-left: 10px;
-    display: flex;
-    align-items: flex-end;
-    width: 30px;
-    height: 15px;
-    justify-content: space-between;
+.like-count {
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.spectrum div {
-    background-color: #fff;
-    width: 4px;
-    height: 100%;
-    transition: height 0.3s;
+.equalizer-icon {
+    width: 26px; /* Tamanho ajustado */
+    height: 26px;
+    cursor: pointer;
+    fill: #ffffff; /* Traços brancos */
+    background: transparent; /* Fundo transparente */
+    margin-right: 15px;
+    transition: fill 0.3s;
 }
 
-#volume-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+.equalizer-icon:hover {
+    fill: #05d26d; /* Troca a cor ao passar o mouse */
 }
 
-#volume-control {
-    width: 80%;
-    margin-left: 10px;
-}
-
-/* Responsividade adicional */
+/* Adicionando responsividade */
 @media (max-width: 768px) {
-    .modal-content-exclusive {
-        width: 90%;
-        max-width: none;
-    }
-
-    audio {
-        width: 100%;
-    }
-
-    #volume-control {
-        width: 100%;
-    }
-
-    #station-list li {
-        width: calc(50% - 10px); /* Ajusta a largura das estações para telas menores */
-    }
-
-    header {
-        padding: 0.5em;
-    }
-
-    .menu-toggle {
-        font-size: 1.2em;
-        padding: 0.3em;
-    }
-
-    .logo, .logo2 {
-        max-width: 100px;
+    .playlist-grid-item {
+        width: calc(50% - 4px); /* 2 capas por linha em telas menores */
     }
 }
 
 @media (max-width: 480px) {
     .playlist-grid-item {
-        width: calc(100% - 2px);
-        padding-top: calc(100% - 2px);
-    }
-
-    #station-list li {
-        width: calc(100% - 10px); /* Ajusta a largura das estações para telas muito pequenas */
+        width: calc(100% - 4px); /* 1 capa por linha em telas muito pequenas */
     }
 }
