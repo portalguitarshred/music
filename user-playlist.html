@@ -11,10 +11,10 @@
 </head>
 <body>
     <header>
-        <i class="fas fa-bars menu-toggle" id="menu-toggle"></i> <!-- Adicionei um ID ao ícone do menu -->
+        <i class="fas fa-bars menu-toggle"></i>
         <img src="logo1.png" alt="Guitar Radio Logo" class="logo">
         <span class="clock-icon-exclusive" id="clock-icon-exclusive">&#128339;</span>
-        <nav class="menu" id="menu"> <!-- Adicionei um ID ao menu -->
+        <nav class="menu">
             <img src="logo2.png" alt="Guitar Radio Logo" class="logo2">
             <hr class="menu-divider">
             <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
@@ -35,6 +35,10 @@
                 <i class="fas fa-heart"></i>
             </button>
             <span id="like-count">0 curtidas</span>
+            <!-- Adicionar o ícone do equalizador -->
+            <button id="equalizer-button" class="equalizer-button">
+                <i class="fas fa-sliders-h"></i>
+            </button>
         </div>
     </div>
 
@@ -81,6 +85,6 @@
     <script src="clock-exclusive.js"></script>
     <script src="playlist-creation.js"></script>
     <script src="playlist-display.js"></script>
-     <script src="menu.js"></script> <!-- Inclua o novo arquivo menu.js -->
+    <script src="menu.js"></script>
 </body>
 </html>
