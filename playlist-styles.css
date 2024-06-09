@@ -619,3 +619,21 @@ input[type="file"]::file-selector-button {
     font-size: 1em;
 }
 
+/* Estilos para o botão do equalizador */
+.equalizer-button {
+    background: none;
+    border: none;
+    font-size: 26px; /* Tamanho do ícone */
+    color: #ffffff;
+    cursor: pointer;
+    margin-left: 15px; /* Margem para separação */
+    transition: color 0.3s;
+}
+
+.equalizer-button:hover {
+    color: #ff4757; /* Cor ao passar o mouse */
+}
+
+.equalizer-button:focus {
+    outline: none;
+}
