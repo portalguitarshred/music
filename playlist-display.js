@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
             menuContent.classList.add('menu-content');
 
             const shareOption = document.createElement('button');
-            shareOption.textContent = 'Compartilhar com amigos';
+            shareOption.innerHTML = '<i class="fas fa-share"></i> Compartilhar com amigos';
             shareOption.addEventListener('click', () => {
                 // Lógica para compartilhar a música
                 const shareData = {
@@ -85,8 +85,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 optionsMenu.classList.remove('open');
             });
 
+            const addToPlaylistOption = document.createElement('button');
+            addToPlaylistOption.innerHTML = '<i class="fas fa-music"></i> Adicionar música na playlist';
+            addToPlaylistOption.addEventListener('click', () => {
+                // Lógica para adicionar a música na playlist
+                alert(`A música "${songTitleText}" foi adicionada à playlist.`);
+                optionsMenu.classList.remove('open');
+            });
+
+            const addToFavoritesOption = document.createElement('button');
+            addToFavoritesOption.innerHTML = '<i class="fas fa-heart"></i> Adicionar aos favoritos';
+            addToFavoritesOption.addEventListener('click', () => {
+                // Lógica para adicionar a música aos favoritos
+                alert(`A música "${songTitleText}" foi adicionada aos favoritos.`);
+                optionsMenu.classList.remove('open');
+            });
+
             const removeOption = document.createElement('button');
-            removeOption.textContent = 'Remover da playlist';
+            removeOption.innerHTML = '<i class="fas fa-trash"></i> Remover da Playlist';
             removeOption.addEventListener('click', () => {
                 // Lógica para remover a música da playlist
                 playlistSongsElem.removeChild(songElem);
@@ -99,6 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             menuContent.appendChild(shareOption);
+            menuContent.appendChild(addToPlaylistOption);
+            menuContent.appendChild(addToFavoritesOption);
             menuContent.appendChild(removeOption);
             optionsMenu.appendChild(optionsButton);
             optionsMenu.appendChild(menuContent);
