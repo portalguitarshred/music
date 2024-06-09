@@ -619,35 +619,72 @@ input[type="file"]::file-selector-button {
     font-size: 1em;
 }
 
-/* Estilos para o botão do equalizador */
+/* Estilos para o modal do equalizador */
+.modal-exclusive {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content-exclusive {
+    background-color: #1f1f1f;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    color: #ffffff;
+    border-radius: 10px;
+    text-align: left;
+}
+
 .equalizer-button {
     background: none;
     border: none;
-    font-size: 25px; /* Tamanho do ícone */
-    color: #ffffff; /* Cor branca */
+    font-size: 25px;
+    color: #ffffff;
     cursor: pointer;
-    margin-left: auto; /* Empurra o botão para a direita */
-    margin-right: 20px; /* Margem para separação da borda direita */
+    margin-left: auto;
+    margin-right: 20px;
     transition: color 0.3s;
 }
 
 .equalizer-button:hover {
-    color: #ff4757; /* Cor ao passar o mouse */
+    color: #ff4757;
 }
 
 .equalizer-button:focus {
     outline: none;
 }
 
-/* Ajustes para a posição do botão do equalizador */
-.like-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* Alinha os botões à direita */
-    gap: 15px; /* Espaço entre os botões */
+#equalizerModal input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
 }
 
-/* Ajustes para o ícone do equalizador */
-.fa-sliders-h {
-    color: #ffffff; /* Cor dos traços do ícone */
+#resetEqualizer {
+    background-color: #05d26d;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+}
+
+#resetEqualizer:hover {
+    background-color: #04b65c;
+}
+
+#resetEqualizer:focus {
+    outline: none;
 }
