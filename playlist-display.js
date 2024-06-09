@@ -34,9 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const songInfo = document.createElement('div');
             songInfo.classList.add('playlist-song-info');
-            
+
+            // Remover a extensão do nome da música
+            const songTitleText = playlistSongNames[index].replace(/\.[^/.]+$/, '');
             const songTitle = document.createElement('h4');
-            songTitle.textContent = playlistSongNames[index];
+            songTitle.textContent = songTitleText;
             songInfo.appendChild(songTitle);
 
             songElem.appendChild(songInfo);
