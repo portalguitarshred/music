@@ -57,6 +57,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentAudio.play();
             });
 
+            // Adicionar os três pontinhos verticais (menu de opções)
+            const optionsMenu = document.createElement('div');
+            optionsMenu.classList.add('options-menu');
+
+            const optionsButton = document.createElement('button');
+            optionsButton.classList.add('options-button');
+            optionsButton.innerHTML = '&#8942;'; // Caractere de três pontinhos verticais
+            optionsButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Previne que o clique no botão toque a música
+                optionsMenu.classList.toggle('open');
+            });
+
+            const menuContent = document.createElement('div');
+            menuContent.classList.add('menu-content');
+
+            const shareOption = document.createElement('button');
+            shareOption.textContent = 'Compartilhar com amigos';
+            shareOption.addEventListener('click', () => {
+                // Lógica para compartilhar a música
+                const shareData = {
+                    title: 'Minha Playlist',
+                    text: `Confira essa música: ${songTitleText}`,
+                    url: songUrl
+                };
+                navigator.share(shareData).catch(console.error);
+                optionsMenu.classList.remove('open');
+            });
+
+            const removeOption = document.createElement('button');
+            removeOption.textContent = 'Remover da playlist';
+            removeOption.addEventListener('click', () => {
+                // Lógica para remover a música da playlist
+                playlistSongsElem.removeChild(songElem);
+                // Atualizar sessionStorage
+                playlistSongs.splice(index, 1);
+                playlistSongNames.splice(index, 1);
+                sessionStorage.setItem('playlistSongs', JSON.stringify(playlistSongs));
+                sessionStorage.setItem('playlistSongNames', JSON.stringify(playlistSongNames));
+                optionsMenu.classList.remove('open');
+            });
+
+            menuContent.appendChild(shareOption);
+            menuContent.appendChild(removeOption);
+            optionsMenu.appendChild(optionsButton);
+            optionsMenu.appendChild(menuContent);
+            songElem.appendChild(optionsMenu);
+
             playlistSongsElem.appendChild(songElem);
         });
     }
