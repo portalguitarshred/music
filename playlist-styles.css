@@ -571,6 +571,8 @@ input[type="file"]::file-selector-button {
     cursor: pointer;
     display: flex; /* Alinha o ícone e o texto */
     align-items: center; /* Centraliza verticalmente o ícone e o texto */
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .menu-content button:hover {
