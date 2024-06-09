@@ -624,9 +624,10 @@ input[type="file"]::file-selector-button {
     background: none;
     border: none;
     font-size: 26px; /* Tamanho do ícone */
-    color: #ffffff;
+    color: #ffffff; /* Cor branca */
     cursor: pointer;
-    margin-left: 15px; /* Margem para separação */
+    margin-left: auto; /* Empurra o botão para a direita */
+    margin-right: 15px; /* Margem para separação da borda direita */
     transition: color 0.3s;
 }
 
@@ -636,4 +637,17 @@ input[type="file"]::file-selector-button {
 
 .equalizer-button:focus {
     outline: none;
+}
+
+/* Ajustes para a posição do botão do equalizador */
+.like-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    gap: 15px; /* Espaço entre os botões */
+}
+
+/* Ajustes para o ícone do equalizador */
+.fa-sliders-h {
+    color: #ffffff; /* Cor dos traços do ícone */
 }
