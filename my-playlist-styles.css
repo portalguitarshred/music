@@ -256,3 +256,54 @@ audio {
         max-width: 80px;
     }
 }
+
+/* Estilos para a lista de estações */
+#stations {
+    margin: 20px 0;
+    width: 100%;
+    padding: 0 1em;
+    box-sizing: border-box;
+}
+
+#station-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#station-list li {
+    width: calc(33.33% - 10px);
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+#station-list li:hover {
+    background-color: #3a3a3a;
+}
+
+#station-list img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    #station-list li {
+        width: calc(50% - 10px); /* Dois itens por linha em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    #station-list li {
+        width: 100%; /* Um item por linha em telas muito pequenas */
+    }
+}
