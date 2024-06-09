@@ -627,7 +627,7 @@ input[type="file"]::file-selector-button {
     color: #ffffff; /* Cor branca */
     cursor: pointer;
     margin-left: auto; /* Empurra o botão para a direita */
-    margin-right: 15px; /* Margem para separação da borda direita */
+    margin-right: 20px; /* Margem para separação da borda direita */
     transition: color 0.3s;
 }
 
