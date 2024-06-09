@@ -491,12 +491,12 @@ input[type="file"]::file-selector-button {
     }
 
     .menu-toggle {
-        font-size: 1em;
-        padding: 0.2em;
+        font-size: 1.5em;
+        padding: 0.5em;
     }
 
     .logo, .logo2 {
-        max-width: 80px;
+        max-width: 100px;
     }
 
     .playlist-cover-container {
