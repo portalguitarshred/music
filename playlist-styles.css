@@ -569,6 +569,8 @@ input[type="file"]::file-selector-button {
     padding: 10px;
     width: 100%;
     cursor: pointer;
+    display: flex; /* Alinha o ícone e o texto */
+    align-items: center; /* Centraliza verticalmente o ícone e o texto */
 }
 
 .menu-content button:hover {
@@ -577,4 +579,8 @@ input[type="file"]::file-selector-button {
 
 .options-menu.open .menu-content {
     display: block;
+}
+
+.menu-content button i {
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
 }
