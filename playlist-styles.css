@@ -554,7 +554,8 @@ input[type="file"]::file-selector-button {
     position: absolute;
     right: 0;
     background-color: #333;
-    min-width: 150px;
+    width: 80vw; /* Ajusta a largura para 80% da viewport */
+    max-width: 350px; /* Define um limite máximo de largura */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 5px;
