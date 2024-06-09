@@ -528,3 +528,52 @@ input[type="file"]::file-selector-button {
         padding: 8px;
     }
 }
+
+/* Estilos para o menu de opções */
+.options-menu {
+    position: relative;
+    display: inline-block;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.options-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.options-button:focus {
+    outline: none;
+}
+
+.menu-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #333;
+    min-width: 150px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.menu-content button {
+    color: #ffffff;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.menu-content button:hover {
+    background-color: #575757;
+}
+
+.options-menu.open .menu-content {
+    display: block;
+}
