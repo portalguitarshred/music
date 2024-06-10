@@ -51,17 +51,18 @@ header {
     top: 0;
     left: 0;
     height: 100%;
-    width: 30%; /* Ajustado para 40% */
+    width: 30%; /* Ajustado para o menu */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
-    transition: transform 0.5s ease-in-out; /* Animação mais lenta */
-    transform: translateX(-100%); /* Inicialmente fora da tela */
+    transition: transform 0.5s ease-in-out; /* Animação para abrir e fechar */
+    transform: translateX(-100%); /* Menu oculto por padrão */
 }
+
 
 /* Menu aberto */
 .menu.open {
-    transform: translateX(0);
+    transform: translateX(0); /* Menu visível quando aberto */
 }
 
 .menu-divider {
@@ -79,6 +80,7 @@ header {
     text-decoration: none;
     color: #000000;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .menu a:hover {
@@ -86,7 +88,20 @@ header {
 }
 
 .menu i {
-    margin-right: 10px;
+    margin-right: 10px; /* Espaçamento ao lado dos ícones */
+}
+
+/* Responsividade do menu */
+@media (max-width: 768px) {
+    .menu {
+        width: 60%; /* Ajusta o tamanho do menu para telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .menu {
+        width: 80%; /* Ajusta o tamanho do menu para telas ainda menores */
+    }
 }
 
 .clock-icon-exclusive {
