@@ -1,91 +1,56 @@
+// menu.js
+
 document.addEventListener('DOMContentLoaded', () => {
-    function openMenu() {
-        document.querySelector('.menu').classList.add('open');
-    }
-
-    function closeMenu() {
-        document.querySelector('.menu').classList.remove('open');
-    }
-
     const menuToggle = document.querySelector('.menu-toggle');
-    menuToggle.addEventListener('click', (event) => {
-        event.stopPropagation();
-        const menu = document.querySelector('.menu');
-        if (menu.classList.contains('open')) {
-            closeMenu();
-        } else {
-            openMenu();
+    const menu = document.querySelector('.menu');
+
+    // Verificar se os elementos de menu existem
+    if (menuToggle && menu) {
+        // Função para abrir o menu
+        function openMenu() {
+            menu.classList.add('open');
         }
-    });
 
-    document.addEventListener('click', (event) => {
-        const menu = document.querySelector('.menu');
-        const menuToggle = document.querySelector('.menu-toggle');
-        if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
-            closeMenu();
+        // Função para fechar o menu
+        function closeMenu() {
+            menu.classList.remove('open');
         }
-    });
 
-    document.querySelectorAll('.menu a').forEach(link => {
-        link.addEventListener('click', closeMenu);
-    });
+        // Adicionar evento de clique ao ícone do menu
+        menuToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            if (menu.classList.contains('open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
 
-    // Funções para os novos itens do menu
-    const createPlaylistLink = document.getElementById('create-playlist-link');
-    const equalizerLink = document.getElementById('equalizer-link');
-    const myPlaylistsLink = document.getElementById('my-playlists-link');
-    const shareLink = document.getElementById('share-link');
+        // Fechar o menu ao clicar fora dele
+        document.addEventListener('click', (event) => {
+            if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+                closeMenu();
+            }
+        });
 
-    createPlaylistLink.addEventListener('click', () => {
-        // Abrir o modal de criar playlist
-        document.getElementById('create-playlist-modal').style.display = 'block';
-    });
+        // Fechar o menu ao clicar em um link dentro do menu
+        document.querySelectorAll('.menu a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    }
 
-    equalizerLink.addEventListener('click', () => {
-        // Abrir o modal do equalizador
-        document.getElementById('equalizerModal').style.display = 'block';
-    });
+    // Específico para 'user-playlist.html'
+    if (document.querySelector('body').classList.contains('user-playlist')) {
+        // Adicionar funções específicas para a página 'user-playlist.html'
+    }
 
-    myPlaylistsLink.addEventListener('click', () => {
-        // Redirecionar ou abrir modal de playlists
-        window.location.href = 'my-playlists.html'; // Supondo que há uma página para listas de reprodução
-    });
+    // Específico para 'user-my-playlist.html'
+    if (document.querySelector('body').classList.contains('user-my-playlist')) {
+        // Adicionar funções específicas para a página 'user-my-playlist.html'
+    }
 
-    shareLink.addEventListener('click', () => {
-        if (navigator.share) {
-            navigator.share({
-                title: 'Guitar Shred',
-                text: 'Confira essa incrível playlist que estou ouvindo!',
-                url: window.location.href
-            }).then(() => {
-                console.log('Compartilhamento bem-sucedido');
-            }).catch((error) => {
-                console.error('Erro ao compartilhar', error);
-            });
-        } else {
-            alert('O compartilhamento não é suportado no seu navegador.');
-        }
-    });
-
-    // Fechar modal de criar playlist
-    const closeCreatePlaylistModal = document.getElementById('close-create-playlist-modal');
-    closeCreatePlaylistModal.addEventListener('click', () => {
-        document.getElementById('create-playlist-modal').style.display = 'none';
-    });
-
-    // Fechar modal de equalizador
-    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
-    closeEqualizerModal.addEventListener('click', () => {
-        document.getElementById('equalizerModal').style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        const createPlaylistModal = document.getElementById('create-playlist-modal');
-        const equalizerModal = document.getElementById('equalizerModal');
-        if (event.target === createPlaylistModal) {
-            createPlaylistModal.style.display = 'none';
-        } else if (event.target === equalizerModal) {
-            equalizerModal.style.display = 'none';
-        }
-    });
+    // Específico para 'radio.html'
+    if (document.querySelector('body').classList.contains('radio')) {
+        // Adicionar funções específicas para a página 'radio.html'
+    }
 });
