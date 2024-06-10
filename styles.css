@@ -1145,7 +1145,7 @@ body.light-theme .logo {
 /* Ajustes responsivos */
 @media (max-width: 768px) {
     .playlist-buttons-container {
-        width: calc(100% - 20px); /* Ajuste menor para telas menores */
+        width: calc(100% - 40px); /* Ajuste menor para telas menores */
     }
     .create-playlist-button, .my-playlists-button {
         padding: 8px 10px; /* Reduz o padding em telas menores */
