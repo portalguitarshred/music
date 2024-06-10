@@ -1082,3 +1082,46 @@ body.light-theme .logo {
     background-color: #2a2a2a;
     color: #ffffff;
 }
+
+/* Estilos para o contêiner dos botões de playlist */
+.playlist-buttons-container {
+    display: flex;
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    gap: 5px; /* Espaçamento entre os botões */
+    margin-bottom: 10px; /* Espaçamento inferior para os botões */
+}
+
+/* Estilo para o botão Criar Playlist */
+.create-playlist-button {
+    background: linear-gradient(to top, #09a858, #05d26d);
+    color: #ffffff;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.2em;
+    box-shadow: 0 0 15px #05d26d;
+    transition: background 0.3s;
+}
+
+.create-playlist-button:hover {
+    background: #04b65c;
+}
+
+/* Estilo para o botão Minhas Playlists */
+.my-playlists-button {
+    background: linear-gradient(to top, #0056b3, #007bff); /* Gradiente azul */
+    color: #ffffff;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.2em;
+    box-shadow: 0 0 15px #007bff;
+    transition: background 0.3s;
+}
+
+.my-playlists-button:hover {
+    background: #0069d9;
+}
+
