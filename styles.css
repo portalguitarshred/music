@@ -1101,18 +1101,18 @@ body.light-theme .logo {
     background: linear-gradient(to top, #09a858, #05d26d);
     color: #ffffff;
     border: none;
-    padding: 8px 20px; /* Padding reduzido */
+    padding: 10px 15px; /* Padding adequado */
     cursor: pointer;
     border-radius: 5px;
     font-size: 1em;
     box-shadow: 0 0 15px #05d26d;
-    display: inline-block;
     flex: 1; /* Permite que o botão ocupe espaço flexível */
-    max-width: 48%; /* Define uma largura máxima */
+    max-width: calc(50% - 5px); /* Define uma largura máxima ajustada */
     height: 40px; /* Altura consistente */
     text-align: center; /* Centraliza o texto */
-    line-height: 24px; /* Ajusta o alinhamento vertical do texto */
+    line-height: 20px; /* Ajusta o alinhamento vertical do texto */
     transition: background 0.3s;
+    white-space: nowrap; /* Impede quebra de linha no texto */
 }
 
 .create-playlist-button:hover {
@@ -1124,25 +1124,25 @@ body.light-theme .logo {
     background: linear-gradient(to top, #0056b3, #007bff); /* Gradiente azul */
     color: #ffffff;
     border: none;
-    padding: 8px 20px; /* Padding reduzido */
+    padding: 10px 15px; /* Padding adequado */
     cursor: pointer;
     border-radius: 5px;
     font-size: 1em;
     box-shadow: 0 0 15px #007bff;
-    display: inline-block;
     flex: 1; /* Permite que o botão ocupe espaço flexível */
-    max-width: 48%; /* Define uma largura máxima */
+    max-width: calc(50% - 5px); /* Define uma largura máxima ajustada */
     height: 40px; /* Altura consistente */
     text-align: center; /* Centraliza o texto */
-    line-height: 24px; /* Ajusta o alinhamento vertical do texto */
+    line-height: 20px; /* Ajusta o alinhamento vertical do texto */
     transition: background 0.3s;
+    white-space: nowrap; /* Impede quebra de linha no texto */
 }
 
 .my-playlists-button:hover {
     background: #0069d9;
 }
 
-/* Responsividade */
+/* Ajustes responsivos */
 @media (max-width: 768px) {
     .playlist-buttons-container {
         width: calc(100% - 20px); /* Ajuste menor para telas menores */
@@ -1152,4 +1152,3 @@ body.light-theme .logo {
         font-size: 0.9em; /* Ajusta o tamanho da fonte em telas menores */
     }
 }
-
