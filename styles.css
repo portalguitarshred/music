@@ -1099,7 +1099,7 @@ body.light-theme .logo {
     padding: 10px 30px;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 1.2em;
+    font-size: 1em;
     box-shadow: 0 0 15px #05d26d;
     transition: background 0.3s;
 }
@@ -1116,7 +1116,7 @@ body.light-theme .logo {
     padding: 10px 30px;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 1.2em;
+    font-size: 1em;
     box-shadow: 0 0 15px #007bff;
     transition: background 0.3s;
 }
