@@ -62,7 +62,7 @@ header {
 
 /* Menu aberto */
 .menu.open {
-    transform: translateX(0); /* Menu visível quando aberto */
+    transform: translateX(0);
 }
 
 .menu-divider {
@@ -788,6 +788,14 @@ body.light-theme .menu a:hover {
 body.light-theme .clock-icon-exclusive,
 body.light-theme .menu-toggle {
     color: #000000;
+}
+
+.menu-toggle {
+    font-size: 1.5em;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: color 0.3s ease;
 }
 
 body.light-theme li {
