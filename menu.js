@@ -1,56 +1,108 @@
-// menu.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.querySelector('.menu-toggle');
     const menu = document.querySelector('.menu');
 
-    // Verificar se os elementos de menu existem
-    if (menuToggle && menu) {
-        // Função para abrir o menu
-        function openMenu() {
-            menu.classList.add('open');
+    function openMenu() {
+        menu.classList.add('open');
+    }
+
+    function closeMenu() {
+        menu.classList.remove('open');
+    }
+
+    menuToggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (menu.classList.contains('open')) {
+            closeMenu();
+        } else {
+            openMenu();
         }
+    });
 
-        // Função para fechar o menu
-        function closeMenu() {
-            menu.classList.remove('open');
+    document.addEventListener('click', (event) => {
+        if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+            closeMenu();
         }
+    });
 
-        // Adicionar evento de clique ao ícone do menu
-        menuToggle.addEventListener('click', (event) => {
-            event.stopPropagation();
-            if (menu.classList.contains('open')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        });
+    document.querySelectorAll('.menu a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
 
-        // Fechar o menu ao clicar fora dele
-        document.addEventListener('click', (event) => {
-            if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
-                closeMenu();
-            }
-        });
+    const createPlaylistLink = document.getElementById('create-playlist-link');
+    const createPlaylistModal = document.getElementById('create-playlist-modal');
+    const closeCreatePlaylistModal = document.getElementById('close-create-playlist-modal');
 
-        // Fechar o menu ao clicar em um link dentro do menu
-        document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
+    createPlaylistLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        createPlaylistModal.style.display = 'block';
+    });
+
+    closeCreatePlaylistModal.addEventListener('click', () => {
+        createPlaylistModal.style.display = 'none';
+    });
+
+    const equalizerLink = document.getElementById('equalizer-link');
+    const equalizerModal = document.getElementById('equalizerModal');
+    const closeEqualizerModal = document.getElementById('closeEqualizerModal');
+
+    equalizerLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    equalizerModal.style.display = 'block';
+});
+
+closeEqualizerModal.addEventListener('click', () => {
+    equalizerModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === equalizerModal) {
+        equalizerModal.style.display = 'none';
     }
+});
 
-    // Específico para 'user-playlist.html'
-    if (document.querySelector('body').classList.contains('user-playlist')) {
-        // Adicionar funções específicas para a página 'user-playlist.html'
-    }
+const myPlaylistsLink = document.getElementById('my-playlists-link');
+myPlaylistsLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'user-my-playlist.html';
+});
 
-    // Específico para 'user-my-playlist.html'
-    if (document.querySelector('body').classList.contains('user-my-playlist')) {
-        // Adicionar funções específicas para a página 'user-my-playlist.html'
-    }
+const shareLink = document.getElementById('share-link');
+const shareModal = document.getElementById('shareModal');
+const closeShareModal = document.getElementById('closeShareModal');
+const copyLinkButton = document.getElementById('copyLink');
+const shareFacebookButton = document.getElementById('shareFacebook');
+const shareTwitterButton = document.getElementById('shareTwitter');
 
-    // Específico para 'radio.html'
-    if (document.querySelector('body').classList.contains('radio')) {
-        // Adicionar funções específicas para a página 'radio.html'
+shareLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    shareModal.style.display = 'block';
+});
+
+closeShareModal.addEventListener('click', () => {
+    shareModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === shareModal) {
+        shareModal.style.display = 'none';
     }
+});
+
+copyLinkButton.addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Link copiado para a área de transferência.');
+    }).catch(err => {
+        console.error('Erro ao copiar o link: ', err);
+    });
+});
+
+shareFacebookButton.addEventListener('click', () => {
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+    window.open(facebookUrl, '_blank');
+});
+
+shareTwitterButton.addEventListener('click', () => {
+    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`;
+    window.open(twitterUrl, '_blank');
 });
