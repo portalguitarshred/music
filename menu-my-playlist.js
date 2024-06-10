@@ -1,7 +1,7 @@
 // menu-my-playlist.js
 document.addEventListener('DOMContentLoaded', () => {
-    const menu = document.querySelector('.menu');
-    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu-my-playlist'); // Atualizado
+    const menuToggle = document.querySelector('.menu-toggle-my-playlist'); // Atualizado
 
     function toggleMenu() {
         if (menu) {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', closeMenu);
 
-    document.querySelectorAll('.menu a').forEach(link => {
+    document.querySelectorAll('.menu-my-playlist a').forEach(link => { // Atualizado
         link.addEventListener('click', () => {
             if (menu) {
                 menu.classList.remove('open');
