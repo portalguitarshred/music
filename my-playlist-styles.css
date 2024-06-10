@@ -29,7 +29,7 @@ header {
     position: relative;
 }
 
-.menu-toggle {
+.menu-toggle-my-playlist {
     font-size: 1.5em;
     color: #ffffff;
     cursor: pointer;
@@ -37,11 +37,11 @@ header {
     transition: color 0.3s ease;
 }
 
-.menu-toggle:hover {
+.menu-toggle-my-playlist:hover {
     color: #d3d3d3;
 }
 
-.menu {
+.menu-my-playlist {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -51,17 +51,16 @@ header {
     top: 0;
     left: 0;
     height: 100%;
-    width: 30%; /* Ajustado para o menu */
+    width: 30%;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
-    transition: transform 0.5s ease-in-out; /* Animação para abrir e fechar */
-    transform: translateX(-100%); /* Menu oculto por padrão */
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(-100%);
 }
 
-
 /* Menu aberto */
-.menu.open {
+.menu-my-playlist.open {
     transform: translateX(0);
 }
 
@@ -73,22 +72,21 @@ header {
     width: 100%;
 }
 
-.menu a {
+.menu-my-playlist a {
     display: flex;
     align-items: center;
     padding: 10px;
     text-decoration: none;
     color: #000000;
     width: 100%;
-    box-sizing: border-box;
 }
 
-.menu a:hover {
+.menu-my-playlist a:hover {
     background-color: #f0f0f0;
 }
 
-.menu i {
-    margin-right: 10px; /* Espaçamento ao lado dos ícones */
+.menu-my-playlist i {
+    margin-right: 10px;
 }
 
 /* Responsividade do menu */
@@ -739,7 +737,7 @@ li.playing .spectrum {
         max-width: 120px;
     }
 
-    .menu {
+    .menu-my-playlist {
         width: 60%;
     }
 
@@ -790,13 +788,10 @@ body.light-theme .menu-toggle {
     color: #000000;
 }
 
-.menu-toggle {
-    font-size: 1.5em;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 0.5em;
-    transition: color 0.3s ease;
-}
+.menu-toggle-my-playlist {
+        font-size: 1.2em;
+        padding: 0.3em;
+    }
 
 body.light-theme li {
     background-color: #f9f9f9;
