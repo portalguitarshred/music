@@ -1085,12 +1085,15 @@ body.light-theme .logo {
 
 /* Contêiner para os botões de playlist */
 .playlist-buttons-container {
-    display: inline-flex;
+    display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 5px;
-    align-items: center;
-    margin-left: 20px;
+    gap: 5px; /* Espaçamento entre os botões */
+    margin-bottom: 10px; /* Espaçamento inferior para os botões */
+    align-items: center; /* Centraliza verticalmente os botões */
+    width: calc(100% - 40px); /* Ajusta a largura para ficar alinhado com o contêiner das estações */
+    max-width: 800px; /* Mantém consistência com o contêiner das estações */
+    margin: 0 auto; /* Centraliza o contêiner */
+    box-sizing: border-box; /* Inclui padding e borda na largura */
 }
 
 /* Estilos para o botão Criar Playlist */
@@ -1098,17 +1101,18 @@ body.light-theme .logo {
     background: linear-gradient(to top, #09a858, #05d26d);
     color: #ffffff;
     border: none;
-    padding: 10px 30px; /* Padding reduzido */
+    padding: 8px 20px; /* Padding reduzido */
     cursor: pointer;
     border-radius: 5px;
     font-size: 1em;
     box-shadow: 0 0 15px #05d26d;
     display: inline-block;
-    min-width: 120px; /* Largura mínima ajustada */
+    flex: 1; /* Permite que o botão ocupe espaço flexível */
+    max-width: 48%; /* Define uma largura máxima */
     height: 40px; /* Altura consistente */
-    transition: background 0.3s;
     text-align: center; /* Centraliza o texto */
     line-height: 24px; /* Ajusta o alinhamento vertical do texto */
+    transition: background 0.3s;
 }
 
 .create-playlist-button:hover {
@@ -1117,22 +1121,35 @@ body.light-theme .logo {
 
 /* Estilos para o botão Minhas Playlists */
 .my-playlists-button {
-    background: linear-gradient(to top, #0056b3, #007bff);
+    background: linear-gradient(to top, #0056b3, #007bff); /* Gradiente azul */
     color: #ffffff;
     border: none;
-    padding: 10px 30px;
+    padding: 8px 20px; /* Padding reduzido */
     cursor: pointer;
     border-radius: 5px;
     font-size: 1em;
     box-shadow: 0 0 15px #007bff;
     display: inline-block;
-    min-width: 120px;
-    height: 40px;
+    flex: 1; /* Permite que o botão ocupe espaço flexível */
+    max-width: 48%; /* Define uma largura máxima */
+    height: 40px; /* Altura consistente */
+    text-align: center; /* Centraliza o texto */
+    line-height: 24px; /* Ajusta o alinhamento vertical do texto */
     transition: background 0.3s;
-    text-align: center;
-    line-height: 24px;
 }
 
 .my-playlists-button:hover {
     background: #0069d9;
 }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .playlist-buttons-container {
+        width: calc(100% - 20px); /* Ajuste menor para telas menores */
+    }
+    .create-playlist-button, .my-playlists-button {
+        padding: 8px 10px; /* Reduz o padding em telas menores */
+        font-size: 0.9em; /* Ajusta o tamanho da fonte em telas menores */
+    }
+}
+
