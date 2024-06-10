@@ -56,7 +56,10 @@
     </div>
 
     <main>
-        <button id="create-playlist-button" class="create-playlist-button">Criar Playlist</button>
+        <div class="playlist-buttons-container">
+            <button id="create-playlist-button" class="create-playlist-button">Criar Playlist</button>
+            <button id="my-playlists-button" class="my-playlists-button">Minhas Playlists</button>
+        </div>
         <section id="stations">
             <ul id="station-list">
                 <!-- Stations will be dynamically added here -->
@@ -126,21 +129,20 @@
     </div>
 
     <!-- Modal para criação de playlist -->
-<div id="create-playlist-modal" class="modal-exclusive">
-    <div class="modal-content-exclusive">
-        <span class="close-modal-exclusive" id="close-create-playlist-modal">&times;</span>
-        <h3>Criar Playlist</h3>
-        <label for="playlist-name">Nome da Playlist:</label>
-        <input type="text" id="playlist-name" placeholder="Digite o nome da playlist">
-        <label for="playlist-cover-input">Capa da Playlist (opcional):</label>
-        <input type="file" id="playlist-cover-input" accept="image/*">
-        <label for="playlist-files">Escolher arquivos de música:</label>
-        <input type="file" id="playlist-files" accept="audio/*" multiple>
-        <button id="save-playlist-button">Salvar Playlist</button>
+    <div id="create-playlist-modal" class="modal-exclusive">
+        <div class="modal-content-exclusive">
+            <span class="close-modal-exclusive" id="close-create-playlist-modal">&times;</span>
+            <h3>Criar Playlist</h3>
+            <label for="playlist-name">Nome da Playlist:</label>
+            <input type="text" id="playlist-name" placeholder="Digite o nome da playlist">
+            <label for="playlist-cover-input">Capa da Playlist (opcional):</label>
+            <input type="file" id="playlist-cover-input" accept="image/*">
+            <label for="playlist-files">Escolher arquivos de música:</label>
+            <input type="file" id="playlist-files" accept="audio/*" multiple>
+            <button id="save-playlist-button">Salvar Playlist</button>
+        </div>
     </div>
-</div>
 
-    
     <script src="script.js"></script>
     <script src="equalizer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
