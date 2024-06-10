@@ -6,6 +6,9 @@
     <title>Minhas Playlists</title>
     <!-- Link para a biblioteca Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Outros links e meta tags -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="my-playlist-styles.css">
 </head>
@@ -21,9 +24,10 @@
             <a href="#" id="register-link"><i class="fas fa-user"></i> Registro</a>
             <hr class="menu-divider">
             <a href="#" id="timer-link"><i class="fas fa-clock"></i> Temporizador</a>
-            <a href="user-my-playlist.html" id="my-playlists-link"><i class="fas fa-list"></i> Minhas Playlists</a>
-            <a href="#" id="share-link"><i class="fas fa-share-alt"></i> Compartilhar com Amigos</a>
-            <hr class="menu-divider">
+            <a href="#" id="create-playlist-link"><i class="fas fa-plus"></i> Criar Playlist</a>
+            <a href="#" id="equalizer-link"><i class="fas fa-sliders-h"></i> Equalizador</a>
+            <a href="#" id="my-playlists-link"><i class="fas fa-music"></i> Minhas Playlists</a>
+            <a href="#" id="share-link"><i class="fas fa-share-alt"></i> Compartilhar com amigos</a>
             <a href="https://guitarshred.com.br" target="_blank"><i class="fas fa-newspaper"></i> Notícias</a>
             <a href="https://guitarshredacademy.com.br" target="_blank"><i class="fas fa-guitar"></i> Cursos de Guitarra</a>
             <a href="https://www.youtube.com/guitarshredofficial" target="_blank"><i class="fab fa-youtube"></i> Canal do YouTube</a>
@@ -31,18 +35,16 @@
         </nav>
     </header>
 
-    <!-- Grid para as capas das playlists -->
     <div class="playlist-grid-container">
-        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Capa Playlist"></div>
-        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Capa Playlist"></div>
-        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Capa Playlist"></div>
-        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Capa Playlist"></div>
-        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Capa Playlist"></div>
-        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Capa Playlist"></div>
+        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Playlist 1"></div>
+        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Playlist 2"></div>
+        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Playlist 3"></div>
+        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Playlist 4"></div>
+        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Playlist 5"></div>
+        <div class="playlist-grid-item"><img src="capa-playlist.png" alt="Playlist 6"></div>
     </div>
 
     <main>
-        <!-- Seção das estações -->
         <section id="stations">
             <ul id="station-list">
                 <!-- Stations will be dynamically added here -->
@@ -70,38 +72,23 @@
         </div>
     </div>
 
-    <!-- Modal para login de usuário -->
-    <div id="loginModal" class="modal-register">
-        <div class="modal-content-register">
-            <span class="close-register" id="closeLoginModal">&times;</span>
-            <h3>Faça seu login</h3>
-            <label for="login-email">Email:</label>
-            <input type="email" id="login-email" required>
-            <label for="login-password">Senha:</label>
-            <input type="password" id="login-password" required>
-            <button class="login-button" id="loginButton">Login</button>
+    <!-- Modal para opções de compartilhamento -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeShareModal">&times;</span>
+            <h3>Compartilhar estação</h3>
+            <div class="share-options">
+                <button id="copyLink">Copiar link</button>
+                <button id="shareFacebook">Compartilhar no Facebook</button>
+                <button id="shareTwitter">Compartilhar no Twitter</button>
+            </div>
         </div>
     </div>
 
-    <!-- Modal para registro de usuário -->
-    <div id="registerModal" class="modal-register">
-        <div class="modal-content-register">
-            <span class="close-register" id="closeRegisterModal">&times;</span>
-            <h3>Registro de Usuário</h3>
-            <label for="username">Nome de Usuário:</label>
-            <input type="text" id="username" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
-            <label for="password">Senha:</label>
-            <input type="password" id="password" required>
-            <button class="register-button" id="registerButton">Registrar</button>
-        </div>
-    </div>
-
-    <script src="menu.js"></script>
+    <script src="script.js"></script>
     <script src="equalizer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
     <script src="clock-exclusive.js"></script>
-    <script src="my-playlist.js"></script>
+    <script src="menu.js"></script>
 </body>
 </html>
