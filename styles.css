@@ -1083,7 +1083,7 @@ body.light-theme .logo {
     color: #ffffff;
 }
 
-//* Contêiner para os botões de playlist */
+/* Contêiner para os botões de playlist */
 .playlist-buttons-container {
     display: flex;
     justify-content: center;
@@ -1102,12 +1102,12 @@ body.light-theme .logo {
     border-radius: 5px;
     font-size: 1em;
     box-shadow: 0 0 15px #05d26d;
-    height: 44px; /* Altura consistente */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 140px; /* Largura mínima ajustada */
+    display: inline-block;
+    min-width: 120px; /* Largura mínima ajustada */
+    height: 40px; /* Altura consistente */
     transition: background 0.3s;
+    text-align: center; /* Centraliza o texto */
+    line-height: 24px; /* Ajusta o alinhamento vertical do texto */
 }
 
 .create-playlist-button:hover {
@@ -1124,12 +1124,12 @@ body.light-theme .logo {
     border-radius: 5px;
     font-size: 1em;
     box-shadow: 0 0 15px #007bff;
-    height: 44px; /* Altura consistente */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 140px; /* Largura mínima ajustada */
+    display: inline-block;
+    min-width: 120px; /* Largura mínima ajustada */
+    height: 40px; /* Altura consistente */
     transition: background 0.3s;
+    text-align: center; /* Centraliza o texto */
+    line-height: 24px; /* Ajusta o alinhamento vertical do texto */
 }
 
 .my-playlists-button:hover {
