@@ -1083,7 +1083,7 @@ body.light-theme .logo {
     color: #ffffff;
 }
 
-/* Contêiner para os botões de playlist */
+//* Contêiner para os botões de playlist */
 .playlist-buttons-container {
     display: flex;
     justify-content: center;
@@ -1097,7 +1097,7 @@ body.light-theme .logo {
     background: linear-gradient(to top, #09a858, #05d26d);
     color: #ffffff;
     border: none;
-    padding: 10px 30px;
+    padding: 8px 20px; /* Padding reduzido */
     cursor: pointer;
     border-radius: 5px;
     font-size: 1em;
@@ -1106,7 +1106,7 @@ body.light-theme .logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 180px; /* Largura mínima para os botões */
+    min-width: 140px; /* Largura mínima ajustada */
     transition: background 0.3s;
 }
 
@@ -1119,7 +1119,7 @@ body.light-theme .logo {
     background: linear-gradient(to top, #0056b3, #007bff); /* Gradiente azul */
     color: #ffffff;
     border: none;
-    padding: 10px 30px;
+    padding: 8px 20px; /* Padding reduzido */
     cursor: pointer;
     border-radius: 5px;
     font-size: 1em;
@@ -1128,7 +1128,7 @@ body.light-theme .logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 180px; /* Largura mínima para os botões */
+    min-width: 140px; /* Largura mínima ajustada */
     transition: background 0.3s;
 }
 
