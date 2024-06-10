@@ -1089,6 +1089,7 @@ body.light-theme .logo {
     justify-content: center;
     gap: 5px; /* Espaçamento entre os botões */
     margin-bottom: 10px; /* Espaçamento inferior para os botões */
+    align-items: center; /* Centraliza verticalmente os botões */
 }
 
 /* Estilos para o botão Criar Playlist */
