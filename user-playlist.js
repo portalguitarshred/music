@@ -1,3 +1,5 @@
+// user-playlist.js
+
 document.addEventListener('DOMContentLoaded', () => {
     const userPlaylistCoverImg = document.getElementById('user-playlist-cover');
     const playlistTitleElem = document.getElementById('playlist-title');
@@ -88,67 +90,65 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const addToPlaylistOption = document.createElement('button');
-            addToPlaylistOption.innerHTML = '<i class="fas fa-music"></i> Adicionar música na playlist';
-            addToPlaylistOption.addEventListener('click', () => {
-                // Lógica para adicionar a música na playlist
-                alert(`A música "${songTitleText}" foi adicionada à playlist.`);
-                optionsMenu.classList.remove('open');
-            });
+addToPlaylistOption.innerHTML = '<i class="fas fa-music"></i> Adicionar música na playlist';
+addToPlaylistOption.addEventListener('click', () => {
+    alert(`A música "${songTitleText}" foi adicionada à playlist.`);
+    optionsMenu.classList.remove('open');
+});
 
-            const addToFavoritesOption = document.createElement('button');
-            addToFavoritesOption.innerHTML = '<i class="fas fa-heart"></i> Adicionar aos favoritos';
-            addToFavoritesOption.addEventListener('click', () => {
-                // Lógica para adicionar a música aos favoritos
-                alert(`A música "${songTitleText}" foi adicionada aos favoritos.`);
-                optionsMenu.classList.remove('open');
-            });
+const addToFavoritesOption = document.createElement('button');
+addToFavoritesOption.innerHTML = '<i class="fas fa-heart"></i> Adicionar aos favoritos';
+addToFavoritesOption.addEventListener('click', () => {
+    alert(`A música "${songTitleText}" foi adicionada aos favoritos.`);
+    optionsMenu.classList.remove('open');
+});
 
-            const removeOption = document.createElement('button');
-            removeOption.innerHTML = '<i class="fas fa-trash"></i> Remover da Playlist';
-            removeOption.addEventListener('click', () => {
-                // Lógica para remover a música da playlist
-                playlistSongsElem.removeChild(songElem);
-                // Atualizar sessionStorage
-                playlistSongs.splice(index, 1);
-                playlistSongNames.splice(index, 1);
-                sessionStorage.setItem('playlistSongs', JSON.stringify(playlistSongs));
-                sessionStorage.setItem('playlistSongNames', JSON.stringify(playlistSongNames));
-                optionsMenu.classList.remove('open');
-            });
+const removeOption = document.createElement('button');
+removeOption.innerHTML = '<i class="fas fa-trash"></i> Remover da Playlist';
+removeOption.addEventListener('click', () => {
+    playlistSongsElem.removeChild(songElem);
+    // Atualizar sessionStorage
+    const playlistSongs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
+    const playlistSongNames = JSON.parse(sessionStorage.getItem('playlistSongNames') || '[]');
+    playlistSongs.splice(index, 1);
+    playlistSongNames.splice(index, 1);
+    sessionStorage.setItem('playlistSongs', JSON.stringify(playlistSongs));
+    sessionStorage.setItem('playlistSongNames', JSON.stringify(playlistSongNames));
+    optionsMenu.classList.remove('open');
+});
 
-            menuContent.appendChild(shareOption);
-            menuContent.appendChild(addToPlaylistOption);
-            menuContent.appendChild(addToFavoritesOption);
-            menuContent.appendChild(removeOption);
-            optionsMenu.appendChild(optionsButton);
-            optionsMenu.appendChild(menuContent);
-            songElem.appendChild(optionsMenu);
+menuContent.appendChild(shareOption);
+menuContent.appendChild(addToPlaylistOption);
+menuContent.appendChild(addToFavoritesOption);
+menuContent.appendChild(removeOption);
+optionsMenu.appendChild(optionsButton);
+optionsMenu.appendChild(menuContent);
+songElem.appendChild(optionsMenu);
 
-            playlistSongsElem.appendChild(songElem);
-        });
-    }
+playlistSongsElem.appendChild(songElem);
+});
 
-    // Função para atualizar a contagem de curtidas
-    const updateLikeCount = () => {
-        const likeCount = parseInt(sessionStorage.getItem('likeCount')) || 0;
-        likeCountElem.textContent = `${likeCount} curtidas`;
-    };
+// Função para atualizar a contagem de curtidas
+const updateLikeCount = () => {
+const likeCount = parseInt(sessionStorage.getItem('likeCount')) || 0;
+likeCountElem.textContent = `${likeCount} curtidas`;
+};
 
-    // Inicializar a contagem de curtidas
-    updateLikeCount();
+// Inicializar a contagem de curtidas
+updateLikeCount();
 
-    // Lógica para o botão de curtidas
-    likeButton.addEventListener('click', () => {
-        let likeCount = parseInt(sessionStorage.getItem('likeCount')) || 0;
-        const liked = likeButton.classList.toggle('liked');
+// Lógica para o botão de curtidas
+likeButton.addEventListener('click', () => {
+let likeCount = parseInt(sessionStorage.getItem('likeCount')) || 0;
+const liked = likeButton.classList.toggle('liked');
 
-        if (liked) {
-            likeCount++;
-        } else {
-            likeCount--;
-        }
+if (liked) {
+likeCount++;
+} else {
+likeCount--;
+}
 
-        sessionStorage.setItem('likeCount', likeCount);
-        updateLikeCount();
-    });
+sessionStorage.setItem('likeCount', likeCount);
+updateLikeCount();
+});
 });
