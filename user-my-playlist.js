@@ -1,31 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
+
+    // Carregar playlists do localStorage
     const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
 
-    playlists.forEach((playlist, index) => {
-        const gridItem = document.createElement('div');
-        gridItem.classList.add('playlist-grid-item');
-        const coverImg = document.createElement('img');
-        coverImg.src = playlist.cover || 'capa-playlist.png'; // Usar uma capa padrão se não houver uma capa personalizada
-        coverImg.alt = `Playlist ${index + 1}`;
-        gridItem.appendChild(coverImg);
+    // Função para criar um elemento de capa de playlist
+    function createPlaylistItem(playlist, index) {
+        const playlistItem = document.createElement('div');
+        playlistItem.classList.add('playlist-grid-item');
+        playlistItem.dataset.index = index;
 
-        gridItem.addEventListener('click', () => {
-            sessionStorage.setItem('currentPlaylistIndex', index);
+        const img = document.createElement('img');
+        img.src = playlist.cover || 'capa-playlist.png'; // Use capa padrão se não houver uma capa salva
+        img.alt = playlist.name;
+
+        playlistItem.appendChild(img);
+
+        // Adicionar evento de clique para abrir a playlist
+        playlistItem.addEventListener('click', () => {
+            sessionStorage.setItem('selectedPlaylist', index);
             window.location.href = 'user-playlist.html';
         });
 
-        playlistGridContainer.appendChild(gridItem);
-    });
-
-    // Adicione os elementos vazios restantes para preencher o grid de 6 espaços
-    for (let i = playlists.length; i < 6; i++) {
-        const emptyGridItem = document.createElement('div');
-        emptyGridItem.classList.add('playlist-grid-item');
-        const emptyCoverImg = document.createElement('img');
-        emptyCoverImg.src = 'capa-playlist.png';
-        emptyCoverImg.alt = `Espaço vazio ${i + 1}`;
-        emptyGridItem.appendChild(emptyCoverImg);
-        playlistGridContainer.appendChild(emptyGridItem);
+        return playlistItem;
     }
+
+    // Exibir até 6 playlists na grade
+    playlists.slice(0, 6).forEach((playlist, index) => {
+        const playlistItem = createPlaylistItem(playlist, index);
+        playlistGridContainer.appendChild(playlistItem);
+    });
 });
