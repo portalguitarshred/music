@@ -11,9 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const songURLs = [];
         const songNames = [];
 
-        if (!playlistName) {
-            alert("Por favor, insira o nome da playlist.");
-            return;
+        if (playlistName) {
+            sessionStorage.setItem('playlistName', playlistName);
+        } else {
+            console.log("Nenhum nome de playlist inserido.");
+            sessionStorage.removeItem('playlistName');
         }
 
         if (playlistCoverFile) {
@@ -35,8 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 Array.from(files).forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        const fileType = file.type || 'audio/mpeg';
+                        const fileType = file.type || 'audio/mpeg'; // Certifique-se de que o tipo de arquivo é definido
                         if (fileType.includes('mp3') || fileType.includes('mpeg')) {
+                            // Usar Blob URL para melhor compatibilidade
                             const blob = new Blob([event.target.result], { type: fileType });
                             const url = URL.createObjectURL(blob);
                             songURLs.push(url);
@@ -48,17 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (filesProcessed === files.length) {
                             sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
                             sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
-                            sessionStorage.setItem('playlistName', playlistName);
-                            window.location.href = 'user-my-playlist.html';
+                            window.location.href = 'user-playlist.html';
                         }
                     };
                     reader.readAsArrayBuffer(file);
                 });
             } else {
+                console.log("Nenhuma música selecionada.");
                 sessionStorage.removeItem('playlistSongs');
                 sessionStorage.removeItem('playlistSongNames');
-                sessionStorage.setItem('playlistName', playlistName);
-                window.location.href = 'user-my-playlist.html';
+                window.location.href = 'user-playlist.html';
             }
         }
     });
