@@ -908,32 +908,29 @@ body.light-theme .close-modal-exclusive {
 }
 
 /* Estilos para o grid das capas das playlists */
-
-
 .playlist-grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    padding: 10px;
-    max-width: 100%;
-    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: calc(100% - 2em); /* Considera o padding */
+    margin: 1em auto;
+    padding: 1em;
+    max-width: 1200px; /* Alinha com a largura máxima do main */
 }
 
 .playlist-grid-item {
-    width: 100%;
-    padding-top: 100%; /* Faz com que o div seja quadrado */
+    width: calc(33% - 4px); /* 6 capas em 2 linhas */
+    aspect-ratio: 1;
+    margin-bottom: 8px; /* Espaçamento entre as linhas */
+    border-radius: 8px;
+    overflow: hidden;
     position: relative;
 }
 
 .playlist-grid-item img {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    max-width: 800px;
-    max-height: 800px;
     border-radius: 8px;
 }
 
