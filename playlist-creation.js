@@ -18,63 +18,56 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.removeItem('playlistName');
         }
 
-        // Ler playlists existentes do localStorage
-        let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
-
-        // Gerar um novo ID único
-        const newId = playlists.length > 0 ? Math.max(...playlists.map(p => p.id)) + 1 : 1;
-
         if (playlistCoverFile) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
-                saveSongs(coverUrl);
+                sessionStorage.setItem('playlistCover', coverUrl);
+                saveSongs();
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
-            saveSongs('default-cover.jpg');
+            sessionStorage.removeItem('playlistCover');
+            saveSongs();
         }
 
-        function saveSongs(coverUrl) {
+        function saveSongs() {
             if (files.length > 0) {
                 let filesProcessed = 0;
                 Array.from(files).forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        const fileType = file.type || 'audio/mpeg';
-                        const blob = new Blob([event.target.result], { type: fileType });
-                        const url = URL.createObjectURL(blob);
-                        songURLs.push(url);
+                        const fileType = file.type || 'audio/mpeg'; // Certifique-se de que o tipo de arquivo é definido
+                        if (fileType.includes('mp3') || fileType.includes('mpeg')) {
+                            // Usar Blob URL para melhor compatibilidade
+                            const blob = new Blob([event.target.result], { type: fileType });
+                            const url = URL.createObjectURL(blob);
+                            songURLs.push(url);
+                        } else {
+                            songURLs.push(event.target.result);
+                        }
                         songNames.push(file.name);
                         filesProcessed++;
                         if (filesProcessed === files.length) {
-                            const newPlaylist = {
-                                id: newId,
+                            const playlist = {
                                 name: playlistName,
-                                cover: coverUrl,
+                                cover: sessionStorage.getItem('playlistCover'),
                                 songs: songURLs,
                                 songNames: songNames
                             };
-                            playlists.push(newPlaylist);
+                            let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+                            playlists.push(playlist);
                             localStorage.setItem('playlists', JSON.stringify(playlists));
-                            sessionStorage.setItem('currentPlaylistId', newId);
-                            window.location.href = 'user-my-playlist.html';
+                            window.location.href = 'user-playlist.html';
                         }
                     };
                     reader.readAsArrayBuffer(file);
                 });
             } else {
-                const newPlaylist = {
-                    id: newId,
-                    name: playlistName,
-                    cover: coverUrl,
-                    songs: [],
-                    songNames: []
-                };
-                playlists.push(newPlaylist);
-                localStorage.setItem('playlists', JSON.stringify(playlists));
-                sessionStorage.setItem('currentPlaylistId', newId);
-                window.location.href = 'user-my-playlist.html';
+                console.log("Nenhuma música selecionada.");
+                sessionStorage.removeItem('playlistSongs');
+                sessionStorage.removeItem('playlistSongNames');
+                window.location.href = 'user-playlist.html';
             }
         }
     });
