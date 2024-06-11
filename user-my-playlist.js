@@ -1,33 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
 
-    // Carregar playlists do localStorage
-    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    const playlistCover = sessionStorage.getItem('playlistCover');
+    const playlistName = sessionStorage.getItem('playlistName');
+    const playlistSongs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
 
-    // Função para criar um elemento de capa de playlist
-    function createPlaylistItem(playlist, index) {
+    // Limpar o container antes de adicionar novos elementos
+    playlistGridContainer.innerHTML = '';
+
+    // Verificar se há uma playlist salva
+    if (playlistName && playlistSongs.length > 0) {
         const playlistItem = document.createElement('div');
         playlistItem.classList.add('playlist-grid-item');
-        playlistItem.dataset.index = index;
 
         const img = document.createElement('img');
-        img.src = playlist.cover || 'capa-playlist.png'; // Use capa padrão se não houver uma capa salva
-        img.alt = playlist.name;
+        img.src = playlistCover || 'capa-playlist.png'; // Use capa padrão se não houver uma capa salva
+        img.alt = playlistName;
 
         playlistItem.appendChild(img);
 
         // Adicionar evento de clique para abrir a playlist
         playlistItem.addEventListener('click', () => {
-            sessionStorage.setItem('selectedPlaylist', index);
             window.location.href = 'user-playlist.html';
         });
 
-        return playlistItem;
-    }
-
-    // Exibir até 6 playlists na grade
-    playlists.slice(0, 6).forEach((playlist, index) => {
-        const playlistItem = createPlaylistItem(playlist, index);
         playlistGridContainer.appendChild(playlistItem);
-    });
+    } else {
+        // Exibir mensagem se não houver playlist
+        const noPlaylistMsg = document.createElement('div');
+        noPlaylistMsg.textContent = 'Nenhuma playlist criada ainda.';
+        noPlaylistMsg.style.color = '#fff'; // Adicione estilos conforme necessário
+        playlistGridContainer.appendChild(noPlaylistMsg);
+    }
 });
