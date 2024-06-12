@@ -1008,3 +1008,44 @@ body.light-theme .close-modal-exclusive {
         width: calc(33.3333% - 4px); /* 3 capas por linha em telas muito pequenas */
     }
 }
+
+/* Estilos para o botão "Deletar Playlist" */
+.delete-playlist-button {
+    background-color: #ff4757;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 5px;
+    border-radius: 5px;
+    width: 100%; /* Ajusta para o tamanho do container */
+    font-size: 0.9em;
+}
+
+.delete-playlist-button:hover {
+    background-color: #e84342;
+}
+
+.playlist-grid-item {
+    display: flex;
+    flex-direction: column; /* Colocar elementos em coluna */
+    justify-content: space-between; /* Distribuir espaço verticalmente */
+    align-items: center; /* Centralizar conteúdo horizontalmente */
+    width: calc(33.3333% - 4px); /* 6 capas em 2 linhas */
+    aspect-ratio: 1; /* Mantém a proporção 1:1 */
+    margin-bottom: 8px; /* Espaçamento entre as linhas */
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box; /* Garantir que padding e border sejam incluídos na largura e altura */
+    padding: 10px; /* Espaçamento interno */
+}
+
+.playlist-grid-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px; /* Espaçamento entre a imagem e o botão */
+}
+
