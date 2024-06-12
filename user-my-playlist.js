@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playlistItem.appendChild(img);
         playlistItem.appendChild(deleteButton);
 
-        playlistItem.addEventListener('click', () => {
+        playlistItem.addEventListener('click', (event) => {
             // Evita que o clique no botão "Deletar Playlist" abra a playlist
             if (!event.target.matches('.delete-playlist-button')) {
                 sessionStorage.setItem('playlistCover', playlist.cover);
