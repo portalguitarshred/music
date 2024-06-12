@@ -2,13 +2,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
-    const audioPlayer = document.getElementById('audio-player');
-    const volumeControl = document.getElementById('volume-control');
-    let currentPlaying = null;
 
     let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
 
     playlists.forEach((playlist, index) => {
+        // Selecionar o item da grade correspondente pelo índice
         const gridItem = document.querySelector(`.playlist-grid-item:nth-child(${index + 1})`);
 
         if (gridItem) {
@@ -26,30 +24,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'user-playlist.html';
             });
         }
-    });
-
-    volumeControl.addEventListener('input', (e) => {
-        audioPlayer.volume = e.target.value;
-        console.log(`Volume: ${audioPlayer.volume}`);
-    });
-
-    const menuToggle = document.querySelector('.menu-toggle');
-    const menu = document.querySelector('.menu');
-
-    menuToggle.addEventListener('click', (event) => {
-        event.stopPropagation();
-        menu.classList.toggle('open');
-    });
-
-    document.addEventListener('click', (event) => {
-        if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
-            menu.classList.remove('open');
-        }
-    });
-
-    document.querySelectorAll('.menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            menu.classList.remove('open');
-        });
     });
 });
