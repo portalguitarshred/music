@@ -919,8 +919,8 @@ body.light-theme .close-modal-exclusive {
 }
 
 .playlist-grid-item {
-    width: calc(33% - 4px); /* 6 capas em 2 linhas */
-    aspect-ratio: 1;
+    width: calc(33.3333% - 4px); /* 6 capas em 2 linhas */
+    aspect-ratio: 1; /* Mantém a proporção 1:1 */
     margin-bottom: 8px; /* Espaçamento entre as linhas */
     border-radius: 8px;
     overflow: hidden;
@@ -932,6 +932,25 @@ body.light-theme .close-modal-exclusive {
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+}
+
+/* Ajustes para dispositivos menores */
+@media (max-width: 1024px) {
+    .playlist-grid-item {
+        width: calc(50% - 4px); /* 2 capas por linha em telas médias */
+    }
+}
+
+@media (max-width: 768px) {
+    .playlist-grid-item {
+        width: calc(50% - 4px); /* 2 capas por linha em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .playlist-grid-item {
+        width: calc(100% - 4px); /* 1 capa por linha em telas muito pequenas */
+    }
 }
 
 .like-icon-container {
