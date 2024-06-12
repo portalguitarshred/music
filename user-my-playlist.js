@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
 
-    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
 
     // Limpar o container antes de adicionar novos elementos
     playlistGridContainer.innerHTML = '';
@@ -17,15 +17,32 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = playlist.cover || 'default-cover.png'; // Use capa padrão se não houver uma capa salva
         img.alt = playlist.name;
 
-        playlistItem.appendChild(img);
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Deletar Playlist';
+        deleteButton.classList.add('delete-playlist-button');
+        deleteButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Impedir que o clique no botão abra a playlist
+            if (confirm(`Tem certeza de que deseja deletar a playlist "${playlist.name}"?`)) {
+                // Remove a playlist do array e atualiza o localStorage
+                playlists.splice(index, 1);
+                localStorage.setItem('playlists', JSON.stringify(playlists));
+                // Recarrega a página para atualizar a lista
+                window.location.reload();
+            }
+        });
 
-        // Adicionar evento de clique para abrir a playlist
+        playlistItem.appendChild(img);
+        playlistItem.appendChild(deleteButton);
+
         playlistItem.addEventListener('click', () => {
-            sessionStorage.setItem('playlistCover', playlist.cover);
-            sessionStorage.setItem('playlistName', playlist.name);
-            sessionStorage.setItem('playlistSongs', JSON.stringify(playlist.songs));
-            sessionStorage.setItem('playlistSongNames', JSON.stringify(playlist.songNames));
-            window.location.href = 'user-playlist.html';
+            // Evita que o clique no botão "Deletar Playlist" abra a playlist
+            if (!event.target.matches('.delete-playlist-button')) {
+                sessionStorage.setItem('playlistCover', playlist.cover);
+                sessionStorage.setItem('playlistName', playlist.name);
+                sessionStorage.setItem('playlistSongs', JSON.stringify(playlist.songs));
+                sessionStorage.setItem('playlistSongNames', JSON.stringify(playlist.songNames));
+                window.location.href = 'user-playlist.html';
+            }
         });
 
         playlistGridContainer.appendChild(playlistItem);
