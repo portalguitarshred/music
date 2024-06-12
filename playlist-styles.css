@@ -688,3 +688,21 @@ input[type="file"]::file-selector-button {
 #resetEqualizer:focus {
     outline: none;
 }
+
+/* Estilos para o botão "Deletar Playlist" */
+.delete-playlist-button {
+    background-color: #ff4757;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+    width: 100%;
+}
+
+.delete-playlist-button:hover {
+    background-color: #e84342;
+}
