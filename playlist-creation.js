@@ -27,8 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
-            
-            // Adicionar a playlist ao próximo espaço disponível
+
             if (playlists.length < 6) {
                 playlists.push(playlist);
                 localStorage.setItem('playlists', JSON.stringify(playlists));
