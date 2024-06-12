@@ -1026,6 +1026,8 @@ body.light-theme .close-modal-exclusive {
     border-radius: 5px;
     width: 100%; /* Ajusta para o tamanho do container */
     font-size: 0.9em;
+    display: block; /* Garantir que o botão seja exibido */
+    text-align: center; /* Centralizar texto */
 }
 
 .delete-playlist-button:hover {
@@ -1035,7 +1037,7 @@ body.light-theme .close-modal-exclusive {
 .playlist-grid-item {
     display: flex;
     flex-direction: column; /* Colocar elementos em coluna */
-    justify-content: space-between; /* Distribuir espaço verticalmente */
+    justify-content: flex-start; /* Alinhar conteúdo ao topo */
     align-items: center; /* Centralizar conteúdo horizontalmente */
     width: calc(33.3333% - 4px); /* 6 capas em 2 linhas */
     aspect-ratio: 1; /* Mantém a proporção 1:1 */
