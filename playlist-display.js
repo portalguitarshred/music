@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const likeButton = document.getElementById('like-button');
     const likeCountElem = document.getElementById('like-count');
     const deletePlaylistButton = document.getElementById('delete-playlist-button');
+    let currentAudio = null;
 
     // Exibir a capa da playlist escolhida pelo usuário
     if (userPlaylistCoverImg) {
@@ -48,15 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             songElem.appendChild(songInfo);
 
-            // Adicione evento de clique para tocar a música
             songElem.addEventListener('click', () => {
-                // Se uma música já estiver tocando, pause-a antes de tocar a nova música
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio.currentTime = 0; // Reinicia a música anterior
                 }
-
-                // Criar um novo objeto Audio para a música selecionada
                 currentAudio = new Audio(songUrl);
                 currentAudio.play();
             });
@@ -71,10 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
         likeCountElem.textContent = `${likeCount} curtidas`;
     };
 
-    // Inicializar a contagem de curtidas
     updateLikeCount();
 
-    // Lógica para o botão de curtidas
     likeButton.addEventListener('click', () => {
         let likeCount = parseInt(sessionStorage.getItem('likeCount')) || 0;
         const liked = likeButton.classList.toggle('liked');
@@ -96,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
             playlists = playlists.filter(playlist => playlist.name !== playlistName);
             localStorage.setItem('playlists', JSON.stringify(playlists));
-            // Voltar para a página de playlists do usuário
             window.location.href = 'user-my-playlist.html';
         }
     });
