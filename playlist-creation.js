@@ -27,9 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
-            playlists.push(playlist);
-            localStorage.setItem('playlists', JSON.stringify(playlists));
-            window.location.href = 'user-my-playlist.html';
+            
+            // Verificar se há espaço disponível
+            if (playlists.length < 6) {
+                playlists.push(playlist);
+                localStorage.setItem('playlists', JSON.stringify(playlists));
+                window.location.href = 'user-my-playlist.html';
+            } else {
+                alert("Você só pode criar até 6 playlists.");
+            }
         }
 
         if (playlistCoverFile) {
