@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
-
     let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
 
     // Limpar o container antes de adicionar novos elementos
@@ -17,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = playlist.cover || 'default-cover.png'; // Use capa padrão se não houver uma capa salva
         img.alt = playlist.name;
 
+        // Cria o botão de deletar playlist
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Deletar Playlist';
         deleteButton.classList.add('delete-playlist-button');
@@ -31,9 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Adiciona a imagem e o botão ao item da playlist
         playlistItem.appendChild(img);
         playlistItem.appendChild(deleteButton);
 
+        // Adiciona o evento de clique para abrir a playlist
         playlistItem.addEventListener('click', (event) => {
             // Evita que o clique no botão "Deletar Playlist" abra a playlist
             if (!event.target.matches('.delete-playlist-button')) {
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Adiciona o item da playlist ao container
         playlistGridContainer.appendChild(playlistItem);
     });
 
