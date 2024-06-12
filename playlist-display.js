@@ -7,7 +7,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const likeButton = document.getElementById('like-button');
     const likeCountElem = document.getElementById('like-count');
     const deletePlaylistButton = document.getElementById('delete-playlist-button');
-    let currentAudio = null;
+    let currentAudio = null; // Variável para controlar a reprodução da música
+
+    // Função para verificar e obter playlists do localStorage
+    function getPlaylists() {
+        try {
+            return JSON.parse(localStorage.getItem('playlists')) || [];
+        } catch (error) {
+            console.error('Erro ao carregar playlists do localStorage:', error);
+            return [];
+        }
+    }
+
+    // Função para salvar playlists no localStorage
+    function savePlaylists(playlists) {
+        try {
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+        } catch (error) {
+            console.error('Erro ao salvar playlists no localStorage:', error);
+        }
+    }
 
     // Exibir a capa da playlist escolhida pelo usuário
     if (userPlaylistCoverImg) {
@@ -49,14 +68,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
             songElem.appendChild(songInfo);
 
+            // Adicione evento de clique para tocar a música
             songElem.addEventListener('click', () => {
+                // Se uma música já estiver tocando, pause-a antes de tocar a nova música
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio.currentTime = 0; // Reinicia a música anterior
                 }
+
+                // Criar um novo objeto Audio para a música selecionada
                 currentAudio = new Audio(songUrl);
                 currentAudio.play();
             });
+
+            // Adicionar os três pontinhos verticais (menu de opções)
+            const optionsMenu = document.createElement('div');
+            optionsMenu.classList.add('options-menu');
+
+            const optionsButton = document.createElement('button');
+            optionsButton.classList.add('options-button');
+            optionsButton.innerHTML = '&#8942;'; // Caractere de três pontinhos verticais
+            optionsButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Previne que o clique no botão toque a música
+                optionsMenu.classList.toggle('open');
+            });
+
+            const menuContent = document.createElement('div');
+            menuContent.classList.add('menu-content');
+
+            const shareOption = document.createElement('button');
+            shareOption.innerHTML = '<i class="fas fa-share"></i> Compartilhar com amigos';
+            shareOption.addEventListener('click', () => {
+                // Lógica para compartilhar a música
+                const shareData = {
+                    title: 'Minha Playlist',
+                    text: `Confira essa música: ${songTitleText}`,
+                    url: songUrl
+                };
+                navigator.share(shareData).catch(console.error);
+                optionsMenu.classList.remove('open');
+            });
+
+            const addToPlaylistOption = document.createElement('button');
+            addToPlaylistOption.innerHTML = '<i class="fas fa-music"></i> Adicionar música na playlist';
+            addToPlaylistOption.addEventListener('click', () => {
+                // Lógica para adicionar a música na playlist
+                alert(`A música "${songTitleText}" foi adicionada à playlist.`);
+                optionsMenu.classList.remove('open');
+            });
+
+            const addToFavoritesOption = document.createElement('button');
+            addToFavoritesOption.innerHTML = '<i class="fas fa-heart"></i> Adicionar aos favoritos';
+            addToFavoritesOption.addEventListener('click', () => {
+                // Lógica para adicionar a música aos favoritos
+                alert(`A música "${songTitleText}" foi adicionada aos favoritos.`);
+                optionsMenu.classList.remove('open');
+            });
+
+            const removeOption = document.createElement('button');
+            removeOption.innerHTML = '<i class="fas fa-trash"></i> Remover da Playlist';
+            removeOption.addEventListener('click', () => {
+                // Lógica para remover a música da playlist
+                playlistSongsElem.removeChild(songElem);
+                // Atualizar sessionStorage
+                playlistSongs.splice(index, 1);
+                playlistSongNames.splice(index, 1);
+                sessionStorage.setItem('playlistSongs', JSON.stringify(playlistSongs));
+                sessionStorage.setItem('playlistSongNames', JSON.stringify(playlistSongNames));
+                optionsMenu.classList.remove('open');
+            });
+
+            menuContent.appendChild(shareOption);
+            menuContent.appendChild(addToPlaylistOption);
+            menuContent.appendChild(addToFavoritesOption);
+            menuContent.appendChild(removeOption);
+            optionsMenu.appendChild(optionsButton);
+            optionsMenu.appendChild(menuContent);
+            songElem.appendChild(optionsMenu);
 
             playlistSongsElem.appendChild(songElem);
         });
@@ -68,8 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
         likeCountElem.textContent = `${likeCount} curtidas`;
     };
 
+    // Inicializar a contagem de curtidas
     updateLikeCount();
 
+    // Lógica para o botão de curtidas
     likeButton.addEventListener('click', () => {
         let likeCount = parseInt(sessionStorage.getItem('likeCount')) || 0;
         const liked = likeButton.classList.toggle('liked');
@@ -88,9 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
     deletePlaylistButton.addEventListener('click', () => {
         if (confirm(`Tem certeza de que deseja deletar a playlist "${playlistTitleElem.textContent}"?`)) {
             const playlistName = sessionStorage.getItem('playlistName');
-            let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+            let playlists = getPlaylists();
             playlists = playlists.filter(playlist => playlist.name !== playlistName);
-            localStorage.setItem('playlists', JSON.stringify(playlists));
+            savePlaylists(playlists);
+            // Voltar para a página de playlists do usuário
             window.location.href = 'user-my-playlist.html';
         }
     });
