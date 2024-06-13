@@ -1,5 +1,3 @@
-// playlist-creation.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const savePlaylistButton = document.getElementById('save-playlist-button');
     const playlistCoverInput = document.getElementById('playlist-cover-input');
@@ -29,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             playlists.push(newPlaylist);
             savePlaylists(playlists);
+            console.log('Playlist salva com sucesso:', newPlaylist);
             window.location.href = 'user-my-playlist.html';
         }
 
@@ -79,3 +78,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function getPlaylists() {
+    try {
+        return JSON.parse(localStorage.getItem('playlists')) || [];
+    } catch (error) {
+        console.error('Erro ao carregar playlists do localStorage:', error);
+        return [];
+    }
+}
+
+function savePlaylists(playlists) {
+    try {
+        localStorage.setItem('playlists', JSON.stringify(playlists));
+    } catch (error) {
+        console.error('Erro ao salvar playlists no localStorage:', error);
+    }
+}
