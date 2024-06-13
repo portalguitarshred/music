@@ -1,11 +1,9 @@
-// user-my-playlist.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
 
     function loadPlaylists() {
         try {
-            let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+            let playlists = getPlaylists();
             // Limpar o container antes de adicionar novos elementos
             playlistGridContainer.innerHTML = '';
 
@@ -26,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (confirm(`Tem certeza de que deseja deletar a playlist "${playlist.name}"?`)) {
                         // Remove a playlist do array e atualiza o localStorage
                         playlists.splice(index, 1);
-                        localStorage.setItem('playlists', JSON.stringify(playlists));
-                        // Recarrega a página para atualizar a lista
+                        savePlaylists(playlists);
+                        console.log('Playlist deletada:', playlist.name);
                         window.location.reload();
                     }
                 });
