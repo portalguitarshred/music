@@ -5,43 +5,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistFilesInput = document.getElementById('playlist-files');
 
     savePlaylistButton.addEventListener('click', () => {
-        const playlistName = playlistNameInput.value.trim();
         const playlistCoverFile = playlistCoverInput.files[0];
+        const playlistName = playlistNameInput.value.trim();
         const files = playlistFilesInput.files;
+        const songURLs = [];
+        const songNames = [];
 
-        if (!playlistName) {
-            alert("Por favor, insira o nome da playlist.");
-            return;
+        if (playlistName) {
+            sessionStorage.setItem('playlistName', playlistName);
+        } else {
+            console.log("Nenhum nome de playlist inserido.");
+            sessionStorage.removeItem('playlistName');
         }
-
-        const songURLs = Array.from(files).map(file => URL.createObjectURL(file));
-        const songNames = Array.from(files).map(file => file.name);
 
         if (playlistCoverFile) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
-                savePlaylist(playlistName, coverUrl, songURLs, songNames);
+                sessionStorage.setItem('playlistCover', coverUrl);
+                saveSongs();
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
-            savePlaylist(playlistName, 'capa-playlist.png', songURLs, songNames);
+            sessionStorage.removeItem('playlistCover');
+            saveSongs();
+        }
+
+        function saveSongs() {
+            if (files.length > 0) {
+                let filesProcessed = 0;
+                Array.from(files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const fileType = file.type || 'audio/mpeg'; // Certifique-se de que o tipo de arquivo é definido
+                        if (fileType.includes('mp3') || fileType.includes('mpeg')) {
+                            // Usar Blob URL para melhor compatibilidade
+                            const blob = new Blob([event.target.result], { type: fileType });
+                            const url = URL.createObjectURL(blob);
+                            songURLs.push(url);
+                        } else {
+                            songURLs.push(event.target.result);
+                        }
+                        songNames.push(file.name);
+                        filesProcessed++;
+                        if (filesProcessed === files.length) {
+                            sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
+                            sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
+                            window.location.href = 'user-playlist.html';
+                        }
+                    };
+                    reader.readAsArrayBuffer(file);
+                });
+            } else {
+                console.log("Nenhuma música selecionada.");
+                sessionStorage.removeItem('playlistSongs');
+                sessionStorage.removeItem('playlistSongNames');
+                window.location.href = 'user-playlist.html';
+            }
         }
     });
-
-    function savePlaylist(name, cover, songs, songNames) {
-        const playlists = getPlaylists();
-        const newPlaylist = { name, cover, songs, songNames };
-        playlists.push(newPlaylist);
-        savePlaylists(playlists);
-        window.location.href = 'user-my-playlist.html';
-    }
-
-    function getPlaylists() {
-        return JSON.parse(localStorage.getItem('playlists')) || [];
-    }
-
-    function savePlaylists(playlists) {
-        localStorage.setItem('playlists', JSON.stringify(playlists));
-    }
 });
