@@ -1,10 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Document loaded');
     const savePlaylistButton = document.getElementById('save-playlist-button');
     const playlistCoverInput = document.getElementById('playlist-cover-input');
     const playlistNameInput = document.getElementById('playlist-name');
     const playlistFilesInput = document.getElementById('playlist-files');
 
+    if (!savePlaylistButton || !playlistCoverInput || !playlistNameInput || !playlistFilesInput) {
+        console.error('Elementos essenciais não foram encontrados.');
+        return;
+    }
+
     savePlaylistButton.addEventListener('click', () => {
+        console.log('Save playlist button clicked');
         const playlistCoverFile = playlistCoverInput.files[0];
         const playlistName = playlistNameInput.value.trim();
         const files = playlistFilesInput.files;
@@ -13,10 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!playlistName) {
             alert("Por favor, insira o nome da playlist.");
+            console.error('Nome da playlist ausente');
             return;
         }
 
         function savePlaylist(coverUrl) {
+            console.log('Saving playlist');
             const playlists = getPlaylists();
             const newPlaylist = {
                 name: playlistName,
@@ -32,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function saveSongs(coverUrl) {
+            console.log('Saving songs');
             if (files.length > 0) {
                 let filesProcessed = 0;
                 Array.from(files).forEach((file, index) => {
