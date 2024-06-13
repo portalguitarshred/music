@@ -4,6 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistNameInput = document.getElementById('playlist-name');
     const playlistFilesInput = document.getElementById('playlist-files');
 
+    // Verificação de elementos
+    if (!savePlaylistButton || !playlistCoverInput || !playlistNameInput || !playlistFilesInput) {
+        console.error('Elementos essenciais não foram encontrados.');
+        return;
+    }
+
     savePlaylistButton.addEventListener('click', () => {
         const playlistName = playlistNameInput.value.trim();
         const playlistCoverFile = playlistCoverInput.files[0];
@@ -38,10 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getPlaylists() {
-        return JSON.parse(localStorage.getItem('playlists')) || [];
+        try {
+            return JSON.parse(localStorage.getItem('playlists')) || [];
+        } catch (error) {
+            console.error('Erro ao carregar playlists do localStorage:', error);
+            return [];
+        }
     }
 
     function savePlaylists(playlists) {
-        localStorage.setItem('playlists', JSON.stringify(playlists));
+        try {
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+        } catch (error) {
+            console.error('Erro ao salvar playlists no localStorage:', error);
+        }
     }
 });
