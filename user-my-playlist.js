@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Document loaded');
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
 
     function loadPlaylists() {
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             noPlaylistMsg.textContent = 'Nenhuma playlist criada ainda.';
             noPlaylistMsg.style.color = '#fff';
             playlistGridContainer.appendChild(noPlaylistMsg);
+            console.log('Nenhuma playlist encontrada');
         } else {
             playlists.forEach((playlist, index) => {
                 const playlistItem = document.createElement('div');
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         playlists.splice(index, 1);
                         savePlaylists(playlists);
                         loadPlaylists(); // Recarregar playlists após deletar
+                        console.log('Playlist deletada:', playlist.name);
                     }
                 });
 
@@ -46,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             fillEmptySpaces(playlists.length, 6);
+            console.log('Playlists carregadas:', playlists);
         }
     }
 
@@ -62,11 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getPlaylists() {
-        return JSON.parse(localStorage.getItem('playlists')) || [];
+        try {
+            return JSON.parse(localStorage.getItem('playlists')) || [];
+        } catch (error) {
+            console.error('Erro ao carregar playlists do localStorage:', error);
+            return [];
+        }
     }
 
     function savePlaylists(playlists) {
-        localStorage.setItem('playlists', JSON.stringify(playlists));
+        try {
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+        } catch (error) {
+            console.error('Erro ao salvar playlists no localStorage:', error);
+        }
     }
 
     loadPlaylists();
