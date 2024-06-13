@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     savePlaylistButton.addEventListener('click', () => {
         console.log('Save playlist button clicked');
-        alert('Botão "Salvar Playlist" foi clicado.'); // Verificação adicional
-
         const playlistName = playlistNameInput.value.trim();
         const files = playlistFilesInput.files;
 
@@ -28,18 +26,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const newPlaylist = {
             name: playlistName,
-            cover: playlistCoverInput.files[0] ? URL.createObjectURL(playlistCoverInput.files[0]) : 'default-cover.png',
+            cover: '', // Será definido após leitura do arquivo da capa
             songs: songURLs,
             songNames: songNames,
         };
 
-        const playlists = getPlaylists();
-        playlists.push(newPlaylist);
-        savePlaylists(playlists);
-        console.log('Playlist salva com sucesso:', newPlaylist);
-        alert('Playlist salva com sucesso!'); // Verificação adicional
-        window.location.href = 'user-my-playlist.html';
+        if (playlistCoverInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                newPlaylist.cover = event.target.result;
+                savePlaylist(newPlaylist);
+            };
+            reader.readAsDataURL(playlistCoverInput.files[0]);
+        } else {
+            newPlaylist.cover = 'default-cover.png'; // URL da imagem padrão
+            savePlaylist(newPlaylist);
+        }
     });
+
+    function savePlaylist(playlist) {
+        const playlists = getPlaylists();
+        playlists.push(playlist);
+        savePlaylists(playlists);
+        console.log('Playlist salva com sucesso:', playlist);
+        window.location.href = 'user-my-playlist.html';
+    }
 });
 
 function getPlaylists() {
