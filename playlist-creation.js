@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     savePlaylistButton.addEventListener('click', () => {
         console.log('Save playlist button clicked');
+        alert('Botão "Salvar Playlist" foi clicado.'); // Verificação adicional
+
         const playlistName = playlistNameInput.value.trim();
         const files = playlistFilesInput.files;
 
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playlists.push(newPlaylist);
         savePlaylists(playlists);
         console.log('Playlist salva com sucesso:', newPlaylist);
+        alert('Playlist salva com sucesso!'); // Verificação adicional
         window.location.href = 'user-my-playlist.html';
     });
 });
