@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
+    const stationList = document.getElementById('station-list');
 
     function loadPlaylists() {
         const playlists = getPlaylists();
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         fillEmptySpaces(playlists.length, 6);
+        loadStations();
     }
 
     function fillEmptySpaces(currentCount, maxCount) {
@@ -60,6 +62,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function savePlaylists(playlists) {
         localStorage.setItem('playlists', JSON.stringify(playlists));
+    }
+
+    function loadStations() {
+        const stations = [
+            { name: 'Rock', url: 'https://stream.zeno.fm/qupiusi3w5puv' },
+            { name: 'Pop', url: 'https://stream.zeno.fm/pop-music' },
+            // Adicione outras estações conforme necessário
+        ];
+
+        stationList.innerHTML = '';
+
+        stations.forEach(station => {
+            const li = document.createElement('li');
+            li.textContent = station.name;
+            li.addEventListener('click', () => {
+                const audioPlayer = document.getElementById('audio-player');
+                audioPlayer.src = station.url;
+                audioPlayer.play();
+            });
+            stationList.appendChild(li);
+        });
     }
 
     loadPlaylists();
