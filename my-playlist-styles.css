@@ -1,15 +1,13 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #121212;
-    color: #ffffff;
     overflow-x: hidden;
-    width: 100vw;
-    box-sizing: border-box;
 }
 
 html, body {
@@ -912,32 +910,30 @@ body.light-theme .close-modal-exclusive {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: calc(100% - 2em); /* Considera o padding */
+    width: calc(100% - 2em);
     margin: 1em auto;
     padding: 1em;
-    max-width: 1200px; /* Alinha com a largura máxima do main */
+    max-width: 1200px;
 }
 
 .playlist-grid-item {
-    width: calc(33.3333% - 4px); /* 6 capas em 2 linhas */
-    aspect-ratio: 1; /* Mantém a proporção 1:1 */
-    margin-bottom: 8px; /* Espaçamento entre as linhas */
+    width: calc(33% - 4px);
+    aspect-ratio: 1;
+    margin-bottom: 8px;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-    box-sizing: border-box; /* Garantir que padding e border sejam incluídos na largura e altura */
-    padding: 10px; /* Espaçamento interno */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza conteúdo horizontalmente */
+    align-items: center;
+    justify-content: center;
 }
 
 .playlist-grid-item img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 10px; /* Espaçamento entre a imagem e o botão */
 }
 
 /* Ajustes para dispositivos menores */
@@ -1022,38 +1018,25 @@ body.light-theme .close-modal-exclusive {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
-    margin-top: 5px;
     border-radius: 5px;
-    width: 100%; /* Ajusta para o tamanho do container */
+    margin-top: 5px;
     font-size: 0.9em;
-    display: block; /* Garantir que o botão seja exibido */
-    text-align: center; /* Centralizar texto */
 }
 
 .delete-playlist-button:hover {
     background-color: #e84342;
 }
 
-.playlist-grid-item {
-    display: flex;
-    flex-direction: column; /* Colocar elementos em coluna */
-    justify-content: flex-start; /* Alinhar conteúdo ao topo */
-    align-items: center; /* Centralizar conteúdo horizontalmente */
-    width: calc(33.3333% - 4px); /* 6 capas em 2 linhas */
-    aspect-ratio: 1; /* Mantém a proporção 1:1 */
-    margin-bottom: 8px; /* Espaçamento entre as linhas */
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    box-sizing: border-box; /* Garantir que padding e border sejam incluídos na largura e altura */
-    padding: 10px; /* Espaçamento interno */
+/* Responsividade */
+@media (max-width: 768px) {
+    .playlist-grid-item {
+        width: calc(50% - 4px);
+    }
 }
 
-.playlist-grid-item img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px; /* Espaçamento entre a imagem e o botão */
+@media (max-width: 480px) {
+    .playlist-grid-item {
+        width: calc(33% - 4px);
+    }
 }
 
