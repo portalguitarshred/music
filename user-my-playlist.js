@@ -65,3 +65,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadPlaylists();
 });
+
+function getPlaylists() {
+    try {
+        return JSON.parse(localStorage.getItem('playlists')) || [];
+    } catch (error) {
+        console.error('Erro ao carregar playlists do localStorage:', error);
+        return [];
+    }
+}
+
+function savePlaylists(playlists) {
+    try {
+        localStorage.setItem('playlists', JSON.stringify(playlists));
+    } catch (error) {
+        console.error('Erro ao salvar playlists no localStorage:', error);
+    }
+}
