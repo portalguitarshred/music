@@ -917,9 +917,9 @@ body.light-theme .close-modal-exclusive {
 }
 
 .playlist-grid-item {
-    width: calc(33.333% - 8px); /* 3 colunas com espaço de 8px */
+    width: calc(33.333% - 16px); /* 3 colunas com espaço de 8px */
     aspect-ratio: 1;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
@@ -938,13 +938,13 @@ body.light-theme .close-modal-exclusive {
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
     .playlist-grid-item {
-        width: calc(50% - 8px); /* 2 colunas com espaço de 8px */
+        width: calc(50% - 16px); /* 2 colunas com espaço de 8px */
     }
 }
 
 @media (max-width: 480px) {
     .playlist-grid-item {
-        width: calc(100% - 8px); /* 1 coluna com espaço de 8px */
+        width: calc(100% - 16px); /* 1 coluna com espaço de 8px */
     }
 }
 
