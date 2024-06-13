@@ -938,19 +938,13 @@ body.light-theme .close-modal-exclusive {
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
     .playlist-grid-item {
-        width: calc(50% - 16px); /* 2 colunas com espaço de 8px */
+        width: calc(50% - 16px); /* 2 colunas com espaço de 16px */
     }
 }
 
 @media (max-width: 480px) {
     .playlist-grid-item {
-        width: calc(100% - 16px); /* 1 coluna com espaço de 8px */
-    }
-}
-
-@media (max-width: 480px) {
-    .playlist-grid-item {
-        width: calc(100% - 4px); /* 1 capa por linha em telas muito pequenas */
+        width: calc(100% - 16px); /* 1 coluna com espaço de 16px */
     }
 }
 
