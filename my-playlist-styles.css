@@ -907,22 +907,26 @@ body.light-theme .close-modal-exclusive {
 
 /* Estilos para o grid das capas das playlists */
 .playlist-grid-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+    grid-gap: 2px; /* Espaçamento entre as capas */
     width: calc(100% - 2em); /* Considera o padding */
-    margin: 1em auto;
     padding: 1em;
-    max-width: 1200px; /* Alinha com a largura máxima do main */
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .playlist-grid-item {
-    width: calc(33% - 4px); /* 6 capas em 2 linhas */
-    aspect-ratio: 1;
-    margin-bottom: 8px; /* Espaçamento entre as linhas */
+    background-color: #333;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 100%; /* Mantém a proporção quadrada */
 }
 
 .playlist-grid-item img {
@@ -930,18 +934,24 @@ body.light-theme .close-modal-exclusive {
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-/* Adicionando responsividade */
+/* Responsividade para telas menores */
 @media (max-width: 768px) {
-    .playlist-grid-item {
-        width: calc(50% - 4px); /* 2 capas por linha em telas menores */
+    .playlist-grid-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas médias */
     }
 }
 
 @media (max-width: 480px) {
+    .playlist-grid-container {
+        grid-template-columns: 1fr; /* 1 coluna em telas pequenas */
+    }
     .playlist-grid-item {
-        width: calc(33.3333% - 4px); /* 3 capas por linha em telas muito pequenas */
+        margin-bottom: 2px; /* Espaço entre as capas */
     }
 }
 
