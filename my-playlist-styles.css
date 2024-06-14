@@ -905,28 +905,24 @@ body.light-theme .close-modal-exclusive {
     color: #ffffff;
 }
 
-/* Grid para as capas das playlists */
+/* Estilos para o grid das capas das playlists */
 .playlist-grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 colunas */
-    gap: 16px; /* Espaço entre os itens */
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: calc(100% - 2em); /* Considera o padding */
+    margin: 1em auto;
     padding: 1em;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-sizing: border-box;
+    max-width: 1200px; /* Alinha com a largura máxima do main */
 }
 
 .playlist-grid-item {
-    width: 100%; /* Use todo o espaço disponível na célula */
-    aspect-ratio: 1; /* Mantém a proporção quadrada */
+    width: calc(33% - 4px); /* 6 capas em 2 linhas */
+    aspect-ratio: 1;
+    margin-bottom: 8px; /* Espaçamento entre as linhas */
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #333; /* Cor de fundo padrão */
 }
 
 .playlist-grid-item img {
@@ -934,6 +930,19 @@ body.light-theme .close-modal-exclusive {
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+}
+
+/* Adicionando responsividade */
+@media (max-width: 768px) {
+    .playlist-grid-item {
+        width: calc(50% - 4px); /* 2 capas por linha em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .playlist-grid-item {
+        width: calc(33.3333% - 4px); /* 3 capas por linha em telas muito pequenas */
+    }
 }
 
 /* Estilo do botão de deletar */
@@ -954,22 +963,6 @@ body.light-theme .close-modal-exclusive {
 /* Mostrar botão de deletar ao passar o mouse */
 .playlist-grid-item:hover .delete-playlist-button {
     display: block;
-}
-
-/* Responsividade para telas menores */
-@media (max-width: 768px) {
-    .playlist-grid-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas médias */
-    }
-}
-
-@media (max-width: 480px) {
-    .playlist-grid-container {
-        grid-template-columns: 1fr; /* 1 coluna em telas pequenas */
-    }
-    .playlist-grid-item {
-        margin-bottom: 16px; /* Espaço entre os itens em uma coluna */
-    }
 }
 
 
