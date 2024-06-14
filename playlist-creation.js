@@ -1,5 +1,3 @@
-// playlist-creation.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const savePlaylistButton = document.getElementById('save-playlist-button');
     const playlistCoverInput = document.getElementById('playlist-cover-input');
@@ -18,38 +16,20 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        function savePlaylist(coverUrl) {
-            const playlist = {
-                name: playlistName,
-                cover: coverUrl,
-                songs: songURLs,
-                songNames: songNames,
-            };
-
-            let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
-            
-            // Verificar se há espaço disponível
-            if (playlists.length < 6) {
-                playlists.push(playlist);
-                localStorage.setItem('playlists', JSON.stringify(playlists));
-                window.location.href = 'user-my-playlist.html';
-            } else {
-                alert("Você só pode criar até 6 playlists.");
-            }
-        }
-
         if (playlistCoverFile) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const coverUrl = event.target.result;
-                saveSongs(coverUrl);
+                sessionStorage.setItem('playlistCover', coverUrl);
+                saveSongs();
             };
             reader.readAsDataURL(playlistCoverFile);
         } else {
-            saveSongs(null);
+            sessionStorage.removeItem('playlistCover');
+            saveSongs();
         }
 
-        function saveSongs(coverUrl) {
+        function saveSongs() {
             if (files.length > 0) {
                 let filesProcessed = 0;
                 Array.from(files).forEach((file, index) => {
@@ -66,13 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         songNames.push(file.name);
                         filesProcessed++;
                         if (filesProcessed === files.length) {
-                            savePlaylist(coverUrl);
+                            sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
+                            sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
+                            sessionStorage.setItem('playlistName', playlistName);
+                            window.location.href = 'user-my-playlist.html';
                         }
                     };
                     reader.readAsArrayBuffer(file);
                 });
             } else {
-                savePlaylist(coverUrl);
+                sessionStorage.removeItem('playlistSongs');
+                sessionStorage.removeItem('playlistSongNames');
+                sessionStorage.setItem('playlistName', playlistName);
+                window.location.href = 'user-my-playlist.html';
             }
         }
     });
