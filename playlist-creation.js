@@ -16,23 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (playlistCoverFile) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const coverUrl = event.target.result;
-                sessionStorage.setItem('playlistCover', coverUrl);
-                saveSongs();
-            };
-            reader.readAsDataURL(playlistCoverFile);
-        } else {
-            sessionStorage.removeItem('playlistCover');
-            saveSongs();
-        }
+        const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
 
-        function saveSongs() {
+        function savePlaylist(coverUrl) {
             if (files.length > 0) {
                 let filesProcessed = 0;
-                Array.from(files).forEach((file, index) => {
+                Array.from(files).forEach(file => {
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         const fileType = file.type || 'audio/mpeg';
@@ -46,20 +35,39 @@ document.addEventListener('DOMContentLoaded', () => {
                         songNames.push(file.name);
                         filesProcessed++;
                         if (filesProcessed === files.length) {
-                            sessionStorage.setItem('playlistSongs', JSON.stringify(songURLs));
-                            sessionStorage.setItem('playlistSongNames', JSON.stringify(songNames));
-                            sessionStorage.setItem('playlistName', playlistName);
+                            playlists.push({
+                                name: playlistName,
+                                cover: coverUrl,
+                                songs: songURLs,
+                                songNames: songNames
+                            });
+                            sessionStorage.setItem('playlists', JSON.stringify(playlists));
                             window.location.href = 'user-my-playlist.html';
                         }
                     };
                     reader.readAsArrayBuffer(file);
                 });
             } else {
-                sessionStorage.removeItem('playlistSongs');
-                sessionStorage.removeItem('playlistSongNames');
-                sessionStorage.setItem('playlistName', playlistName);
+                playlists.push({
+                    name: playlistName,
+                    cover: coverUrl,
+                    songs: [],
+                    songNames: []
+                });
+                sessionStorage.setItem('playlists', JSON.stringify(playlists));
                 window.location.href = 'user-my-playlist.html';
             }
+        }
+
+        if (playlistCoverFile) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const coverUrl = event.target.result;
+                savePlaylist(coverUrl);
+            };
+            reader.readAsDataURL(playlistCoverFile);
+        } else {
+            savePlaylist(null);
         }
     });
 });
