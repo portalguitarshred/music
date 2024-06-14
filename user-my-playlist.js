@@ -1,35 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistGridContainer = document.querySelector('.playlist-grid-container');
-
-    const playlistCover = sessionStorage.getItem('playlistCover');
-    const playlistName = sessionStorage.getItem('playlistName');
-    const playlistSongs = JSON.parse(sessionStorage.getItem('playlistSongs') || '[]');
+    const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
 
     // Limpar o container antes de adicionar novos elementos
     playlistGridContainer.innerHTML = '';
 
-    // Verificar se há uma playlist salva
-    if (playlistName && playlistSongs.length > 0) {
-        const playlistItem = document.createElement('div');
-        playlistItem.classList.add('playlist-grid-item');
+    // Adicionar as playlists salvas
+    playlists.forEach((playlist, index) => {
+        const slotId = `playlist-slot-${index + 1}`;
+        const playlistSlot = document.getElementById(slotId);
+        if (playlistSlot) {
+            const img = playlistSlot.querySelector('img');
+            img.src = playlist.cover || 'capa-playlist.png';
+            img.alt = playlist.name;
 
-        const img = document.createElement('img');
-        img.src = playlistCover || 'capa-playlist.png'; // Use capa padrão se não houver uma capa salva
-        img.alt = playlistName;
+            // Adicionar evento de clique para abrir a playlist
+            playlistSlot.addEventListener('click', () => {
+                sessionStorage.setItem('currentPlaylistIndex', index);
+                window.location.href = 'user-playlist.html';
+            });
+        }
+    });
 
-        playlistItem.appendChild(img);
-
-        // Adicionar evento de clique para abrir a playlist
-        playlistItem.addEventListener('click', () => {
-            window.location.href = 'user-playlist.html';
-        });
-
-        playlistGridContainer.appendChild(playlistItem);
-    } else {
-        // Exibir mensagem se não houver playlist
-        const noPlaylistMsg = document.createElement('div');
-        noPlaylistMsg.textContent = 'Nenhuma playlist criada ainda.';
-        noPlaylistMsg.style.color = '#fff'; // Adicione estilos conforme necessário
-        playlistGridContainer.appendChild(noPlaylistMsg);
+    // Preencher os slots vazios com a capa padrão
+    for (let i = playlists.length + 1; i <= 6; i++) {
+        const slotId = `playlist-slot-${i}`;
+        const playlistSlot = document.getElementById(slotId);
+        if (playlistSlot) {
+            const img = playlistSlot.querySelector('img');
+            img.src = 'capa-playlist.png';
+            img.alt = `Playlist ${i}`;
+        }
     }
 });
