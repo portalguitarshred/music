@@ -90,5 +90,6 @@
     <script src="clock-exclusive.js"></script>
     <script src="menu-my-playlist.js"></script>
     <script src="user-my-playlist.js"></script>
+    <script src="playlist-creation.js"></script>
 </body>
 </html>
