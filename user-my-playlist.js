@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
 
-    // Verificar cada espaço e preencher com a capa da playlist se disponível
+    // Iterar sobre os espaços e preencher com as capas das playlists
     for (let i = 0; i < 6; i++) {
         const slotId = `playlist-slot-${i + 1}`;
         const playlistSlot = document.getElementById(slotId);
