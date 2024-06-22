@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const playlistSlot = document.getElementById(slotId);
         if (playlistSlot) {
             const img = playlistSlot.querySelector('img');
+            console.log(`Atualizando slot ${slotId} com a capa:`, playlist.cover);
             img.src = playlist.cover || 'capa-playlist.png';
             img.alt = playlist.name;
 
@@ -14,10 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 sessionStorage.setItem('currentPlaylistIndex', index);
                 window.location.href = 'user-playlist.html';
             };
+        } else {
+            console.warn(`Slot ${slotId} não encontrado.`);
         }
     });
 
-    // Preencher os slots vazios com a capa padrão
     for (let i = playlists.length; i < 6; i++) {
         const slotId = `playlist-slot-${i + 1}`;
         const playlistSlot = document.getElementById(slotId);
