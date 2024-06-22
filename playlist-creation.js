@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 songNames: songNames
                             });
                             sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                            setTimeout(updateMyPlaylists, 100);  // Atraso para garantir a atualização do sessionStorage
+                            console.log('Playlists após salvar:', JSON.parse(sessionStorage.getItem('playlists')));
+                            setTimeout(updateMyPlaylists, 100);
                         }
                     };
                     reader.readAsArrayBuffer(file);
@@ -55,7 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     songNames: []
                 });
                 sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                setTimeout(updateMyPlaylists, 100);  // Atraso para garantir a atualização do sessionStorage
+                console.log('Playlists após salvar:', JSON.parse(sessionStorage.getItem('playlists')));
+                setTimeout(updateMyPlaylists, 100);
             }
         }
 
