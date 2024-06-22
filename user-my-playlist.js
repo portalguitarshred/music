@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
+    const playlists = JSON.parse(localStorage.getItem('playlists') || '[]');
 
     playlists.forEach((playlist, index) => {
         const slotId = `playlist-slot-${index + 1}`;
@@ -10,13 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
             img.alt = playlist.name;
 
             playlistSlot.onclick = () => {
-                sessionStorage.setItem('currentPlaylistIndex', index);
+                localStorage.setItem('currentPlaylistIndex', index);
                 window.location.href = 'user-playlist.html';
             };
         }
     });
 
-    // Preencher os slots vazios com a capa padrão
     for (let i = playlists.length; i < 6; i++) {
         const slotId = `playlist-slot-${i + 1}`;
         const playlistSlot = document.getElementById(slotId);
