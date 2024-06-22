@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
+        console.log('Playlists antes de salvar:', playlists);
 
         function savePlaylist(coverUrl) {
             if (files.length > 0) {
