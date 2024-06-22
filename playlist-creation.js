@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 songNames: songNames
                             });
                             sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                            window.location.href = 'user-my-playlist.html';
+                            updateMyPlaylists();
                         }
                     };
                     reader.readAsArrayBuffer(file);
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     songNames: []
                 });
                 sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                window.location.href = 'user-my-playlist.html';
+                updateMyPlaylists();
             }
         }
 
@@ -70,4 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
             savePlaylist(null);
         }
     });
+
+    // Função para atualizar a página 'user-my-playlist.html'
+    function updateMyPlaylists() {
+        sessionStorage.setItem('newPlaylist', true);
+        window.location.href = 'user-my-playlist.html';
+    }
 });
