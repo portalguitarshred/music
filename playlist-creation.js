@@ -16,16 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const playlists = JSON.parse(localStorage.getItem('playlists') || '[]');
+        const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
 
         function savePlaylist(coverUrl) {
-            const newPlaylist = {
-                name: playlistName,
-                cover: coverUrl,
-                songs: songURLs,
-                songNames: songNames
-            };
-
             if (files.length > 0) {
                 let filesProcessed = 0;
                 Array.from(files).forEach(file => {
@@ -42,19 +35,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         songNames.push(file.name);
                         filesProcessed++;
                         if (filesProcessed === files.length) {
-                            newPlaylist.songs = songURLs;
-                            newPlaylist.songNames = songNames;
-                            playlists.push(newPlaylist);
-                            localStorage.setItem('playlists', JSON.stringify(playlists));
-                            updateMyPlaylistsDOM(newPlaylist, playlists.length);
+                            playlists.push({
+                                name: playlistName,
+                                cover: coverUrl,
+                                songs: songURLs,
+                                songNames: songNames
+                            });
+                            sessionStorage.setItem('playlists', JSON.stringify(playlists));
+                            window.location.href = 'user-my-playlist.html';
                         }
                     };
                     reader.readAsArrayBuffer(file);
                 });
             } else {
-                playlists.push(newPlaylist);
-                localStorage.setItem('playlists', JSON.stringify(playlists));
-                updateMyPlaylistsDOM(newPlaylist, playlists.length);
+                playlists.push({
+                    name: playlistName,
+                    cover: coverUrl,
+                    songs: [],
+                    songNames: []
+                });
+                sessionStorage.setItem('playlists', JSON.stringify(playlists));
+                window.location.href = 'user-my-playlist.html';
             }
         }
 
@@ -69,14 +70,4 @@ document.addEventListener('DOMContentLoaded', () => {
             savePlaylist(null);
         }
     });
-
-    function updateMyPlaylistsDOM(playlist, index) {
-        const slotId = `playlist-slot-${index}`;
-        const playlistSlot = document.getElementById(slotId);
-        if (playlistSlot) {
-            const img = playlistSlot.querySelector('img');
-            img.src = playlist.cover || 'capa-playlist.png';
-            img.alt = playlist.name;
-        }
-    }
 });
