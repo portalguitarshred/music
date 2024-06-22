@@ -17,9 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
-        console.log('Playlists antes de salvar:', playlists);
 
         function savePlaylist(coverUrl) {
+            const newPlaylist = {
+                name: playlistName,
+                cover: coverUrl,
+                songs: songURLs,
+                songNames: songNames
+            };
+
             if (files.length > 0) {
                 let filesProcessed = 0;
                 Array.from(files).forEach(file => {
@@ -36,28 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         songNames.push(file.name);
                         filesProcessed++;
                         if (filesProcessed === files.length) {
-                            playlists.push({
-                                name: playlistName,
-                                cover: coverUrl,
-                                songs: songURLs,
-                                songNames: songNames
-                            });
+                            newPlaylist.songs = songURLs;
+                            newPlaylist.songNames = songNames;
+                            playlists.push(newPlaylist);
                             sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                            console.log('Playlists após salvar:', JSON.parse(sessionStorage.getItem('playlists')));
                             setTimeout(updateMyPlaylists, 100);
                         }
                     };
                     reader.readAsArrayBuffer(file);
                 });
             } else {
-                playlists.push({
-                    name: playlistName,
-                    cover: coverUrl,
-                    songs: [],
-                    songNames: []
-                });
+                playlists.push(newPlaylist);
                 sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                console.log('Playlists após salvar:', JSON.parse(sessionStorage.getItem('playlists')));
                 setTimeout(updateMyPlaylists, 100);
             }
         }
