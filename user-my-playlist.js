@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
+    console.log('Playlists ao carregar:', playlists);
 
     playlists.forEach((playlist, index) => {
         const slotId = `playlist-slot-${index + 1}`;
         const playlistSlot = document.getElementById(slotId);
-
         if (playlistSlot) {
             const img = playlistSlot.querySelector('img');
             img.src = playlist.cover || 'capa-playlist.png';
