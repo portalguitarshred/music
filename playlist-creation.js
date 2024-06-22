@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
+        const playlists = JSON.parse(localStorage.getItem('playlists') || '[]');
 
         function savePlaylist(coverUrl) {
             const newPlaylist = {
@@ -45,16 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             newPlaylist.songs = songURLs;
                             newPlaylist.songNames = songNames;
                             playlists.push(newPlaylist);
-                            sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                            setTimeout(updateMyPlaylists, 100);
+                            localStorage.setItem('playlists', JSON.stringify(playlists));
+                            updateMyPlaylistsDOM(newPlaylist, playlists.length);
                         }
                     };
                     reader.readAsArrayBuffer(file);
                 });
             } else {
                 playlists.push(newPlaylist);
-                sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                setTimeout(updateMyPlaylists, 100);
+                localStorage.setItem('playlists', JSON.stringify(playlists));
+                updateMyPlaylistsDOM(newPlaylist, playlists.length);
             }
         }
 
@@ -70,8 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function updateMyPlaylists() {
-        sessionStorage.setItem('newPlaylist', true);
-        window.location.href = 'user-my-playlist.html';
+    function updateMyPlaylistsDOM(playlist, index) {
+        const slotId = `playlist-slot-${index}`;
+        const playlistSlot = document.getElementById(slotId);
+        if (playlistSlot) {
+            const img = playlistSlot.querySelector('img');
+            img.src = playlist.cover || 'capa-playlist.png';
+            img.alt = playlist.name;
+        }
     }
 });
