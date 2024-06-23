@@ -13,10 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             playlistSlot.onclick = () => {
                 sessionStorage.setItem('currentPlaylistIndex', index);
-                sessionStorage.setItem('playlistCover', playlist.cover);
-                sessionStorage.setItem('playlistName', playlist.name);
-                sessionStorage.setItem('playlistSongs', JSON.stringify(playlist.songs));
-                sessionStorage.setItem('playlistSongNames', JSON.stringify(playlist.songNames));
                 window.location.href = 'user-playlist.html';
             };
         }
