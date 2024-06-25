@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         playlistTitleElem.textContent = currentPlaylist.name;
     }
 
+    // Limpar elementos existentes no playlistSongsElem
+    playlistSongsElem.innerHTML = '';
+
     // Exibir as músicas da playlist
     if (playlistSongsElem && currentPlaylist) {
         currentPlaylist.songs.forEach((songUrl, index) => {
