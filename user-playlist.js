@@ -56,19 +56,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentAudio.currentTime = 0; // Reinicia a música anterior
                 }
 
-                // Verificar o tipo de arquivo e garantir que seja suportado
-                const fileType = songUrl.split('.').pop().toLowerCase();
-                const supportedFormats = ['mp3', 'wav', 'mp4', 'opus', 'm4a'];
+                // Criar um novo objeto Audio para a música selecionada
+                currentAudio = new Audio(songUrl);
 
-                if (supportedFormats.includes(fileType)) {
-                    // Criar um novo objeto Audio para a música selecionada
-                    currentAudio = new Audio(songUrl);
+                currentAudio.addEventListener('canplaythrough', () => {
+                    console.log('O áudio pode ser reproduzido completamente sem interrupções.');
                     currentAudio.play().catch(error => {
                         console.error('Erro ao tentar reproduzir o áudio:', error);
                     });
-                } else {
-                    console.error('Formato de arquivo não suportado:', fileType);
-                }
+                });
+
+                currentAudio.addEventListener('error', (e) => {
+                    console.error('Erro ao carregar o áudio:', e);
+                });
+
+                currentAudio.load();
             });
 
             // Adicionar os três pontinhos verticais (menu de opções)
