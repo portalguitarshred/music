@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistSongsElem = document.getElementById('playlist-songs');
     const likeButton = document.getElementById('like-button');
     const likeCountElem = document.getElementById('like-count');
+    const deletePlaylistButton = document.getElementById('delete-playlist-button');
     let currentAudio = null; // Variável para controlar a reprodução da música
 
     const currentPlaylistIndex = parseInt(sessionStorage.getItem('currentPlaylistIndex'), 10);
@@ -141,5 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sessionStorage.setItem('likeCount', likeCount);
         updateLikeCount();
+    });
+
+    // Lógica para deletar a playlist
+    deletePlaylistButton.addEventListener('click', () => {
+        playlists.splice(currentPlaylistIndex, 1);
+        sessionStorage.setItem('playlists', JSON.stringify(playlists));
+        window.location.href = 'user-my-playlist.html';
     });
 });
