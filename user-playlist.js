@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const likeButton = document.getElementById('like-button');
     const likeCountElem = document.getElementById('like-count');
     const deletePlaylistButton = document.getElementById('delete-playlist-button');
-    const audioPlayer = document.getElementById('audio-player'); // Player de áudio HTML5
-    const audioSource = document.getElementById('audio-source'); // Fonte de áudio
+    let currentAudio = null;
 
     const currentPlaylistIndex = parseInt(sessionStorage.getItem('currentPlaylistIndex'), 10);
     const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
@@ -48,9 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicionar evento de clique para tocar a música
             songElem.addEventListener('click', () => {
-                audioSource.src = songUrl; // Definir a fonte do áudio
-                audioPlayer.load(); // Carregar o áudio
-                audioPlayer.play().catch(error => {
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+                currentAudio = new Audio(songUrl);
+                currentAudio.play().catch(error => {
                     console.error('Erro ao tentar reproduzir o áudio:', error);
                 });
             });
