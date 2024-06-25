@@ -116,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
             optionsMenu.appendChild(menuContent);
             songElem.appendChild(optionsMenu);
 
+            console.log(`Menu de opções adicionado à música ${index + 1}`);
+
             playlistSongsElem.appendChild(songElem);
         });
     }
