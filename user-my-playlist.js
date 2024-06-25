@@ -1,7 +1,7 @@
-// user-my-playlist.js
 document.addEventListener('DOMContentLoaded', () => {
     const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
 
+    // Iterar sobre os espaços e preencher com as capas das playlists
     playlists.forEach((playlist, index) => {
         const slotId = `playlist-slot-${index + 1}`;
         const playlistSlot = document.getElementById(slotId);
@@ -11,13 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
             img.src = playlist.cover || 'capa-playlist.png';
             img.alt = playlist.name;
 
-            // Configurar clique para carregar a playlist
+            // Adicionar evento de clique para abrir a playlist
             playlistSlot.onclick = () => {
                 sessionStorage.setItem('currentPlaylistIndex', index);
-                sessionStorage.setItem('playlistCover', playlist.cover);
-                sessionStorage.setItem('playlistName', playlist.name);
-                sessionStorage.setItem('playlistSongs', JSON.stringify(playlist.songs));
-                sessionStorage.setItem('playlistSongNames', JSON.stringify(playlist.songNames));
                 window.location.href = 'user-playlist.html';
             };
         }
