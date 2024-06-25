@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const likeButton = document.getElementById('like-button');
     const likeCountElem = document.getElementById('like-count');
     const deletePlaylistButton = document.getElementById('delete-playlist-button');
+    const audioPlayer = document.getElementById('audio-player'); // Player HTML5
+    const audioSource = document.getElementById('audio-source'); // Fonte de áudio
+
     let currentAudio = null; // Variável para controlar a reprodução da música
 
     const currentPlaylistIndex = parseInt(sessionStorage.getItem('currentPlaylistIndex'), 10);
@@ -49,28 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Adicione evento de clique para tocar a música
             songElem.addEventListener('click', () => {
                 console.log(`Tentando reproduzir a música: ${songTitleText}`);
-                // Se uma música já estiver tocando, pause-a antes de tocar a nova música
-                if (currentAudio) {
-                    console.log('Pausando a música atual');
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0; // Reinicia a música anterior
-                }
-
-                // Criar um novo objeto Audio para a música selecionada
-                currentAudio = new Audio(songUrl);
-
-                currentAudio.oncanplaythrough = () => {
-                    console.log('O áudio pode ser reproduzido completamente sem interrupções.');
-                    currentAudio.play().catch(error => {
-                        console.error('Erro ao tentar reproduzir o áudio:', error);
-                    });
-                };
-
-                currentAudio.onerror = (e) => {
-                    console.error('Erro ao carregar o áudio:', e);
-                };
-
-                currentAudio.load();
+                audioSource.src = songUrl;
+                audioPlayer.load();
+                audioPlayer.play().catch(error => {
+                    console.error('Erro ao tentar reproduzir o áudio:', error);
+                });
             });
 
             // Adicionar os três pontinhos verticais (menu de opções)
