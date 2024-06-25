@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicionar evento de clique para tocar a música
             songElem.addEventListener('click', () => {
-                audioSource.src = songUrl;
-                audioPlayer.load();
+                audioSource.src = songUrl; // Definir a fonte do áudio
+                audioPlayer.load(); // Carregar o áudio
                 audioPlayer.play().catch(error => {
                     console.error('Erro ao tentar reproduzir o áudio:', error);
                 });
