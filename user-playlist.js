@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exibir as músicas da playlist
     if (playlistSongsElem && currentPlaylist) {
         currentPlaylist.songs.forEach((songUrl, index) => {
+            console.log(`Adicionando música ${index + 1}: ${currentPlaylist.songNames[index]}`);
             const songElem = document.createElement('div');
             songElem.classList.add('playlist-song');
 
