@@ -48,17 +48,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicione evento de clique para tocar a música
             songElem.addEventListener('click', () => {
+                console.log(`Tentando reproduzir a música: ${songTitleText}`);
                 // Se uma música já estiver tocando, pause-a antes de tocar a nova música
                 if (currentAudio) {
+                    console.log('Pausando a música atual');
                     currentAudio.pause();
                     currentAudio.currentTime = 0; // Reinicia a música anterior
                 }
 
                 // Criar um novo objeto Audio para a música selecionada
                 currentAudio = new Audio(songUrl);
-                currentAudio.play().catch(error => {
-                    console.error('Erro ao tentar reproduzir o áudio:', error);
-                });
+
+                currentAudio.oncanplaythrough = () => {
+                    console.log('O áudio pode ser reproduzido completamente sem interrupções.');
+                    currentAudio.play().catch(error => {
+                        console.error('Erro ao tentar reproduzir o áudio:', error);
+                    });
+                };
+
+                currentAudio.onerror = (e) => {
+                    console.error('Erro ao carregar o áudio:', e);
+                };
+
+                currentAudio.load();
             });
 
             // Adicionar os três pontinhos verticais (menu de opções)
