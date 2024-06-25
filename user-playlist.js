@@ -8,8 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioPlayer = document.getElementById('audio-player'); // Player HTML5
     const audioSource = document.getElementById('audio-source'); // Fonte de áudio
 
-    let currentAudio = null; // Variável para controlar a reprodução da música
-
     const currentPlaylistIndex = parseInt(sessionStorage.getItem('currentPlaylistIndex'), 10);
     const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
     const currentPlaylist = playlists[currentPlaylistIndex];
