@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exibir as músicas da playlist
     if (playlistSongsElem && currentPlaylist) {
         currentPlaylist.songs.forEach((songUrl, index) => {
+            console.log(`Adicionando música ${index + 1}: ${currentPlaylist.songNames[index]}`);
             const songElem = document.createElement('div');
             songElem.classList.add('playlist-song');
 
@@ -47,17 +48,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicione evento de clique para tocar a música
             songElem.addEventListener('click', () => {
+                console.log(`Tentando reproduzir a música: ${songTitleText}`);
                 // Se uma música já estiver tocando, pause-a antes de tocar a nova música
                 if (currentAudio) {
+                    console.log('Pausando a música atual');
                     currentAudio.pause();
                     currentAudio.currentTime = 0; // Reinicia a música anterior
                 }
 
-                // Criar um novo objeto Audio para a música selecionada
-                currentAudio = new Audio(songUrl);
-                currentAudio.play().catch(error => {
-                    console.error('Erro ao tentar reproduzir o áudio:', error);
-                });
+                // Verificar o tipo de arquivo e garantir que seja suportado
+                const fileType = songUrl.split('.').pop().toLowerCase();
+                const supportedFormats = ['mp3', 'wav', 'mp4', 'opus', 'm4a'];
+
+                if (supportedFormats.includes(fileType)) {
+                    // Criar um novo objeto Audio para a música selecionada
+                    currentAudio = new Audio(songUrl);
+                    currentAudio.play().catch(error => {
+                        console.error('Erro ao tentar reproduzir o áudio:', error);
+                    });
+                } else {
+                    console.error('Formato de arquivo não suportado:', fileType);
+                }
             });
 
             // Adicionar os três pontinhos verticais (menu de opções)
