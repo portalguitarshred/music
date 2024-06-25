@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const likeButton = document.getElementById('like-button');
     const likeCountElem = document.getElementById('like-count');
     const deletePlaylistButton = document.getElementById('delete-playlist-button');
-    const audioPlayer = document.getElementById('audio-player'); // Player HTML5
+    const audioPlayer = document.getElementById('audio-player'); // Player de áudio HTML5
     const audioSource = document.getElementById('audio-source'); // Fonte de áudio
 
     const currentPlaylistIndex = parseInt(sessionStorage.getItem('currentPlaylistIndex'), 10);
@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exibir as músicas da playlist
     if (playlistSongsElem && currentPlaylist) {
         currentPlaylist.songs.forEach((songUrl, index) => {
-            console.log(`Adicionando música ${index + 1}: ${currentPlaylist.songNames[index]}`);
             const songElem = document.createElement('div');
             songElem.classList.add('playlist-song');
 
@@ -47,9 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             songElem.appendChild(songInfo);
 
-            // Adicione evento de clique para tocar a música
+            // Adicionar evento de clique para tocar a música
             songElem.addEventListener('click', () => {
-                console.log(`Tentando reproduzir a música: ${songTitleText}`);
                 audioSource.src = songUrl;
                 audioPlayer.load();
                 audioPlayer.play().catch(error => {
@@ -75,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const shareOption = document.createElement('button');
             shareOption.innerHTML = '<i class="fas fa-share"></i> Compartilhar com amigos';
             shareOption.addEventListener('click', () => {
-                // Lógica para compartilhar a música
                 const shareData = {
                     title: 'Minha Playlist',
                     text: `Confira essa música: ${songTitleText}`,
@@ -103,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
             removeOption.innerHTML = '<i class="fas fa-trash"></i> Remover da Playlist';
             removeOption.addEventListener('click', () => {
                 playlistSongsElem.removeChild(songElem);
-                // Atualizar sessionStorage
                 currentPlaylist.songs.splice(index, 1);
                 currentPlaylist.songNames.splice(index, 1);
                 sessionStorage.setItem('playlists', JSON.stringify(playlists));
