@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicionar evento de clique para tocar a música
             songElem.addEventListener('click', () => {
+                console.log("Tentando reproduzir a música:", songUrl);
                 playAudio(songUrl);
             });
 
