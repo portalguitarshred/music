@@ -69,65 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            // Adicionar os três pontinhos verticais (menu de opções)
-            const optionsMenu = document.createElement('div');
-            optionsMenu.classList.add('options-menu');
-
-            const optionsButton = document.createElement('button');
-            optionsButton.classList.add('options-button');
-            optionsButton.innerHTML = '&#8942;'; // Caractere de três pontinhos verticais
-            optionsButton.addEventListener('click', (event) => {
-                event.stopPropagation(); // Previne que o clique no botão toque a música
-                optionsMenu.classList.toggle('open');
-            });
-
-            const menuContent = document.createElement('div');
-            menuContent.classList.add('menu-content');
-
-            const shareOption = document.createElement('button');
-            shareOption.innerHTML = '<i class="fas fa-share"></i> Compartilhar com amigos';
-            shareOption.addEventListener('click', () => {
-                const shareData = {
-                    title: 'Minha Playlist',
-                    text: `Confira essa música: ${songTitleText}`,
-                    url: songUrl
-                };
-                navigator.share(shareData).catch(console.error);
-                optionsMenu.classList.remove('open');
-            });
-
-            const addToPlaylistOption = document.createElement('button');
-            addToPlaylistOption.innerHTML = '<i class="fas fa-music"></i> Adicionar música na playlist';
-            addToPlaylistOption.addEventListener('click', () => {
-                alert(`A música "${songTitleText}" foi adicionada à playlist.`);
-                optionsMenu.classList.remove('open');
-            });
-
-            const addToFavoritesOption = document.createElement('button');
-            addToFavoritesOption.innerHTML = '<i class="fas fa-heart"></i> Adicionar aos favoritos';
-            addToFavoritesOption.addEventListener('click', () => {
-                alert(`A música "${songTitleText}" foi adicionada aos favoritos.`);
-                optionsMenu.classList.remove('open');
-            });
-
-            const removeOption = document.createElement('button');
-            removeOption.innerHTML = '<i class="fas fa-trash"></i> Remover da Playlist';
-            removeOption.addEventListener('click', () => {
-                playlistSongsElem.removeChild(songElem);
-                currentPlaylist.songs.splice(index, 1);
-                currentPlaylist.songNames.splice(index, 1);
-                sessionStorage.setItem('playlists', JSON.stringify(playlists));
-                optionsMenu.classList.remove('open');
-            });
-
-            menuContent.appendChild(shareOption);
-            menuContent.appendChild(addToPlaylistOption);
-            menuContent.appendChild(addToFavoritesOption);
-            menuContent.appendChild(removeOption);
-            optionsMenu.appendChild(optionsButton);
-            optionsMenu.appendChild(menuContent);
-            songElem.appendChild(optionsMenu);
-
             playlistSongsElem.appendChild(songElem);
         });
     }
