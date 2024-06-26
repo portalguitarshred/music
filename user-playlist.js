@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const likeButton = document.getElementById('like-button');
     const likeCountElem = document.getElementById('like-count');
     const deletePlaylistButton = document.getElementById('delete-playlist-button');
-    let currentAudio = null;
 
     const currentPlaylistIndex = parseInt(sessionStorage.getItem('currentPlaylistIndex'), 10);
     const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
@@ -95,17 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Adicione este código ao final do arquivo user-playlist.js
-document.addEventListener('DOMContentLoaded', () => {
-    const testAudioButton = document.getElementById('test-audio-button');
-
-    testAudioButton.addEventListener('click', () => {
-        const audioUrl = 'URL_DA_SUA_MUSICA_AQUI'; // Substitua pelo URL real da música
-        playAudio(audioUrl);
-    });
-});
-
+// Adicione a função playAudio ao final do arquivo user-playlist.js
 function playAudio(url) {
+    console.log("Iniciando reprodução de áudio:", url);
     if (window.currentAudio) {
         window.currentAudio.pause();
         window.currentAudio.currentTime = 0;
