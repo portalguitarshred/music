@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicionar evento de clique para tocar a música
             songElem.addEventListener('click', () => {
-                console.log("Tentando reproduzir a música:", songUrl);
                 playAudio(songUrl);
             });
 
@@ -95,3 +94,17 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'user-my-playlist.html';
     });
 });
+
+function playAudio(url) {
+    console.log("Iniciando reprodução de áudio:", url);
+    if (window.currentAudio) {
+        window.currentAudio.pause();
+        window.currentAudio.currentTime = 0;
+    }
+    window.currentAudio = new Audio(url);
+    window.currentAudio.play().then(() => {
+        console.log("Reproduzindo áudio:", url);
+    }).catch(error => {
+        console.error('Erro ao tentar reproduzir o áudio:', error);
+    });
+}
