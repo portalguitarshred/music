@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const likeButton = document.getElementById('like-button');
     const likeCountElem = document.getElementById('like-count');
     const deletePlaylistButton = document.getElementById('delete-playlist-button');
-    let currentAudio = null;
-
+    
     const currentPlaylistIndex = parseInt(sessionStorage.getItem('currentPlaylistIndex'), 10);
     const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
     const currentPlaylist = playlists[currentPlaylistIndex];
@@ -56,17 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicionar evento de clique para tocar a música
             songElem.addEventListener('click', () => {
-                console.log("Tentando tocar a música:", songUrl);
-                if (currentAudio) {
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0;
-                }
-                currentAudio = new Audio(songUrl);
-                currentAudio.play().then(() => {
-                    console.log("Reproduzindo áudio:", songUrl);
-                }).catch(error => {
-                    console.error('Erro ao tentar reproduzir o áudio:', error);
-                });
+                playAudio(songUrl);
             });
 
             playlistSongsElem.appendChild(songElem);
@@ -104,3 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'user-my-playlist.html';
     });
 });
+
+// Função isolada para reprodução de áudio
+function playAudio(url) {
+    if (window.currentAudio) {
+        window.currentAudio.pause();
+        window.currentAudio.currentTime = 0;
+    }
+    window.currentAudio = new Audio(url);
+    window.currentAudio.play().then(() => {
+        console.log("Reproduzindo áudio:", url);
+    }).catch(error => {
+        console.error('Erro ao tentar reproduzir o áudio:', error);
+    });
+}
