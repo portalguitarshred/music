@@ -13,14 +13,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlists = JSON.parse(sessionStorage.getItem('playlists') || '[]');
     const currentPlaylist = playlists[currentPlaylistIndex];
 
+    if (!currentPlaylist) {
+        console.error("Nenhuma playlist encontrada no índice:", currentPlaylistIndex);
+        return;
+    }
+
     // Exibir a capa da playlist escolhida pelo usuário
-    if (userPlaylistCoverImg && currentPlaylist) {
+    if (userPlaylistCoverImg) {
         userPlaylistCoverImg.src = currentPlaylist.cover || 'default-cover.jpg';
         console.log("Capa da playlist exibida:", currentPlaylist.cover);
     }
 
     // Exibir o título da playlist
-    if (playlistTitleElem && currentPlaylist) {
+    if (playlistTitleElem) {
         playlistTitleElem.textContent = currentPlaylist.name;
         console.log("Título da playlist exibido:", currentPlaylist.name);
     }
@@ -29,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     playlistSongsElem.innerHTML = '';
 
     // Exibir as músicas da playlist
-    if (playlistSongsElem && currentPlaylist) {
+    if (playlistSongsElem) {
         currentPlaylist.songs.forEach((songUrl, index) => {
             const songElem = document.createElement('div');
             songElem.classList.add('playlist-song');
@@ -57,7 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentAudio.currentTime = 0;
                 }
                 currentAudio = new Audio(songUrl);
-                currentAudio.play().catch(error => {
+                currentAudio.play().then(() => {
+                    console.log("Reproduzindo áudio:", songUrl);
+                }).catch(error => {
                     console.error('Erro ao tentar reproduzir o áudio:', error);
                 });
             });
