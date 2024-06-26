@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("user-playlist.js carregado");
+
     const userPlaylistCoverImg = document.getElementById('user-playlist-cover');
     const playlistTitleElem = document.getElementById('playlist-title');
     const playlistSongsElem = document.getElementById('playlist-songs');
@@ -14,11 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exibir a capa da playlist escolhida pelo usuário
     if (userPlaylistCoverImg && currentPlaylist) {
         userPlaylistCoverImg.src = currentPlaylist.cover || 'default-cover.jpg';
+        console.log("Capa da playlist exibida:", currentPlaylist.cover);
     }
 
     // Exibir o título da playlist
     if (playlistTitleElem && currentPlaylist) {
         playlistTitleElem.textContent = currentPlaylist.name;
+        console.log("Título da playlist exibido:", currentPlaylist.name);
     }
 
     // Limpar elementos existentes no playlistSongsElem
@@ -47,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicionar evento de clique para tocar a música
             songElem.addEventListener('click', () => {
+                console.log("Música clicada:", songUrl);
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio.currentTime = 0;
