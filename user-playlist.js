@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adicionar evento de clique para tocar a música
             songElem.addEventListener('click', () => {
-                console.log("Música clicada:", songUrl);
+                console.log("Tentando tocar a música:", songUrl);
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio.currentTime = 0;
